@@ -6,11 +6,11 @@ This is Sample project for Azure Functions. May this repository help you underst
 
 This sample include following.
 
-FunctionName | Description
----- | ----
-GithubWebhookCSharp | Sample C# code for Github Webhook
-VSTSWebhookCSharp | Sample C# code for Visual Studio Team Service (VSTS) Webhook
-WebhookCSharpSendToSlack | Sample C# code for Slack Notification
+FunctionName | Language | Description
+---- | ---- | ----
+GithubWebhookCSharp | C# | Github Webhook Sample code
+VSTSWebhookCSharp | C# | Visual Studio Team Service (VSTS) Webhook Sample code
+WebhookCSharpSendToSlack | C# | Slack Notification Sample code
 
 # GitHub Integration Sample
 
