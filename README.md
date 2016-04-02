@@ -20,4 +20,4 @@ This repogitory Sync with Azure Functions by GitHub Integration.
 
 # License
 
-[MIT](https://github.com/guitarrapc/AzureFunctionsIntroduction/LICENSE)
+[MIT](https://github.com/guitarrapc/AzureFunctionsIntroduction/blob/master/LICENSE)
