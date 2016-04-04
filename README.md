@@ -10,6 +10,8 @@ FunctionName | Language | Description
 ---- | ---- | ----
 GithubWebhookCSharp | C# | Github Webhook Sample code
 VSTSWebhookCSharp | C# | Visual Studio Team Service (VSTS) Webhook Sample code
+WebhookCSharpGithubOctokit | NuGet package reference sample for Octokit
+WebhookCSharpSendToChatWork | Chatwork Notification Sample code
 WebhookCSharpSendToSlack | C# | Slack Notification Sample code
 
 # GitHub Integration Sample
