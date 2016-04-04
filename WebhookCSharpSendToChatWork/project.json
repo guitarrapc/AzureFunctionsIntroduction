@@ -1,0 +1,9 @@
+{
+ "frameworks": {
+   "net46":{
+     "dependencies": {
+       "ChatWork.Api": "0.4.0"
+     }
+   }
+ }
+}
