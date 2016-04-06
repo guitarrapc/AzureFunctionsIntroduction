@@ -8,10 +8,11 @@ This sample include following.
 
 FunctionName | Language | Description
 ---- | ---- | ----
+GenericWebhookCSharpExtensionMethod | C# | Extension Method usage Sample code
 GithubWebhookCSharp | C# | Github Webhook Sample code
 VSTSWebhookCSharp | C# | Visual Studio Team Service (VSTS) Webhook Sample code
-WebhookCSharpGithubOctokit | NuGet package reference sample for Octokit
-WebhookCSharpSendToChatWork | Chatwork Notification Sample code
+WebhookCSharpGithubOctokit | C# | NuGet package reference sample for Octokit
+WebhookCSharpSendToChatWork | C# | Chatwork Notification Sample code
 WebhookCSharpSendToSlack | C# | Slack Notification Sample code
 
 # GitHub Integration Sample
@@ -19,6 +20,10 @@ WebhookCSharpSendToSlack | C# | Slack Notification Sample code
 You may find this repository structure is fit with Azure Functions CI by Github.
 
 This repogitory Sync with Azure Functions by GitHub Integration.
+
+# Reference
+
+http://tech.guitarrapc.com/archive/category/AzureFunctions
 
 # License
 
