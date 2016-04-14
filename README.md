@@ -8,6 +8,7 @@ This sample include following.
 
 FunctionName | Language | Description
 ---- | ---- | ----
+ExternalCsxWebhookCSharp | C# | Reference external .csx usage Sample code
 GenericWebhookCSharpExtensionMethod | C# | Extension Method usage Sample code
 GithubWebhookCSharp | C# | Github Webhook Sample code
 LineBotWebhookCSharp | C# | Line Bot Webhook Sample code
