@@ -4,6 +4,10 @@ This is Sample project for Azure Functions. May this repository help you underst
 
 # Recommend Azure Functions settings for stability
 
+- [Keep Function App Platform 32bit (don't change to 64bit)](http://stackoverflow.com/questions/36653122/is-there-any-difference-between-platform-32-bit-or-platform-64-bit-for-azure)
+
+![](images/PlatformSetting.png)
+
 - Add Dynamic Memory from default 128MB to 256MB.
 
 ![](images/MemoryAllocation.png)
