@@ -2,6 +2,11 @@
 
 This is Sample project for Azure Functions. May this repository help you understand Azure Functions better.
 
+# Recommend Azure Functions settings for stability
+
+- Add Dynamic Memory from default 128MB to 256MB.
+- Stop nesting multiple Azure Functions, and use ```#load "<YourCoolLogic.csx>"``` to load shared code.
+
 # What you can know
 
 This sample include following.
