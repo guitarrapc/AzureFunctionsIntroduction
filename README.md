@@ -8,14 +8,15 @@ This sample include following.
 
 FunctionName | Language | Description
 ---- | ---- | ----
-ExternalCsxWebhookCSharp | C# | Reference external .csx usage Sample code
-GenericWebhookCSharpExtensionMethod | C# | Extension Method usage Sample code
-GithubWebhookCSharp | C# | Github Webhook Sample code
-LineBotWebhookCSharp | C# | Line Bot Webhook Sample code
-VSTSWebhookCSharp | C# | Visual Studio Team Service (VSTS) Webhook Sample code
-WebhookCSharpGithubOctokit | C# | NuGet package reference sample for Octokit
-WebhookCSharpSendToChatWork | C# | Chatwork Notification Sample code
-WebhookCSharpSendToSlack | C# | Slack Notification Sample code
+AppSettingsWebhookCSharp | C# | Reference ```Application Settings > App Setting``` of Web Apps Sample code. 
+ExternalCsxWebhookCSharp | C# | Reference external .csx usage Sample code.
+GenericWebhookCSharpExtensionMethod | C# | Extension Method usage Sample code.
+GithubWebhookCSharp | C# | Github Webhook Sample code.
+LineBotWebhookCSharp | C# | Line Bot Webhook Sample code.
+VSTSWebhookCSharp | C# | Visual Studio Team Service (VSTS) Webhook Sample code.
+WebhookCSharpGithubOctokit | C# | NuGet package reference sample for Octokit.
+WebhookCSharpSendToChatWork | C# | Chatwork Notification Sample code.
+WebhookCSharpSendToSlack | C# | Slack Notification Sample code.
 
 # GitHub Integration Sample
 
