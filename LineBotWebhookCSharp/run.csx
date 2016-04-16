@@ -80,7 +80,7 @@ static Content CreateResponseContent(dynamic result, TraceWriter log)
     }
     else if (text != null)
     {
-        var responseText = $"オウム返しするぞい！ : {text}";
+        var responseText = $"位置情報を共有してくれると緊急避難情報を調べます！";
         log.Verbose($"message : {responseText}");
         content = new Content
         {
@@ -91,18 +91,13 @@ static Content CreateResponseContent(dynamic result, TraceWriter log)
     }
     else if (contentMetaData.SKTID != "")
     {
-        var stkId = Enumerable.Range(100, 40).Select(x => x.ToString()).SampleOne();
-        log.Verbose($"image. sktId : {stkId}");
+        var responseText = $"位置情報を共有してくれると緊急避難情報を調べます！";
+        log.Verbose($"message : {responseText}");
         content = new Content
         {
-            contentType = 8,
+            contentType = 1,
             toType = 1,
-            contentMetadata = new ContentMetadata
-            {
-                STKID = stkId,
-                STKPKGID = "1",
-                STKVER = "100",
-            }
+            text = responseText,
         };
     }
     return content;
