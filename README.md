@@ -24,7 +24,7 @@ AppSettingsWebhookCSharp | C# | Reference ```Application Settings > App Setting`
 ExternalCsxWebhookCSharp | C# | Reference external .csx usage Sample code.
 GenericWebhookCSharpExtensionMethod | C# | Extension Method usage Sample code.
 GithubWebhookCSharp | C# | Github Webhook Sample code.
-LineBotWebhookCSharp | C# | Line Bot Webhook Sample code.
+LineBotWebhookCSharp | C# | Line Bot Webhook Sample code with Emergency Evacuation info with sent info.
 VSTSWebhookCSharp | C# | Visual Studio Team Service (VSTS) Webhook Sample code.
 WebhookCSharpGithubOctokit | C# | NuGet package reference sample for Octokit.
 WebhookCSharpSendToChatWork | C# | Chatwork Notification Sample code.

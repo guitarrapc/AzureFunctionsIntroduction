@@ -1,6 +1,11 @@
 #r "Newtonsoft.Json"
+#r "System.Configuration"
+#load "..\EnumerableExtensions.csx"
+#load "..\RescureUrl.csx"
 
 using System;
+using System.Configuration;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -15,6 +20,7 @@ public static async Task<object> Run(HttpRequestMessage req, TraceWriter log)
     
     // Debug
     log.Verbose($"result : {result}");
+    log.Verbose($"data : {data}");
 
     if (result == null) {
         return req.CreateResponse(HttpStatusCode.BadRequest, new {
@@ -25,12 +31,14 @@ public static async Task<object> Run(HttpRequestMessage req, TraceWriter log)
     // Create Bot Response
     var content = CreateResponseContent(result, log);
 
-    // Send Response to Line Sender
     using (var client = new HttpClient())
     {
-        client.DefaultRequestHeaders.Add("X-Line-ChannelID", "Channel IDを入力");
-        client.DefaultRequestHeaders.Add("X-Line-ChannelSecret", "Channel Secret を入力");
-        client.DefaultRequestHeaders.Add("X-Line-Trusted-User-With-ACL", "MID を入力");
+        // Set line authorization header
+        client.DefaultRequestHeaders.Add("X-Line-ChannelID", ConfigurationManager.AppSettings["LineChannelId"]);
+        client.DefaultRequestHeaders.Add("X-Line-ChannelSecret", ConfigurationManager.AppSettings["LineChannelSecret"]);
+        client.DefaultRequestHeaders.Add("X-Line-Trusted-User-With-ACL", ConfigurationManager.AppSettings["LineMid"]);
+
+        // Send Response to Line Sender
         var res = await client.PostAsJsonAsync("https://trialbot-api.line.me/v1/events",
             new {
                 to = new[] { result.content.from },
@@ -46,35 +54,52 @@ public static async Task<object> Run(HttpRequestMessage req, TraceWriter log)
         return req.CreateResponse(res.StatusCode, new {
             text = $"{content.contentType}"
         });
-    }              
+    }
 }
 
 static Content CreateResponseContent(dynamic result, TraceWriter log)
 {
     var text = result.content.text;
     var contentMetaData = result.content.contentMetadata;
+    var location = result.content.location;
     Content content = null;
 
-    if (text != null)
+    if (location != null)
     {
-        log.Verbose($"message");
+        string latitude = location.latitude;
+        string longitude = location.longitude;
+        string address = location.address;
+        log.Verbose($"location. Latitude : {latitude}, Longitude : {longitude}, Address : {address}");
+        var responseText = new RescureUrl(latitude, longitude, address).GetAsync().Result;
         content = new Content
         {
             contentType = 1,
             toType = 1,
-            text = $"オウム返しするぞい！ : {text}",
+            text = responseText,
+        };
+    }
+    else if (text != null)
+    {
+        var responseText = $"オウム返しするぞい！ : {text}";
+        log.Verbose($"message : {responseText}");
+        content = new Content
+        {
+            contentType = 1,
+            toType = 1,
+            text = responseText,
         };
     }
     else if (contentMetaData.SKTID != "")
     {
-        log.Verbose($"image");
+        var stkId = Enumerable.Range(100, 40).Select(x => x.ToString()).SampleOne();
+        log.Verbose($"image. sktId : {stkId}");
         content = new Content
         {
             contentType = 8,
             toType = 1,
             contentMetadata = new ContentMetadata
             {
-                STKID = "100",
+                STKID = stkId,
                 STKPKGID = "1",
                 STKVER = "100",
             }
