@@ -19,6 +19,10 @@ public class RescureUrl
     // 「ナビタイム災害情報」を利用 : kumamoto prefecture が含まれていたら熊本地震とみなしてURL 追加
     private static readonly string _navitimeUrl = "http://www.navitime.co.jp/saigai/?from=pctop";
     
+    // Google クライシスレスポンスを利用 : https://www.google.org/crisisresponse/japan
+    // Map 表示もできるけど、位置関係なしなので一旦TOP のみでMapはなし : https://www.google.org/crisisresponse/japan/maps?hl=ja
+    private static readonly string _googleChrisisUrl = "https://www.google.org/crisisresponse/japan";
+    
     public string Latitude { get; private set; }
     public string Longitude { get; private set; }
     public string Address { get; private set; }
@@ -58,6 +62,8 @@ public class RescureUrl
 
                 var message = new [] {$@"「近くの緊急避難所を探します」で、検索結果が見つかりました。",
                     $"最寄りの避難所情報 URL : {requestUrl.AbsoluteUri}",
+                    Environment.NewLine,
+                    $"安否情報はGoogleクライシスレスポンスもどうぞ URL : {_googleChrisisUrl}",
                     Environment.NewLine,
                     postMessage,
                 }.ToJoinedString(Environment.NewLine);
