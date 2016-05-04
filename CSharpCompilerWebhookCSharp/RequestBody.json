@@ -1,0 +1,5 @@
+{
+    "code": "new System.Net.Http.HttpClient().GetStringAsync(\"https://google.com\").Result.Length",
+    "channel": "#azurefunctions",
+    "bot" : "C# Bot"
+}
