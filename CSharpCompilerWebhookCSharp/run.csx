@@ -1,4 +1,5 @@
 #load "..\CSharpScripting.csx"
+#r "MyExtentions.dll"
 
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Microsoft.CodeAnalysis.Scripting;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
+using MyExtentions;
 
 public static async Task<object> Run(HttpRequestMessage req, TraceWriter log)
 {

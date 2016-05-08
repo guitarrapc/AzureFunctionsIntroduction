@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Microsoft.CodeAnalysis.Scripting;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
+using MyExtentions;
 
 private static readonly string[] DefaultImports =
 {
@@ -27,6 +28,7 @@ private static readonly string[] DefaultImports =
     "System.Net.Http",
     "System.Threading",
     "System.Threading.Tasks",
+    "MyExtentions",
 };
 
 private static readonly Assembly[] DefaultReferences =
@@ -34,6 +36,7 @@ private static readonly Assembly[] DefaultReferences =
     typeof(Enumerable).Assembly,
     typeof(List<string>).Assembly,
     typeof(System.Net.Http.HttpClient).Assembly,
+    typeof(EnumerableExtensions).Assembly,
 };
 
 public static async Task<string> EvaluateCSharpAsync(string code)
