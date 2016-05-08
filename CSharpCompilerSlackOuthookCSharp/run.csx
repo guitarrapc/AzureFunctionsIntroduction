@@ -1,7 +1,7 @@
 #load "..\EnumerableExtensions.csx"
 
 #r "System.Web"
-#r "MyExtentions.dll"
+#r "MyExtensions.dll"
 
 using System;
 using System.Collections.Generic;
@@ -12,7 +12,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Web;
 using Newtonsoft.Json;
-using MyExtentions;
+using MyExtensions;
 
 private const string TRIGGER_WORD = "@C#:";
 private const string SlackWebhookUrl = "Input your Slack Notification Azure Functions Url";

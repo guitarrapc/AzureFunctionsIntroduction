@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Microsoft.CodeAnalysis.Scripting;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
-using MyExtentions;
+using MyExtensions;
 
 private static readonly string[] DefaultImports =
 {
@@ -28,7 +28,7 @@ private static readonly string[] DefaultImports =
     "System.Net.Http",
     "System.Threading",
     "System.Threading.Tasks",
-    "MyExtentions",
+    "MyExtensions",
 };
 
 private static readonly Assembly[] DefaultReferences =
