@@ -1,10 +1,10 @@
 {
   "bindings": [
     {
-      "webHookType": "",
       "type": "httpTrigger",
       "direction": "in",
-      "name": "req"
+      "name": "req",
+      "authLevel": "function"
     },
     {
       "type": "http",

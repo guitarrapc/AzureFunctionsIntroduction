@@ -1,5 +1,9 @@
+#load "..\CSharpScripting.csx"
 #load "..\EnumerableExtensions.csx"
 
+#r "System.Configuration"
+#r "System.Collections"
+#r "System.Runtime"
 #r "System.Web"
 #r "MyExtensions.dll"
 
@@ -9,13 +13,14 @@ using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Reflection;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using Newtonsoft.Json;
 using MyExtensions;
 
 private const string TRIGGER_WORD = "@C#:";
-private const string SlackWebhookUrl = "Input your Slack Notification Azure Functions Url";
+private static string _slackWebhookUrl = ConfigurationManager.AppSettings["SlackIncomingWebhookUrl"];
 
 public static async Task<object> Run(HttpRequestMessage req, TraceWriter log)
 {
@@ -46,10 +51,6 @@ public static async Task<object> Run(HttpRequestMessage req, TraceWriter log)
     var resultText = await EvaluateCSharpAsync(code);
     log.Verbose(resultText);
 
-    // デバッグ用
-    log.Verbose(res.StatusCode.ToString());
-    log.Verbose(res.Error);
-
     // Send back with Slack Incoming Webhook
     var message = string.IsNullOrWhiteSpace(resultText) ? "空だニャ" : resultText;
     var payload = new
@@ -63,7 +64,7 @@ public static async Task<object> Run(HttpRequestMessage req, TraceWriter log)
     var jsonString = JsonConvert.SerializeObject(payload);
     using (var client = new HttpClient())
     {
-        var res = await client.PostAsync(SlackWebhookUrl, new StringContent(jsonString, Encoding.UTF8, "application/json"));
+        var res = await client.PostAsync(_slackWebhookUrl, new StringContent(jsonString, Encoding.UTF8, "application/json"));
         return req.CreateResponse(res.StatusCode, new {
             body = $"CSharp Evaluate message. Message : {message}",
         });

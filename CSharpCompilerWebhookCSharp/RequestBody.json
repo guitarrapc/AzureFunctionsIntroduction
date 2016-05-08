@@ -1,5 +1,3 @@
 {
-    "code": "new System.Net.Http.HttpClient().GetStringAsync(\"https://google.com\").Result.Length",
-    "channel": "#azurefunctions",
-    "bot" : "C# Bot"
+    code : "Enumerable.Range(1, 10).Select(x => x * x).Aggregate((x,y) => x + y)"
 }

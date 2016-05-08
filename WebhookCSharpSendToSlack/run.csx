@@ -1,9 +1,13 @@
 #r "Newtonsoft.Json"
+#r "System.Configuration"
 
 using System;
+using System.Configuration;
 using System.Net;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+
+private static string _slackWebhookUrl = ConfigurationManager.AppSettings["SlackIncomingWebhookUrl"];
 
 public static async Task<object> Run(HttpRequestMessage req, TraceWriter log)
 {
@@ -18,7 +22,6 @@ public static async Task<object> Run(HttpRequestMessage req, TraceWriter log)
         });
     }
 
-    var WebhookUrl = "INPUT YOUR INCOMING WEB HOOK URL HERE!";
     var payload = new
     {
         channel = data.channel,
@@ -29,7 +32,7 @@ public static async Task<object> Run(HttpRequestMessage req, TraceWriter log)
     var jsonString = JsonConvert.SerializeObject(payload);
     using (var client = new HttpClient())
     {
-        var res = await client.PostAsync(WebhookUrl, new FormUrlEncodedContent(new[]
+        var res = await client.PostAsync(_slackWebhookUrl, new FormUrlEncodedContent(new[]
         {
             new KeyValuePair<string, string>("payload", jsonString)
         }));
