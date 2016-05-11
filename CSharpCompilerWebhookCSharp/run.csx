@@ -13,7 +13,7 @@ using MyExtensions;
 
 public static async Task<object> Run(HttpRequestMessage req, TraceWriter log)
 {
-    log.Verbose("Charp Compiler service Webhook was triggered!");
+    log.Info("Charp Compiler service Webhook was triggered!");
 
     string jsonContent = await req.Content.ReadAsStringAsync();
     dynamic data = JsonConvert.DeserializeObject(jsonContent);
@@ -27,9 +27,9 @@ public static async Task<object> Run(HttpRequestMessage req, TraceWriter log)
 
     // CSharp Code評価
     string code = data.code;
-    log.Verbose($"{nameof(code)} : {code}");
+    log.Info($"{nameof(code)} : {code}");
     var resultText = await EvaluateCSharpAsync(code);
-    log.Verbose(resultText);
+    log.Info(resultText);
 
     return req.CreateResponse(HttpStatusCode.OK, new {
         body = resultText,

@@ -12,15 +12,15 @@ using Newtonsoft.Json;
 
 public static async Task<object> Run(HttpRequestMessage req, TraceWriter log)
 {
-    log.Verbose($"Webhook was triggered!");
+    log.Info($"Webhook was triggered!");
 
     string jsonContent = await req.Content.ReadAsStringAsync();
     dynamic data = JsonConvert.DeserializeObject(jsonContent);
     var result = data.result[0];
     
     // Debug
-    log.Verbose($"result : {result}");
-    log.Verbose($"data : {data}");
+    log.Info($"result : {result}");
+    log.Info($"data : {data}");
 
     if (result == null) {
         return req.CreateResponse(HttpStatusCode.BadRequest, new {
@@ -69,7 +69,7 @@ static Content CreateResponseContent(dynamic result, TraceWriter log)
         string latitude = location.latitude;
         string longitude = location.longitude;
         string address = location.address;
-        log.Verbose($"location. Latitude : {latitude}, Longitude : {longitude}, Address : {address}");
+        log.Info($"location. Latitude : {latitude}, Longitude : {longitude}, Address : {address}");
         var responseText = new RescureUrl(latitude, longitude, address).GetAsync().Result;
         content = new Content
         {
@@ -81,7 +81,7 @@ static Content CreateResponseContent(dynamic result, TraceWriter log)
     else if (text != null)
     {
         var responseText = $"位置情報を共有してくれると緊急避難情報を調べます！";
-        log.Verbose($"message : {responseText}");
+        log.Info($"message : {responseText}");
         content = new Content
         {
             contentType = 1,
@@ -92,7 +92,7 @@ static Content CreateResponseContent(dynamic result, TraceWriter log)
     else if (contentMetaData.SKTID != "")
     {
         var responseText = $"位置情報を共有してくれると緊急避難情報を調べます！";
-        log.Verbose($"message : {responseText}");
+        log.Info($"message : {responseText}");
         content = new Content
         {
             contentType = 1,

@@ -24,10 +24,10 @@ private static string _slackWebhookUrl = ConfigurationManager.AppSettings["Slack
 
 public static async Task<object> Run(HttpRequestMessage req, TraceWriter log)
 {
-    log.Verbose("Outgoding webhook Charp Compiler service was triggered!");
+    log.Info("Outgoding webhook Charp Compiler service was triggered!");
 
     var content = await req.Content.ReadAsStringAsync();
-    log.Verbose(content);
+    log.Info(content);
 
     var data = content
         .Split('&')
@@ -42,14 +42,14 @@ public static async Task<object> Run(HttpRequestMessage req, TraceWriter log)
     }
 
     var text = data["text"] as string ?? "";
-    log.Verbose(text);
+    log.Info(text);
 
     var code = text.Replace(TRIGGER_WORD, "");
 
     // Evaluate C# Code with Roslyn
-    log.Verbose($"{nameof(code)} : {code}");
+    log.Info($"{nameof(code)} : {code}");
     var resultText = await EvaluateCSharpAsync(code);
-    log.Verbose(resultText);
+    log.Info(resultText);
 
     // Send back with Slack Incoming Webhook
     var message = string.IsNullOrWhiteSpace(resultText) ? "空だニャ" : resultText;
