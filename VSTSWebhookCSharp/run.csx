@@ -8,18 +8,18 @@ using Newtonsoft.Json;
 
 public static async Task<object> Run(HttpRequestMessage req, TraceWriter log)
 {
-    log.Verbose($"Webhook was triggered!");
+    log.Info($"Webhook was triggered!");
 
     string jsonContent = await req.Content.ReadAsStringAsync();
     dynamic data = JsonConvert.DeserializeObject(jsonContent);
-    log.Verbose(jsonContent);
+    log.Info(jsonContent);
     var jsonObject = JsonConvert.DeserializeObject<VSTSWebHook>(jsonContent);
     var message = $@"VSTS New Build Executed!
     Job Name : {jsonObject.resource.definition.name}
     Status : {jsonObject.resource.status}
     Detail Message : {jsonObject.detailedMessage.markdown}
     ";
-    log.Verbose(message);
+    log.Info(message);
     var webhookUrl = "Input your Slack Notification Azure Functions Url";
     var payload = new
     {

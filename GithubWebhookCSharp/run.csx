@@ -17,7 +17,7 @@ public static async Task<object> Run(HttpRequestMessage req, TraceWriter log)
             error = "Please pass comment:body properties in the input object"
         });
     }
-    log.Verbose($"GitHub WebHook triggered!, {data}");
+    log.Info($"GitHub WebHook triggered!, {data}");
     var message = $@"New GitHub comment posted by {data.comment.user.login} at {data.repository.name},
         Url : {data.comment.url}
         Tite : {data.issue.title}

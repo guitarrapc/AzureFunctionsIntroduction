@@ -11,7 +11,7 @@ using System.Linq;
 
 public static async Task<object> Run(HttpRequestMessage req, TraceWriter log)
 {
-    log.Verbose($"Webhook was triggered!");
+    log.Info($"Webhook was triggered!");
 
     string jsonContent = await req.Content.ReadAsStringAsync();
     dynamic data = JsonConvert.DeserializeObject(jsonContent);
@@ -24,18 +24,18 @@ public static async Task<object> Run(HttpRequestMessage req, TraceWriter log)
 
     // Load .csx from same directory
     var hoge = Test();
-    log.Verbose(hoge);
+    log.Info(hoge);
     
     // Load .csx from same directory + pass TraceWriter
     Test2(log);
     
     // Load .csx from parent directory
     var concat = Enumerable.Range(1, 10).Select(x => x * x).ToArray().ToJoinedString(",");
-    log.Verbose(concat);
+    log.Info(concat);
     
     // Load NuGet .csx test
     var fuga = NugetTest();
-    log.Verbose(fuga);
+    log.Info(fuga);
     
     return req.CreateResponse(HttpStatusCode.OK, new {
         greeting = $"Hello {data.first} {data.last}!"

@@ -8,11 +8,11 @@ using Newtonsoft.Json;
 
 public static async Task<object> Run(HttpRequestMessage req, TraceWriter log)
 {
-    log.Verbose($"Webhook was triggered!");
+    log.Info($"Webhook was triggered!");
 
     var appKey = "FooKey";
     var appValue = ConfigurationManager.AppSettings[appKey];
-    log.Verbose($"App Setting. Key : {appKey}, Value : {appValue}");
+    log.Info($"App Setting. Key : {appKey}, Value : {appValue}");
 
     string jsonContent = await req.Content.ReadAsStringAsync();
     dynamic data = JsonConvert.DeserializeObject(jsonContent);
