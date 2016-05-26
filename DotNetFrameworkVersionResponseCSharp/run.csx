@@ -65,7 +65,6 @@ public static async Task<object> Run(HttpRequestMessage req, TraceWriter log)
             });
         }
 
-        // 終了
         return req.CreateResponse(HttpStatusCode.OK, new
         {
             Version = version.ToString(),
