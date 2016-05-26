@@ -23,6 +23,7 @@ FunctionName | Language | Description
 AppSettingsWebhookCSharp | C# | Reference ```Application Settings > App Setting``` of Web Apps Sample code.
 CSharpCompilerSlackOuthookCSharp | C# | Slack Interactive C# Code Roslyn Evaluation Sample. (```@C#: Enumerable.Range(10, 20).Aggregate((x, y) => x + y)```)
 CSharpCompilerWebhookCSharp | C# | Generic Webhook C# Code Roslyn Evaluation Sample.
+DotNetFrameworkVersionResponseCSharp | C# | Retrurn .NET Framework Friendly Name by passing .NET Framework Release Registry Value.
 ExternalCsxWebhookCSharp | C# | Reference external .csx usage Sample code.
 GenericWebhookCSharpExtensionMethod | C# | Extension Method usage Sample code.
 GithubWebhookCSharp | C# | Github Webhook Sample code.
