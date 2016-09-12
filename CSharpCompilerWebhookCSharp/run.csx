@@ -25,7 +25,7 @@ public static async Task<object> Run(HttpRequestMessage req, TraceWriter log)
         });
     }
 
-    // CSharp Code評価
+    // Evaluate CSharp Code
     string code = data.code;
     log.Info($"{nameof(code)} : {code}");
     var resultText = await EvaluateCSharpAsync(code);
