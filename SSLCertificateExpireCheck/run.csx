@@ -73,17 +73,12 @@ public static async Task Run(TimerInfo myTimer, TraceWriter log)
 
     if (!notExistsSites.Any() && !expiredSites.Any() && !nearlyExpiredSites.Any())
     {
-        log.Info($"There are no limit SSLs. SSLCertificateChecker finished without sending notification. Message : {message}, channel : {channel}");
+        log.Info($"There are no limit SSLs. SSLCertificateChecker finished without sending notification. Message : {message}");
         return;
     }
 
     // Send warning to Slack as you like!
     // YOUR SLACK SEND LOGIC WILL BE COME HERE.
-
-    // for Debug
-    log.Info(res.StatusCode.ToString());
-    log.Info(res.Error);
-    log.Info(res.Body.Text);
 }
 
 public class CertificateExpireChecker
