@@ -2,17 +2,6 @@
 
 This is Sample project for Azure Functions. May this repository help you understand Azure Functions better.
 
-# Recommend Azure Functions settings for stability
-
-Description | Screenshot
----- | ----
-[Concider to select Dynamic Service Plan if possible.]((https://azure.microsoft.com/en-us/documentation/articles/functions-scale/)) <br/>This will bring you best cost efficiency and scalability | ![](images/DynamicServicePlan.png)
-Keep your Azure Functions Runtime version up-to-date. <br/>Expecially higher than 0.5 is neccesary.<br/>You can apply just in a seconds.<br/>[Release note will be here.](https://github.com/Azure/azure-webjobs-sdk-script/releases) | ![](images/AzureFunctionsRuntimeVersion.png)
-[Keep Function App Platform 32bit (don't change to 64bit)](http://stackoverflow.com/questions/36653122/is-there-any-difference-between-platform-32-bit-or-platform-64-bit-for-azure) | ![](images/PlatformSetting.png)
-Add Dynamic Memory from default 128MB to 256MB or higher as your app needed. Do not run out memory! | ![](images/MemoryAllocation.png)
-Make sure your functions in AppService will be less than 1536MB. [This is limiation of Dynamic Service Plan](https://azure.microsoft.com/en-us/documentation/articles/functions-scale/). <br/>In case you exceed 1536MB, use App Service Plan. | ![](images/DynamicServicePlanMemory.png)
-Stop nesting multiple Azure Functions, use ```#load "<YourCoolLogic.csx>"``` to load shared code. <br/> This is efficient and speedier way to call functions.  | ![](images/LoadCsx.png)
-
 # What you can know
 
 This sample include following.
@@ -39,9 +28,31 @@ You may find this repository structure is fit with Azure Functions CI by Github.
 
 This repogitory Sync with Azure Functions by GitHub Integration.
 
-# Reference
+# More Reference
 
 http://tech.guitarrapc.com/archive/category/AzureFunctions
+
+# Recommend Azure Functions settings for stability
+
+These settings are my recommendation with using AzureFunctions.
+
+Description | Screenshot
+---- | ----
+[Concider to select Dynamic Service Plan if possible.]((https://azure.microsoft.com/en-us/documentation/articles/functions-scale/)) <br/>This will bring you best cost efficiency and scalability | ![](images/DynamicServicePlan.png)
+Keep your Azure Functions Runtime version up-to-date. Actually there's no meaning concider downtime because apply will be done in just a seconds.<br/>[Release note will be here.](https://github.com/Azure/azure-webjobs-sdk-script/releases) | ![](images/AzureFunctionsRuntimeVersionUpgrade.png)<br/>![](images/AzureFunctionsRuntimeVersion.png)
+[Keep Function App Platform 32bit (don't change to 64bit)](http://stackoverflow.com/questions/36653122/is-there-any-difference-between-platform-32-bit-or-platform-64-bit-for-azure) | ![](images/PlatformSetting.png)
+Do not run out memory, add Dynamic Memory if needed! Default 128MB will be run out easiry. Upgrade to 256MB or higher as your app requires.<br/> Dynamic Plan pricing is relates to Memory size, but less meanful to concider.<br/>[AzureFunctions pricing is here.](https://azure.microsoft.com/en-us/pricing/details/functions/)  | ![](images/MemoryAllocation.png)
+Make sure your functions in AppService will be less than 1536MB. [This is limiation of Dynamic Service Plan](https://azure.microsoft.com/en-us/documentation/articles/functions-scale/). <br/>In case you exceed 1536MB there's 2 options.<br/> - Divide to separate functions. <br/>- Combine all functions to single App Service Plan. | ![](images/DynamicServicePlanMemory.png)
+Stop nesting multiple Azure Functions, use ```#load "<YourCoolLogic.csx>"``` to load shared code. <br/> This is efficient and speedier way to call functions.  | ![](images/LoadCsx.png)
+Use AppSettings to store secret values. This eliminate sensitive value in the source code. | ![](images/SecretValue.png) 
+
+# Not Recommend
+
+There's are possible but I never recommend. These settings will bring complexity 
+
+Description | Screenshot
+---- | ----
+Default TimeZone is UTC, but you can use LocalTime zone with ```WEBSITE_TIME_ZONE``` into Application Settings.<br/>You can obtain all timezone string with ```System.TimeZoneInfo.GetSystemTimeZones()``` <br/>Detail is here : [Changing the server time zone on Azure Web Apps](https://blogs.msdn.microsoft.com/tomholl/2015/04/06/changing-the-server-time-zone-on-azure-web-apps/)  | ![](images/AzureFunctionsTimeZone.png)
 
 # License
 
