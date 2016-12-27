@@ -5,7 +5,7 @@
 #r "System.Collections"
 #r "System.Runtime"
 #r "System.Web"
-#r "MyExtensions.dll"
+#r "..\sharedlib\MyExtensions.dll"
 
 using System;
 using System.Collections.Generic;

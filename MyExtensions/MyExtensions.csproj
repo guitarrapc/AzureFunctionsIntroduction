@@ -46,8 +46,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="CopyDll">
-    <Copy SourceFiles="$(SolutionDir)MyExtensions\bin\$(ConfigurationName)\MyExtensions.dll" DestinationFolder="$(SolutionDir)CSharpCompilerSlackOuthookCSharp\bin" ContinueOnError="true" />
-    <Copy SourceFiles="$(SolutionDir)MyExtensions\bin\$(ConfigurationName)\MyExtensions.dll" DestinationFolder="$(SolutionDir)CSharpCompilerWebhookCSharp\bin" ContinueOnError="true" />
+    <Copy SourceFiles="$(SolutionDir)MyExtensions\bin\$(ConfigurationName)\MyExtensions.dll" DestinationFolder="$(SolutionDir)\sharedlib" ContinueOnError="true" />
   </Target>
   <Target Name="AfterBuild">
     <CallTarget Condition="'$(Configuration)' == 'Debug'" Targets="CopyDll" />

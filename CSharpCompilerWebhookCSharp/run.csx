@@ -1,6 +1,6 @@
 #load "..\CSharpScripting.csx"
 
-#r "MyExtensions.dll"
+#r "..\sharedlib\MyExtensions.dll"
 
 using System;
 using System.Collections.Generic;
