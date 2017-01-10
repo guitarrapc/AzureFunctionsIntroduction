@@ -14,7 +14,7 @@ namespace PreCompileEnvironmentVariablesWebhookCSharp
     {
         private static readonly TraceWriter log = new CustomTraceWriter(System.Diagnostics.TraceLevel.Info);
 
-        public async Task<HttpResponseMessage> FunctionHandler(HttpRequestMessage req)
+        public static async Task<HttpResponseMessage> FunctionHandler(HttpRequestMessage req)
         {
             log.Info($"Webhook was triggered!");
 
