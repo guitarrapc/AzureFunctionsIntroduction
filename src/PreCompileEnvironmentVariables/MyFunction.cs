@@ -4,15 +4,15 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.Azure.WebJobs.Host;
 using Newtonsoft.Json;
 
 namespace PreCompileEnvironmentVariables
 {
     public class MyFunction
     {
-        public static async Task<HttpResponseMessage> Run(HttpRequestMessage req)
+        public static async Task<HttpResponseMessage> Run(HttpRequestMessage req, TraceWriter log)
         {
-            var log = new CustomTraceWriter(System.Diagnostics.TraceLevel.Info);
             log.Info($"Webhook was triggered!");
 
             var appKey = "FooKey";
