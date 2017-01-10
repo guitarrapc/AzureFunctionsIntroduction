@@ -4,23 +4,19 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Host;
 using Newtonsoft.Json;
 
 namespace PreCompileEnvironmentVariablesWebhookCSharp
 {
     public class MyFunction
     {
-        private static readonly TraceWriter log = new CustomTraceWriter(System.Diagnostics.TraceLevel.Info);
-
         public static async Task<HttpResponseMessage> Run(HttpRequestMessage req)
         {
-            log.Info($"Webhook was triggered!");
+            Console.WriteLine($"Webhook was triggered!");
 
             var appKey = "FooKey";
             var appValue = Environment.GetEnvironmentVariable(appKey);
-            log.Info($"App Setting. Key : {appKey}, Value : {appValue}");
+            Console.WriteLine($"App Setting. Key : {appKey}, Value : {appValue}");
 
             string jsonContent = await req.Content.ReadAsStringAsync();
             dynamic data = JsonConvert.DeserializeObject(jsonContent);
