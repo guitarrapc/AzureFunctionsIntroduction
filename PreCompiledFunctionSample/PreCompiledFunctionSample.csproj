@@ -53,10 +53,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\MyFunction.cs" />
+    <Compile Include="MyFunction.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Properties\function.json">
+    <Content Include="function.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
