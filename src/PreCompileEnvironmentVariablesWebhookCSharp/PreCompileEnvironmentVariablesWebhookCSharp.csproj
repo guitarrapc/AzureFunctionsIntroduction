@@ -87,7 +87,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomTraceWriter.cs" />
-    <Compile Include="Function.cs" />
+    <Compile Include="MyFunction.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

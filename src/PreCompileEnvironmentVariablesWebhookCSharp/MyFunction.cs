@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 
 namespace PreCompileEnvironmentVariablesWebhookCSharp
 {
-    public class Function
+    public class MyFunction
     {
         private static readonly TraceWriter log = new CustomTraceWriter(System.Diagnostics.TraceLevel.Info);
 

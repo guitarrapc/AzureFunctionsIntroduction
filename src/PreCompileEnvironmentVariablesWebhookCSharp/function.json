@@ -1,6 +1,6 @@
 {
   "scriptFile": "PreCompileEnvironmentVariablesWebhookCSharp.dll",
-  "entryPoint": "PreCompileEnvironmentVariablesWebhookCSharp.Function.Run",
+  "entryPoint": "PreCompileEnvironmentVariablesWebhookCSharp.MyFunction.Run",
   "bindings": [
     {
       "webHookType": "genericJson",
