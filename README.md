@@ -6,21 +6,23 @@ This is Sample project for Azure Functions. May this repository help you underst
 
 This sample include following.
 
-FunctionName | Language | Description
----- | ---- | ----
-AppSettingsWebhookCSharp | C# | Reference ```Application Settings > App Setting``` of Web Apps Sample code.
-CSharpCompilerSlackOuthookCSharp | C# | Slack Interactive C# Code Roslyn Evaluation Sample. (```@C#: Enumerable.Range(10, 20).Aggregate((x, y) => x + y)```)
-CSharpCompilerWebhookCSharp | C# | Generic Webhook C# Code Roslyn Evaluation Sample.
-DotNetFrameworkVersionResponseCSharp | C# | Retrurn .NET Framework Friendly Name by passing .NET Framework Release Registry Value.
-ExternalCsxWebhookCSharp | C# | Reference external .csx usage Sample code.
-GenericWebhookCSharpExtensionMethod | C# | Extension Method usage Sample code.
-GithubWebhookCSharp | C# | Github Webhook Sample code.
-LineBotWebhookCSharp | C# | Line Bot Webhook Sample code with Emergency Evacuation info with sent info.
-SSLCertificateExpireCheck | C# | SSL Certificate Checker. Often introduce in AWS Lambda but you can do with C# + AzureFucntions, too! 
-VSTSWebhookCSharp | C# | Visual Studio Team Service (VSTS) Webhook Sample code.
-WebhookCSharpGithubOctokit | C# | NuGet package reference sample for Octokit.
-WebhookCSharpSendToChatWork | C# | Chatwork Notification Sample code.
-WebhookCSharpSendToSlack | C# | Slack Notification Sample code.
+FunctionName | Language | Pre-compiled? | Description
+---- | ---- | ----  | ----
+AppSettingsWebhookCSharp | C# | No | Reference ```Application Settings > App Setting``` of Web Apps Sample code.
+CSharpCompilerSlackOuthookCSharp | C# | No | Slack Interactive C# Code Roslyn Evaluation Sample. (```@C#: Enumerable.Range(10, 20).Aggregate((x, y) => x + y)```)
+CSharpCompilerWebhookCSharp | C# | No | Generic Webhook C# Code Roslyn Evaluation Sample.
+DotNetFrameworkVersionResponseCSharp | C# | No | Retrurn .NET Framework Friendly Name by passing .NET Framework Release Registry Value.
+ExternalCsxWebhookCSharp | C# | No | Reference external .csx usage Sample code.
+GenericWebhookCSharpExtensionMethod | C# | No | Extension Method usage Sample code.
+GithubWebhookCSharp | C# | No | Github Webhook Sample code.
+LineBotWebhookCSharp | C# | No | Line Bot Webhook Sample code with Emergency Evacuation info with sent info.
+SSLCertificateExpireCheck | C# | No | SSL Certificate Checker. Often introduce in AWS Lambda but you can do with C# + AzureFucntions, too! 
+VSTSWebhookCSharp | C# | No | Visual Studio Team Service (VSTS) Webhook Sample code.
+WebhookCSharpGithubOctokit | C# | No | NuGet package reference sample for Octokit.
+WebhookCSharpSendToChatWork | C# | No | Chatwork Notification Sample code.
+WebhookCSharpSendToSlack | C# | No | Slack Notification Sample code.
+src/PreCompiledFunctionSample | C# | Yes | Basic sample of PreCompiled Function. Build artifact will published right under root as PreCompiledFunctionSample.
+src/PreCompileEnvironmentVariables | C# | Yes | Basic sample of PreCompiled Function with Logger. Build artifact will published right under root as PreCompileEnvironmentVariables.
 
 # GitHub Integration Sample
 
@@ -31,6 +33,18 @@ This repogitory Sync with Azure Functions by GitHub Integration.
 # More Reference
 
 http://tech.guitarrapc.com/archive/category/AzureFunctions
+
+# Precompiled functions reference
+
+Refer basic information with https://github.com/Azure/azure-webjobs-sdk-script/wiki/Precompiled-functions .
+
+Following additional tips will be useful for first step.
+
+Description | Screenshot
+---- | ----
+Precomplied function's Run signature will accept TraceWriter. Use Logger as same as .csx even you are using Precompile. You need to add [Microsoft.Azure.WebJobs.Host](https://www.nuget.org/packages/Microsoft.Azure.WebJobs) nuget package to refer TraceWriter. | ![](images/TraceWriterForPrecompiled.png)
+Precompiled function required to add [Microsoft.AspNet.WebApi.Core](https://www.nuget.org/packages/microsoft.aspnet.webapi.core/) nuget package for several HttpRequestMessage Extensions. | ![](images/HttpRequestMessageExtensions.png)
+Precompiled function's dll will be locked by w3wp.exe when deployed function. You should kill w3wp.exe and restart AppService to deploy new PreCompiled dll. | ![](images/PrecompiledDll.png)<br/>![](images/PrecompiledDllKillW3wp.png)<br/> ![](images/PrecompiledDllRestartAppService.png)
 
 # Recommend Azure Functions settings for stability
 
