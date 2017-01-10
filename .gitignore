@@ -253,4 +253,5 @@ paket-files/
 
 # ignore build project result
 MyExtensions/[Bb]in/
+PreCompiledFunctionSample/*
 PreCompileEnvironmentVariablesWebhookCSharp/*

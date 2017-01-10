@@ -12,7 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{E7ADB5E1-29A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PreCompileEnvironmentVariablesWebhookCSharp", "src\PreCompileEnvironmentVariablesWebhookCSharp\PreCompileEnvironmentVariablesWebhookCSharp.csproj", "{FD5FD41F-D92D-47FC-9AF7-37CB957F98BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PreCompiledFunctionSample", "PreCompiledFunctionSample\PreCompiledFunctionSample.csproj", "{17F862F4-779F-41B2-86F5-3F08C34AE144}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PreCompiledFunctionSample", "src\PreCompiledFunctionSample\PreCompiledFunctionSample.csproj", "{17F862F4-779F-41B2-86F5-3F08C34AE144}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
