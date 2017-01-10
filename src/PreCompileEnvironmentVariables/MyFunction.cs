@@ -12,11 +12,12 @@ namespace PreCompileEnvironmentVariables
     {
         public static async Task<HttpResponseMessage> Run(HttpRequestMessage req)
         {
-            Console.WriteLine($"Webhook was triggered!");
+            var log = new CustomTraceWriter(System.Diagnostics.TraceLevel.Info);
+            log.Info($"Webhook was triggered!");
 
             var appKey = "FooKey";
             var appValue = Environment.GetEnvironmentVariable(appKey);
-            Console.WriteLine($"App Setting. Key : {appKey}, Value : {appValue}");
+            log.Info($"App Setting. Key : {appKey}, Value : {appValue}");
 
             string jsonContent = await req.Content.ReadAsStringAsync();
             dynamic data = JsonConvert.DeserializeObject(jsonContent);
