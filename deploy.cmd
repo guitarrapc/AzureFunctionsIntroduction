@@ -49,6 +49,23 @@ IF NOT DEFINED KUDU_SYNC_CMD (
 )
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+:: Build
+:: -----
+
+:: NuGet package restore
+echo "Restoring solution packages"
+FOR /F %%d in ('DIR "*.sln" /S /B') DO ( 
+  call nuget restore %%d
+)
+
+:: MSBuild
+echo "MSBuild solution"
+FOR /F %%d in ('DIR "*.sln" /S /B') DO ( 
+  call msbuild.exe %%d /p:Configuration=Release
+  IF !ERRORLEVEL! NEQ 0 goto error
+)
+
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :: Deployment
 :: ----------
 
