@@ -7,8 +7,8 @@
     <ProjectGuid>{FD5FD41F-D92D-47FC-9AF7-37CB957F98BC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PreCompileEnvironmentVariablesWebhookCSharp</RootNamespace>
-    <AssemblyName>PreCompileEnvironmentVariablesWebhookCSharp</AssemblyName>
+    <RootNamespace>PreCompileEnvironmentVariables</RootNamespace>
+    <AssemblyName>PreCompileEnvironmentVariables</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -26,7 +26,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\PreCompileEnvironmentVariablesWebhookCSharp\</OutputPath>
+    <OutputPath>..\..\PreCompileEnvironmentVariables\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
