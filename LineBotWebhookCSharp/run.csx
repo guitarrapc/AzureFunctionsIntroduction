@@ -1,5 +1,5 @@
 #r "Newtonsoft.Json"
-#r "System.Configuration"
+
 #load "..\EnumerableExtensions.csx"
 #load "..\RescureUrl.csx"
 

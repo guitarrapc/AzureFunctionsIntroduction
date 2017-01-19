@@ -1,4 +1,3 @@
 {
-    "location": "HttpResponse",
-    "output": "Hello Azure Functions!"
+    code : "Enumerable.Range(1, 10).Select(x => x * x).Aggregate((x,y) => x + y)"
 }

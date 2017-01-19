@@ -1,7 +1,6 @@
 #load "..\EnumerableExtensions.csx"
 
 #r "Newtonsoft.Json"
-#r "System.Configuration"
 
 using System;
 using System.Collections.Generic;

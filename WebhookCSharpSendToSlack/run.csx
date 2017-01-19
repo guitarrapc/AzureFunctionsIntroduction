@@ -1,5 +1,4 @@
 #r "Newtonsoft.Json"
-#r "System.Configuration"
 
 using System;
 using System.Configuration;

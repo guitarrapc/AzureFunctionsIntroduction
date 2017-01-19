@@ -1,4 +1,6 @@
 {
-    "location": "HttpResponse",
-    "output": "Hello Azure Functions!"
+    channel : "#github",
+    username : "Azure Function Bot",
+    text : "test",
+    icon_url : "https://azure.microsoft.com/svghandler/functions/?width=300&height=300"
 }

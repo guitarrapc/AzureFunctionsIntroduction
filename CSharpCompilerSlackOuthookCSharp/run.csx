@@ -1,9 +1,6 @@
 #load "..\CSharpScripting.csx"
 #load "..\EnumerableExtensions.csx"
 
-#r "System.Configuration"
-#r "System.Collections"
-#r "System.Runtime"
 #r "System.Web"
 #r "..\sharedlib\MyExtensions.dll"
 
