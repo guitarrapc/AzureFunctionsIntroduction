@@ -30,6 +30,7 @@ namespace PreCompileEnvironmentVariables
                 });
             }
 
+            log.Info("Hello world");
             return req.CreateResponse(HttpStatusCode.OK, new
             {
                 greeting = $"Hello World!! {data.first} {data.last}!"

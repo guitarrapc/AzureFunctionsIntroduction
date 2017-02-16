@@ -3,12 +3,13 @@ using System.Net;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net.Http;
+using Microsoft.Azure.WebJobs.Host;
 
 namespace PreCompiledFunctionSample
 {
     public class MyFunction
     {
-        public static async Task<HttpResponseMessage> Run(HttpRequestMessage req)
+        public static async Task<HttpResponseMessage> Run(HttpRequestMessage req, TraceWriter log)
         {
             // parse query parameter
             var name = req.GetQueryNameValuePairs()
@@ -21,6 +22,7 @@ namespace PreCompiledFunctionSample
             // Set name to query string or body data
             name = name ?? data?.name;
 
+            log.Info("Hello world");
             return name == null
                 ? req.CreateResponse(HttpStatusCode.BadRequest, "Please pass a name on the query string or in the request body")
                 : req.CreateResponse(HttpStatusCode.OK, "Hello World!! " + name);
