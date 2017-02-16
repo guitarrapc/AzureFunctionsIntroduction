@@ -76,6 +76,7 @@ FOR /F %%d in ('DIR "*.sln" /S /B') DO (
 echo "MSBuild solution"
 FOR /F %%d in ('DIR "src\*.csproj" /S /B') DO (
 setlocal
+  echo %%d
   set dirNames=%%d:~1,-1%
   FOR %%i in ("%dirNames:\=" "%") DO (
    set parentFolderName=%%~i
