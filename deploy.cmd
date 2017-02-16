@@ -48,6 +48,20 @@ IF NOT DEFINED KUDU_SYNC_CMD (
   SET KUDU_SYNC_CMD=%appdata%\npm\kuduSync.cmd
 )
 
+IF NOT DEFINED DEPLOYMENT_TEMP (
+  SET DEPLOYMENT_TEMP=%temp%\___deployTemp%random%
+  SET CLEAN_LOCAL_DEPLOYMENT_TEMP=true
+)
+
+IF DEFINED CLEAN_LOCAL_DEPLOYMENT_TEMP (
+  IF EXIST "%DEPLOYMENT_TEMP%" rd /s /q "%DEPLOYMENT_TEMP%"
+  mkdir "%DEPLOYMENT_TEMP%"
+)
+
+IF DEFINED MSBUILD_PATH goto MsbuildPathDefined
+SET MSBUILD_PATH=%ProgramFiles(x86)%\MSBuild\14.0\Bin\MSBuild.exe
+:MsbuildPathDefined
+
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :: Build
 :: -----
@@ -55,13 +69,14 @@ IF NOT DEFINED KUDU_SYNC_CMD (
 :: NuGet package restore
 echo "Restoring solution packages"
 FOR /F %%d in ('DIR "*.sln" /S /B') DO ( 
-  call nuget restore %%d
+  call :ExecuteCmd nuget restore %%d
 )
 
 :: MSBuild
 echo "MSBuild solution"
-FOR /F %%d in ('DIR "*.sln" /S /B') DO ( 
-  call msbuild.exe %%d /p:Configuration=Release
+FOR /F %%d in ('DIR "src\*.csproj" /S /B') DO (
+  call :GetParentFolderName %%d
+  call :ExecuteCmd "%MSBUILD_PATH%" "%DEPLOYMENT_SOURCE%\%parentFolderName%\%parentFolderName%.csproj" /nologo /verbosity:m /t:Build /p:Configuration=Release;OutputPath="%DEPLOYMENT_TEMP%\%parentFolderName%";UseSharedCompilation=false %SCM_BUILD_ARGS%
   IF !ERRORLEVEL! NEQ 0 goto error
 )
 
@@ -86,6 +101,21 @@ IF /I "%IN_PLACE_DEPLOYMENT%" NEQ "1" (
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 goto end
+
+:: Custom sub routine
+:GetParentFolderName
+set fullPath=%~p1
+set dirNames=%fullPath:~1,-1%
+call :GetDirectoryName "%dirNames:\=" "%"
+exit /b
+
+:GetDirectoryName
+FOR %%i in (%*) DO (
+ set parentFolderName=%%~i
+)
+exit /b
+
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 :: Execute command routine that will echo out when error
 :ExecuteCmd
