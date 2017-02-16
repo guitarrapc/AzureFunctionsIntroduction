@@ -78,7 +78,8 @@ FOR /F %%d in ('DIR "src\*.csproj" /S /B') DO (
 setlocal
   set dirNames=%%d:~1,-1%
   FOR %%i in ("%dirNames:\=" "%") DO (
-   set parentFolderName=%%i
+   set parentFolderName=%%~i
+   echo %parentFolderName%
   )
    call :ExecuteCmd "%MSBUILD_PATH%" "%DEPLOYMENT_SOURCE%\src\%parentFolderName%\%parentFolderName%.csproj" /nologo /verbosity:m /t:Build /p:Configuration=Release;OutputPath="%DEPLOYMENT_TEMP%\%parentFolderName%";UseSharedCompilation=false %SCM_BUILD_ARGS%
 endlocal
