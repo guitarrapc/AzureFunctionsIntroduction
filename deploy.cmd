@@ -75,7 +75,8 @@ FOR /F %%d in ('DIR "*.sln" /S /B') DO (
 :: MSBuild
 echo "MSBuild solution"
 FOR /F %%d in ('DIR "src\*.csproj" /S /B') DO (
-   call :ExecuteCmd "%MSBUILD_PATH%" "%DEPLOYMENT_SOURCE%\src\%%~nd\%%~nd.csproj" /nologo /verbosity:m /t:Build /p:Configuration=Release;OutputPath="%DEPLOYMENT_TEMP%\%%~nd";UseSharedCompilation=false %SCM_BUILD_ARGS%
+  :: call :ExecuteCmd "%MSBUILD_PATH%" "%DEPLOYMENT_SOURCE%\src\%%~nd\%%~nd.csproj" /nologo /verbosity:m /t:Build /p:Configuration=Release;OutputPath="%DEPLOYMENT_TEMP%\%%~nd";UseSharedCompilation=false %SCM_BUILD_ARGS%
+  call :ExecuteCmd "%MSBUILD_PATH%" "%DEPLOYMENT_SOURCE%\src\%%~nd\%%~nd.csproj" /nologo /verbosity:m /t:Build /p:Configuration=Release;OutputPath="%DEPLOYMENT_SOURCE%\%%~nd";UseSharedCompilation=false %SCM_BUILD_ARGS%
   IF !ERRORLEVEL! NEQ 0 goto error
 )
 
@@ -92,7 +93,8 @@ FOR /F %%d in ('DIR "Project.json" /S /B') DO (
 echo Handling Basic Web Site deployment.
 :: KuduSync
 IF /I "%IN_PLACE_DEPLOYMENT%" NEQ "1" (
-  call :ExecuteCmd "%KUDU_SYNC_CMD%" -v 50 -f "%DEPLOYMENT_TEMP%" -t "%DEPLOYMENT_TARGET%" -n "%NEXT_MANIFEST_PATH%" -p "%PREVIOUS_MANIFEST_PATH%" -i ".git;.hg;.deployment;deploy.cmd;host.json"
+  ::call :ExecuteCmd "%KUDU_SYNC_CMD%" -v 50 -f "%DEPLOYMENT_TEMP%" -t "%DEPLOYMENT_TARGET%" -n "%NEXT_MANIFEST_PATH%" -p "%PREVIOUS_MANIFEST_PATH%" -i ".git;.hg;.deployment;deploy.cmd;host.json"
+  call :ExecuteCmd "%KUDU_SYNC_CMD%" -v 50 -f "%DEPLOYMENT_SOURCE%" -t "%DEPLOYMENT_TARGET%" -n "%NEXT_MANIFEST_PATH%" -p "%PREVIOUS_MANIFEST_PATH%" -i ".git;.hg;.deployment;deploy.cmd;host.json"
   IF !ERRORLEVEL! NEQ 0 goto error
 )
 
