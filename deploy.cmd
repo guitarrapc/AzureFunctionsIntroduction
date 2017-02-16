@@ -75,8 +75,13 @@ FOR /F %%d in ('DIR "*.sln" /S /B') DO (
 :: MSBuild
 echo "MSBuild solution"
 FOR /F %%d in ('DIR "src\*.csproj" /S /B') DO (
-  call :GetParentFolderName %%d
-  call :ExecuteCmd "%MSBUILD_PATH%" "%DEPLOYMENT_SOURCE%\%parentFolderName%\%parentFolderName%.csproj" /nologo /verbosity:m /t:Build /p:Configuration=Release;OutputPath="%DEPLOYMENT_TEMP%\%parentFolderName%";UseSharedCompilation=false %SCM_BUILD_ARGS%
+setlocal
+  set dirNames=%%d:~1,-1%
+  FOR %%i in ("%dirNames:\=" "%") DO (
+   set parentFolderName=%%~i
+  )
+   call :ExecuteCmd "%MSBUILD_PATH%" "%DEPLOYMENT_SOURCE%\src\%parentFolderName%\%parentFolderName%.csproj" /nologo /verbosity:m /t:Build /p:Configuration=Release;OutputPath="%DEPLOYMENT_TEMP%\%parentFolderName%";UseSharedCompilation=false %SCM_BUILD_ARGS%
+endlocal
   IF !ERRORLEVEL! NEQ 0 goto error
 )
 
