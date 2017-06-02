@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{3F5D9BDD-561B-425D-82DC-795B040E059A}</ProjectGuid>
+    <ProjectGuid>{B2E77F45-EE5D-4D93-B447-E27CCDB16794}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NuGetSample</RootNamespace>
-    <AssemblyName>NuGetSample</AssemblyName>
+    <RootNamespace>CSharpScripting</RootNamespace>
+    <AssemblyName>CSharpScripting</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,15 +40,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="RoslynCompiler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="OctokitSample.cs" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Scripting">
+      <Version>2.2.0</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Octokit">
-      <Version>0.24.0</Version>
-    </PackageReference>
+    <ProjectReference Include="..\MyExtensions\MyExtensions.csproj">
+      <Project>{01e5c39a-856f-4baf-81a2-4c4ddba33a83}</Project>
+      <Name>MyExtensions</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
