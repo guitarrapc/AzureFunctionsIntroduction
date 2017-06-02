@@ -110,7 +110,6 @@
     <Content Include="function.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="project.json" />
     <Compile Include="FunctionTrigger.cs" />
     <Content Include="TestOutput.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
