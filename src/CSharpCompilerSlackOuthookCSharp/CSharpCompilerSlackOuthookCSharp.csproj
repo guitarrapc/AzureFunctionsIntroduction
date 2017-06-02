@@ -132,6 +132,10 @@
       <Project>{6504b65e-1f79-432c-b73f-aeb9e6976d1d}</Project>
       <Name>CSharpScripting</Name>
     </ProjectReference>
+    <ProjectReference Include="..\MyExtensions\MyExtensions.csproj">
+      <Project>{c8e501d1-ccb6-4e35-ad2e-7949afa83521}</Project>
+      <Name>MyExtensions</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
