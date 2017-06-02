@@ -11,7 +11,11 @@ namespace LineBotWebhookCSharp
 {
     public class FunctionTrigger
     {
-        public static async Task<object> Run(HttpRequestMessage req, TraceWriter log)
+        private static readonly string lineChannelId = Environment.GetEnvironmentVariable("LineChannelId");
+        private static readonly string lineChannelSecret = Environment.GetEnvironmentVariable("LineChannelSecret");
+        private static readonly string lineMid = Environment.GetEnvironmentVariable("LineMid");
+
+        public static async Task<HttpResponseMessage> Run(HttpRequestMessage req, TraceWriter log)
         {
             log.Info($"Webhook was triggered!");
 
@@ -37,9 +41,9 @@ namespace LineBotWebhookCSharp
             using (var client = new HttpClient())
             {
                 // Set line authorization header
-                client.DefaultRequestHeaders.Add("X-Line-ChannelID", ConfigurationManager.AppSettings["LineChannelId"]);
-                client.DefaultRequestHeaders.Add("X-Line-ChannelSecret", ConfigurationManager.AppSettings["LineChannelSecret"]);
-                client.DefaultRequestHeaders.Add("X-Line-Trusted-User-With-ACL", ConfigurationManager.AppSettings["LineMid"]);
+                client.DefaultRequestHeaders.Add("X-Line-ChannelID", lineChannelId);
+                client.DefaultRequestHeaders.Add("X-Line-ChannelSecret", lineChannelSecret);
+                client.DefaultRequestHeaders.Add("X-Line-Trusted-User-With-ACL", lineMid);
 
                 // Send Response to Line Sender
                 var res = await client.PostAsJsonAsync("https://trialbot-api.line.me/v1/events",

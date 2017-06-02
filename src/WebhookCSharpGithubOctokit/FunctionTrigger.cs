@@ -12,7 +12,7 @@ namespace WebhookCSharpGithubOctokit
 {
     public class FunctionTrigger
     {
-        public static async Task<object> Run(HttpRequestMessage req, TraceWriter log)
+        public static async Task<HttpResponseMessage> Run(HttpRequestMessage req, TraceWriter log)
         {
             log.Info($"Webhook was triggered!");
 

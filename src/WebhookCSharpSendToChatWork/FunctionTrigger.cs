@@ -13,7 +13,7 @@ namespace WebhookCSharpSendToChatWork
     public class FunctionTrigger
     {
         private static readonly string chatworkApiKey = Environment.GetEnvironmentVariable("ChatworkApiKey");
-        public static async Task<object> Run(HttpRequestMessage req, TraceWriter log)
+        public static async Task<HttpResponseMessage> Run(HttpRequestMessage req, TraceWriter log)
         {
             log.Info($"Webhook was triggered!");
 

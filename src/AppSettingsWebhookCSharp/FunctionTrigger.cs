@@ -15,8 +15,6 @@ namespace AppSettingsWebhookCSharp
             log.Info($"AppSettingsWebhookCSharp. C# HTTP trigger function processed a request. RequestUri={req.RequestUri}");
 
             // Both code is same meaning with AzureFunctions (Azure Web Apps).
-            // System.Configuration.ConfigurationManager.AppSettings[Key];
-            // System.Environment.GetEnvironmentVariable("Key");
             var appKey = "FooKey";
             var appValue = ConfigurationManager.AppSettings[appKey];
             log.Info($"App Setting. Key : {appKey}, Value : {appValue}");

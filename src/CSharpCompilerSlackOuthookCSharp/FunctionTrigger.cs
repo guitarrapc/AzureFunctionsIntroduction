@@ -7,13 +7,14 @@ using System.Web;
 using Newtonsoft.Json;
 using System.Net.Http;
 using Microsoft.Azure.WebJobs.Host;
+using System;
 
 namespace CSharpScripting
 {
     public class FunctionTrigger
     {
         private const string TRIGGER_WORD = "@C#:";
-        private static string _slackWebhookUrl = ConfigurationManager.AppSettings["SlackIncomingWebhookUrl"];
+        private static string _slackWebhookUrl = Environment.GetEnvironmentVariable("SlackIncomingWebhookUrl");
 
         public static async Task<HttpResponseMessage> Run(HttpRequestMessage req, TraceWriter log)
         {
