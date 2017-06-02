@@ -1,0 +1,19 @@
+﻿{
+  "disabled": false,
+  "scriptFile": "AppSettingsWebhookCSharp.dll",
+  "entryPoint": "AppSettingsWebhookCSharp.FunctionTrigger.Run",
+  "bindings": [
+    {
+      "webHookType": "genericJson",
+      "authLevel": "function",
+      "name": "req",
+      "type": "httpTrigger",
+      "direction": "in"
+    },
+    {
+      "name": "res",
+      "type": "http",
+      "direction": "out"
+    }
+  ]
+}

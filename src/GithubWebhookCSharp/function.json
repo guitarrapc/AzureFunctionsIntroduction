@@ -1,0 +1,18 @@
+{
+  "disabled": false,
+  "scriptFile": "GithubWebhookCSharp.dll",
+  "entryPoint": "GithubWebhookCSharp.FunctionTrigger.Run",
+  "bindings": [
+    {
+      "webHookType": "github",
+      "type": "httpTrigger",
+      "direction": "in",
+      "name": "req"
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "res"
+    }
+  ]
+}

@@ -20,7 +20,7 @@ x86/
 bld/
 [Oo]bj/
 [Ll]og/
-# [Bb]in/
+[Bb]in/
 
 # Visual Studio 2015 cache/options directory
 .vs/
@@ -251,6 +251,3 @@ paket-files/
 .idea/
 *.sln.iml
 
-# ignore build project result
-MyExtensions/[Bb]in/
-sharedlib/*

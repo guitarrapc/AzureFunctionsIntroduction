@@ -1,0 +1,18 @@
+{
+  "disabled": false,
+  "scriptFile": "DotNetFrameworkVersionResponseCSharp.dll",
+  "entryPoint": "DotNetFrameworkVersionResponseCSharp.FunctionTrigger.Run",
+  "bindings": [
+    {
+      "webHookType": "genericJson",
+      "type": "httpTrigger",
+      "direction": "in",
+      "name": "req"
+    },
+    {
+      "type": "http",
+      "direction": "out",
+      "name": "res"
+    }
+  ]
+}

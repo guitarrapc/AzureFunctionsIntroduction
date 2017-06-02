@@ -1,6 +1,7 @@
 {
+  "disabled": false,
   "scriptFile": "PreCompiledFunctionSample.dll",
-  "entryPoint": "PreCompiledFunctionSample.MyFunction.Run",
+  "entryPoint": "PreCompiledFunctionSample.FunctionTrigger.Run",
   "bindings": [
     {
       "authLevel": "function",
@@ -13,6 +14,5 @@
       "type": "http",
       "direction": "out"
     }
-  ],
-  "disabled": false
+  ]
 }
