@@ -67,7 +67,7 @@ SET MSBUILD_PATH=%ProgramFiles(x86)%\MSBuild\14.0\Bin\MSBuild.exe
 
 echo Handling Azure Functions deployment.
 
-SET SOLUTIONNAME="AzureFunctionsIntroduction.sln"
+SET SOLUTIONNAME=AzureFunctionsIntroduction.sln
 
 :: 1. Restore NuGet packages
 IF /I "src\%SOLUTIONNAME%" NEQ "" (
