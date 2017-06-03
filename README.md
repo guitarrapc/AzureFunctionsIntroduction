@@ -87,7 +87,7 @@ There's are possible but I never recommend. These settings will bring complexity
 Description | Screenshot
 ---- | ----
 Default TimeZone is UTC, but you can use LocalTime zone with ```WEBSITE_TIME_ZONE``` into Application Settings.<br/>You can obtain all timezone string with ```System.TimeZoneInfo.GetSystemTimeZones()``` <br/>Detail is here : [Changing the server time zone on Azure Web Apps](https://blogs.msdn.microsoft.com/tomholl/2015/04/06/changing-the-server-time-zone-on-azure-web-apps/)  | ![](images/AzureFunctionsTimeZone.png)
-To keep Deployment simplicity, I do recommend not to mix Precompile functions and .csx functions. | 
+To keep Deployment simplicity, I never recommend mix up Precompile functions and .csx functions. | 
 
 # License
 
