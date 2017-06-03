@@ -6,28 +6,45 @@ This is Sample project for Azure Functions. May this repository help you underst
 
 This sample include following.
 
-FunctionName | Language | Pre-compiled? | Description
----- | ---- | ----  | ----
-AppSettingsWebhookCSharp | C# | No | Reference ```Application Settings > App Setting``` of Web Apps Sample code.
-CSharpCompilerSlackOuthookCSharp | C# | No | Slack C# Code Roslyn Evaluation Sample. (```@C#: Enumerable.Range(10, 20).Aggregate((x, y) => x + y)```)
-CSharpCompilerWebhookCSharp | C# | No | Generic Webhook C# Code Roslyn Evaluation Sample.
-DotNetFrameworkVersionResponseCSharp | C# | No | Retrurn .NET Framework Friendly Name by passing .NET Framework Release Registry Value.
-GenericWebhookCSharpExtensionMethod | C# | No | Extension Method usage Sample code.
-GithubWebhookCSharp | C# | No | Github Webhook Sample code.
-LineBotWebhookCSharp | C# | No | Line Bot Webhook Sample code with Emergency Evacuation info with sent info.
-PreCompiledFunctionSample | C# | Yes | Basic sample of PreCompiled Function. Build artifact will published right under root as PreCompiledFunctionSample.
-PreCompileEnvironmentVariables | C# | Yes | Basic sample of PreCompiled Function with Logger. Build artifact will published right under root as PreCompileEnvironmentVariables.
-SSLCertificateExpireCheck | C# | No | SSL Certificate Checker. Often introduce in AWS Lambda but you can do with C# + AzureFucntions, too! 
-VSTSWebhookCSharp | C# | No | Visual Studio Team Service (VSTS) Webhook trigger Sample code.
-WebhookCSharpGithubOctokit | C# | No | NuGet package reference sample for Octokit.
-WebhookCSharpSendToChatWork | C# | No | Chatwork Notification Sample code.
-WebhookCSharpSendToSlack | C# | No | Slack Notification Sample code.
+DirectoryName | FunctionName | Language | Pre-compiled? | Description
+---- | ---- | ---- | ----  | ----
+src | AppSettingsWebhookCSharp | C# | Yes | Reference ```Application Settings > App Setting``` of Web Apps Sample code.
+src | CSharpCompilerSlackOuthookCSharp | C# | Yes | Slack C# Code Roslyn Evaluation Sample. (```@C#: Enumerable.Range(10, 20).Aggregate((x, y) => x + y)```)
+src | CSharpCompilerWebhookCSharp | C# | Yes | Generic Webhook C# Code Roslyn Evaluation Sample.
+src | DotNetFrameworkVersionResponseCSharp | C# | Yes | Retrurn .NET Framework Friendly Name by passing .NET Framework Release Registry Value.
+src | GenericWebhookCSharpExtensionMethod | C# | Yes | Extension Method usage Sample code.
+src | GithubWebhookCSharp | C# | Yes | Github Webhook Sample code.
+src | LineBotWebhookCSharp | C# | Yes | Line Bot Webhook Sample code with Emergency Evacuation info with sent info.
+src | PreCompiledFunctionSample | C# | Yes | Basic sample of PreCompiled Function. Build artifact will published right under root as PreCompiledFunctionSample.
+src | PreCompileEnvironmentVariables | C# | Yes | Basic sample of PreCompiled Function with Logger. Build artifact will published right under root as PreCompileEnvironmentVariables.
+src | SSLCertificateExpireCheck | C# | Yes | SSL Certificate Checker. Often introduce in AWS Lambda but you can do with C# + AzureFucntions, too! 
+src | VSTSWebhookCSharp | C# | Yes | Visual Studio Team Service (VSTS) Webhook trigger Sample code.
+src | WebhookCSharpGithubOctokit | C# | Yes | NuGet package reference sample for Octokit.
+src | WebhookCSharpSendToChatWork | C# | Yes | Chatwork Notification Sample code.
+src | WebhookCSharpSendToSlack | C# | Yes | Slack Notification Sample code.
+CsxSamples | AppSettingsWebhookCSharp | C# | No | Reference ```Application Settings > App Setting``` of Web Apps Sample code.
+CsxSamples | CSharpCompilerSlackOuthookCSharp | C# | No | Slack Interactive C# Code Roslyn Evaluation Sample. (```@C#: Enumerable.Range(10, 20).Aggregate((x, y) => x + y)```)
+CsxSamples | CSharpCompilerWebhookCSharp | C# | No | Generic Webhook C# Code Roslyn Evaluation Sample.
+CsxSamples | DotNetFrameworkVersionResponseCSharp | C# | No | Retrurn .NET Framework Friendly Name by passing .NET Framework Release Registry Value.
+CsxSamples | ExternalCsxWebhookCSharp | C# | No | Reference external .csx usage Sample code.
+CsxSamples | GenericWebhookCSharpExtensionMethod | C# | No | Extension Method usage Sample code.
+CsxSamples | GithubWebhookCSharp | C# | No | Github Webhook Sample code.
+CsxSamples | LineBotWebhookCSharp | C# | No | Line Bot Webhook Sample code with Emergency Evacuation info with sent info.
+CsxSamples | SSLCertificateExpireCheck | C# | No | SSL Certificate Checker. Often introduce in AWS Lambda but you can do with C# + AzureFucntions, too! 
+CsxSamples | VSTSWebhookCSharp | C# | No | Visual Studio Team Service (VSTS) Webhook Sample code.
+CsxSamples | WebhookCSharpGithubOctokit | C# | No | NuGet package reference sample for Octokit.
+CsxSamples | WebhookCSharpSendToChatWork | C# | No | Chatwork Notification Sample code.
+CsxSamples | WebhookCSharpSendToSlack | C# | No | Slack Notification Sample code.
 
 # GitHub Integration Sample
 
-You may find this repository structure is fit with Azure Functions CI by Github.
+You may find this repository structure is fit with Azure Functions CI by Github. This repogitory Sync with Azure Functions by GitHub Integration.
 
-This repogitory Sync with Azure Functions by GitHub Integration.
+Default structure can be publish with Precompiled Functions.
+
+If you want to use CsxSamples then replace whole root items with `CsxSamples/`. It allows you to deploy .csx samples by Azure Github Continuous Deployemnt.
+
+![](images/CsxDeployment.png)
 
 # More Reference
 
@@ -41,6 +58,7 @@ Following additional tips will be useful for first step.
 
 Description | Screenshot
 ---- | ----
+You can use both VS2015 Update3 and VS2017. Make sure install [Azure Functions Core Tools](https://www.npmjs.com/package/azure-functions-core-tools) | ![](images/azure-functions-core-tools.png)
 Use precompile function when you want to gain more faster execution and IDE compile, debug benefits. <br/>Unfortunately `.csx` is not yet match friendly for VS Debugging. It will not detect compile error and less intellisense at all.<br/> Therefore you will find .csx will cause compile error on Function App portal so often.<br/> If you feel it reduse your efficiency, then use precompile instead. This repo and [doc](https://blogs.msdn.microsoft.com/appserviceteam/2017/03/16/publishing-a-net-class-library-as-a-function-app/) and [doc for vs2017](https://blogs.msdn.microsoft.com/webdev/2017/05/10/azure-function-tools-for-visual-studio-2017/) offer you how.| ![](images/PrecompileFunction.png)
 Precomplied function's Entry point will accept TraceWriter. Use Logger as same as .csx even you are using Precompile. You need to add [Microsoft.Azure.WebJobs.Host](https://www.nuget.org/packages/Microsoft.Azure.WebJobs) nuget package to refer TraceWriter. <br/> If you are using TraceWriter, add the NuGet package Microsoft.Azure.WebJobs and the statement: using Microsoft.Azure.WebJobs.Host| ![](images/TraceWriterForPrecompiled.png)
 Precompiled function's Entry point will accept various Triggers. <br/>If you using timer triggers, add the NuGet package Microsoft.Azure.WebJobs.Extensions. | ![](images/PrecompileTrigger.png)
@@ -69,6 +87,7 @@ There's are possible but I never recommend. These settings will bring complexity
 Description | Screenshot
 ---- | ----
 Default TimeZone is UTC, but you can use LocalTime zone with ```WEBSITE_TIME_ZONE``` into Application Settings.<br/>You can obtain all timezone string with ```System.TimeZoneInfo.GetSystemTimeZones()``` <br/>Detail is here : [Changing the server time zone on Azure Web Apps](https://blogs.msdn.microsoft.com/tomholl/2015/04/06/changing-the-server-time-zone-on-azure-web-apps/)  | ![](images/AzureFunctionsTimeZone.png)
+To keep Deployment simplicity, I do recommend not to mix Precompile functions and .csx functions. | 
 
 # License
 
