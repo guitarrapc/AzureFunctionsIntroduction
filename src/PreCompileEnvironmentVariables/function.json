@@ -1,6 +1,7 @@
 {
+  "disabled": false,
   "scriptFile": "PreCompileEnvironmentVariables.dll",
-  "entryPoint": "PreCompileEnvironmentVariables.MyFunction.Run",
+  "entryPoint": "PreCompileEnvironmentVariables.FunctionTrigger.Run",
   "bindings": [
     {
       "webHookType": "genericJson",
@@ -13,6 +14,5 @@
       "direction": "out",
       "name": "$return"
     }
-  ],
-  "disabled": false
+  ]
 }

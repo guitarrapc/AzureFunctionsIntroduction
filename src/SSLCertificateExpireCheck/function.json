@@ -1,0 +1,14 @@
+{
+  "disabled": false,
+  "scriptFile": "SSLCertificateExpireCheck.dll",
+  "entryPoint": "SSLCertificateExpireCheck.FunctionTrigger.Run",
+  "bindings": [
+    {
+      "name": "myTimer",
+      "type": "timerTrigger",
+      "direction": "in",
+      "schedule": "0 30 9 * * *",
+      "runOnStartup": false
+    }
+  ]
+}
