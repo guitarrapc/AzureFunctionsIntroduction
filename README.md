@@ -1,3 +1,7 @@
+Branch | Usage | BuildStatus
+---- | ---- | ----
+master | Precompile | ![](https://guitarrapc.visualstudio.com/_apis/public/build/definitions/7ded7c7f-85c4-4196-a2ad-92577231ccdb/3/badge)
+
 # AzureFunctionsIntroduction
 
 This is Sample project for Azure Functions. May this repository help you understand Azure Functions better.
