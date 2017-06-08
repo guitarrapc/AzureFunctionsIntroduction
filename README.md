@@ -52,7 +52,12 @@ If you want to use CsxSamples then replace whole root items with `CsxSamples/`. 
 
 # More Reference
 
-http://tech.guitarrapc.com/archive/category/AzureFunctions
+Reference | Description
+---- | ----
+[Blog post - tech.guitarrapc.com](http://tech.guitarrapc.com/archive/category/AzureFunctions) | Blog post for AzureFuncitons by repository owner.
+[Azure/Azure-Functions](https://github.com/Azure/Azure-Functions) | AzureFunctions official repo. You may find where to report Issue, Feature Requests, Questions and Help.
+[Microsoft Azure WebJobs SDK Quick Reference](https://jhaleyfiles2016.blob.core.windows.net/public/Azure%20WebJobs%20SDK%20Cheat%20Sheet%202014.pdf) | Web Job SDK cheat sheet.
+
 
 # Precompiled functions reference
 
