@@ -113,7 +113,7 @@
   <ItemGroup>
     <Content Include="packages.config" />
     <Compile Include="FunctionTrigger.cs" />
-    <Content Include="appsettings.json" />
+    <Content Include="local.settings.json" />
     <Content Include="function.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

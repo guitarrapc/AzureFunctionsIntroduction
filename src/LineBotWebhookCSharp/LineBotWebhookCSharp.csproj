@@ -110,7 +110,7 @@
     <Content Include="TestOutput.json" />
     <Compile Include="RescureUrl.cs" />
     <Content Include="host.json" />
-    <Content Include="appsettings.json" />
+    <Content Include="local.settings.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
