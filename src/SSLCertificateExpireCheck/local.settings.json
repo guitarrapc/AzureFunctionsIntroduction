@@ -1,7 +1,8 @@
 ﻿{
   "IsEncrypted": false,
-  "Values": {
-    "AzureWebJobsStorage": "",
-    "AzureWebJobsDashboard": ""
-  }
+    "Values": {
+        "AzureWebJobsStorage": "INPUT AzureWebJobsStorage Connection String. Should be found in Storage Account > Access Key",
+        "AzureWebJobsDashboard": ""
+    },
+  "ConnectionStrings": {}
 }
