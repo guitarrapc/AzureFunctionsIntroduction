@@ -251,3 +251,5 @@ paket-files/
 .idea/
 *.sln.iml
 
+# build output path
+Tmp/
