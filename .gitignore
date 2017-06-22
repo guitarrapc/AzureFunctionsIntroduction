@@ -253,3 +253,7 @@ paket-files/
 
 # build output path
 Tmp/
+MSBuild.dll
+*.deps.json
+*.runtimeconfig.*.json
+*.runtimeconfig.json
