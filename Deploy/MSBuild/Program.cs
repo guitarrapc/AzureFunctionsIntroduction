@@ -17,9 +17,13 @@ namespace MSBuild
 
             // Arguments
             var parallelBuild = false;
-            if (args.Length >= 1)
+            if (args.Length < 1)
             {
-                if (bool.TryParse(args[0], out parallelBuild)) { }
+                Console.WriteLine($"Parallel execution argument missing. {nameof(parallelBuild)} : {parallelBuild}");
+            }
+            else if (bool.TryParse(args[0], out parallelBuild))
+            {
+                Console.WriteLine($"Parallel execution argument detected. {nameof(parallelBuild)} : {parallelBuild}");
             }
 
             // Run
