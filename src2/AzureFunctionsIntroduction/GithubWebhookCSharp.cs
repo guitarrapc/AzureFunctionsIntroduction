@@ -17,7 +17,7 @@ namespace AzureFunctionsIntroduction
         [FunctionName("GithubWebhookCSharp")]
         public static async Task<HttpResponseMessage> Run([HttpTrigger(WebHookType = "github")]HttpRequestMessage req, TraceWriter log)
         {
-            log.Info("C# HTTP trigger function processed a request.");
+            log.Info("GithubWebhookCSharp : C# HTTP trigger function processed a request.");
 
             // Get request body
             dynamic data = await req.Content.ReadAsAsync<object>();
