@@ -5,6 +5,7 @@
     <AssemblyName>AzureFunctionsIntroduction</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Chatwork.Api" Version="0.6.2" />
     <PackageReference Include="Microsoft.CodeAnalysis.Scripting" Version="2.6.1" />
     <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="1.0.2" />
   </ItemGroup>
