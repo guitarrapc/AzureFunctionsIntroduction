@@ -1,8 +1,6 @@
-# AzureFunctionsIntroduction
+# V2 : Recommented
 
 This is Sample project for Azure Functions v2, precompiled.
-
-v2 is recommened.
 
 # Samples
 

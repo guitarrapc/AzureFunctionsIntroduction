@@ -1,4 +1,4 @@
-# AzureFunctionsIntroduction
+# v1 CSharp Scripting : Obsolated
 
 This is Sample project for Azure Functions v1, CSharp Scripting. 
 
