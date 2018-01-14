@@ -1,0 +1,27 @@
+# AzureFunctionsIntroduction
+
+This is Sample project for Azure Functions v2, precompiled.
+
+v2 is recommened.
+
+# Samples
+
+This sample include following.
+
+FunctionName | Language | Pre-compiled? | Description
+---- | ---- | ----  | ----
+AppSettingsWebhookCSharp | C# | Yes | Reference ```Application Settings > App Setting``` of Web Apps Sample code.
+CSharpCompilerSlackOuthookCSharp | C# | Yes | Slack C# Code Roslyn Evaluation Sample. (```@C#: Enumerable.Range(10, 20).Aggregate((x, y) => x + y)```)
+CSharpCompilerWebhookCSharp | C# | Yes | Generic Webhook C# Code Roslyn Evaluation Sample.
+GenericWebhookCSharpExtensionMethod | C# | Yes | Extension Method usage Sample code.
+GithubWebhookCSharp | C# | Yes | Github Webhook Sample code.
+LineBotWebhookCSharp | C# | Yes | Line Bot Webhook Sample code with Emergency Evacuation info with sent info.
+SSLCertificateExpireCheck | C# | Yes | SSL Certificate Checker. Often introduce in AWS Lambda but you can do with C# + AzureFucntions, too! 
+VSTSWebhookCSharp | C# | Yes | Visual Studio Team Service (VSTS) Webhook trigger Sample code.
+WebhookCSharpGithubOctokit | C# | Yes | NuGet package reference sample for Octokit.
+WebhookCSharpSendToChatWork | C# | Yes | Chatwork Notification Sample code.
+WebhookCSharpSendToSlack | C# | Yes | Slack Notification Sample code.
+
+# License
+
+[MIT](https://github.com/guitarrapc/AzureFunctionsIntroduction/blob/master/LICENSE)
