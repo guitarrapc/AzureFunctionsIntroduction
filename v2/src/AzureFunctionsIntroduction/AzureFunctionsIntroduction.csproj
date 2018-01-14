@@ -5,6 +5,9 @@
     <AssemblyName>AzureFunctionsIntroduction</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="LineBotWebhookCSharp.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Chatwork.Api" Version="0.6.2" />
     <PackageReference Include="Microsoft.CodeAnalysis.Scripting" Version="2.6.1" />
     <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="1.0.2" />
@@ -14,7 +17,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Extensions\EnumerableExtensions.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Compile>
   </ItemGroup>
   <ItemGroup>

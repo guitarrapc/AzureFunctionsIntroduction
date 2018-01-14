@@ -13,7 +13,6 @@ CSharpCompilerSlackOuthookCSharp | C# | Yes | Slack C# Code Roslyn Evaluation Sa
 CSharpCompilerWebhookCSharp | C# | Yes | Generic Webhook C# Code Roslyn Evaluation Sample.
 GenericWebhookCSharpExtensionMethod | C# | Yes | Extension Method usage Sample code.
 GithubWebhookCSharp | C# | Yes | Github Webhook Sample code.
-LineBotWebhookCSharp | C# | Yes | Line Bot Webhook Sample code with Emergency Evacuation info with sent info.
 SSLCertificateExpireCheck | C# | Yes | SSL Certificate Checker. Often introduce in AWS Lambda but you can do with C# + AzureFucntions, too! 
 VSTSWebhookCSharp | C# | Yes | Visual Studio Team Service (VSTS) Webhook trigger Sample code.
 WebhookCSharpGithubOctokit | C# | Yes | NuGet package reference sample for Octokit.
