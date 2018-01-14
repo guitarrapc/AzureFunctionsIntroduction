@@ -1,3 +1,5 @@
+![](https://guitarrapc.visualstudio.com/_apis/public/build/definitions/7ded7c7f-85c4-4196-a2ad-92577231ccdb/3/badge)
+
 # V2 : Recommented
 
 This is Sample project for Azure Functions v2, precompiled.
