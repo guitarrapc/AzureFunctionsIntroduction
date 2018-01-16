@@ -53,8 +53,8 @@ namespace AzureFunctionsIntroduction
                     {
                         to = new[] { result.content.from },
                         toChannel = "1383378250",
-                        // g138311609000106303h	Received message (example: text, images)
-                        // g138311609100106403h	Received operation (example: added as friend)
+                        // â€œ138311609000106303â€	Received message (example: text, images)
+                        // â€œ138311609100106403â€	Received operation (example: added as friend)
                         eventType = "138311608800106203",
                         content = content
                     }
@@ -91,7 +91,7 @@ namespace AzureFunctionsIntroduction
             }
             else if (text != null)
             {
-                var responseText = $"ˆÊ’uî•ñ‚ğ‹¤—L‚µ‚Ä‚­‚ê‚é‚Æ‹Ù‹}”ğ“ïî•ñ‚ğ’²‚×‚Ü‚·I";
+                var responseText = "ä½ç½®æƒ…å ±ã‚’å…±æœ‰ã—ã¦ãã‚Œã‚‹ã¨ç·Šæ€¥é¿é›£æƒ…å ±ã‚’èª¿ã¹ã¾ã™ï¼";
                 log.Info($"message : {responseText}");
                 content = new Content
                 {
@@ -102,7 +102,7 @@ namespace AzureFunctionsIntroduction
             }
             else if (contentMetaData.SKTID != "")
             {
-                var responseText = $"ˆÊ’uî•ñ‚ğ‹¤—L‚µ‚Ä‚­‚ê‚é‚Æ‹Ù‹}”ğ“ïî•ñ‚ğ’²‚×‚Ü‚·I";
+                var responseText = "ä½ç½®æƒ…å ±ã‚’å…±æœ‰ã—ã¦ãã‚Œã‚‹ã¨ç·Šæ€¥é¿é›£æƒ…å ±ã‚’èª¿ã¹ã¾ã™ï¼";
                 log.Info($"message : {responseText}");
                 content = new Content
                 {
@@ -116,14 +116,14 @@ namespace AzureFunctionsIntroduction
 
         public class RescureUrl
         {
-            // u‹ß‚­‚Ì‹Ù‹}”ğ“ïŠ‚ğ’T‚µ‚Ü‚·v‚ğ—˜—p : ‚¾‚¢‚½‚¢”¼Œa3kmˆÈ“à‚Å‹ß‚­‚Ì”ğ“ïŠ‚ğ‹³‚¦‚Ä‚­‚ê‚Ü‚·
+            // ã€Œè¿‘ãã®ç·Šæ€¥é¿é›£æ‰€ã‚’æ¢ã—ã¾ã™ã€ã‚’åˆ©ç”¨ : ã ã„ãŸã„åŠå¾„3kmä»¥å†…ã§è¿‘ãã®é¿é›£æ‰€ã‚’æ•™ãˆã¦ãã‚Œã¾ã™
             private static readonly string _searchBaseUrl = "https://0312.yanoshin.jp/rescue/index";
 
-            // uƒiƒrƒ^ƒCƒ€ĞŠQî•ñv‚ğ—˜—p : kumamoto prefecture ‚ªŠÜ‚Ü‚ê‚Ä‚¢‚½‚çŒF–{’nk‚Æ‚İ‚È‚µ‚ÄURL ’Ç‰Á
+            // ã€ŒãƒŠãƒ“ã‚¿ã‚¤ãƒ ç½å®³æƒ…å ±ã€ã‚’åˆ©ç”¨ : kumamoto prefecture ãŒå«ã¾ã‚Œã¦ã„ãŸã‚‰ç†Šæœ¬åœ°éœ‡ã¨ã¿ãªã—ã¦URL è¿½åŠ 
             private static readonly string _navitimeUrl = "http://www.navitime.co.jp/saigai/?from=pctop";
 
-            // Google ƒNƒ‰ƒCƒVƒXƒŒƒXƒ|ƒ“ƒX‚ğ—˜—p : https://www.google.org/crisisresponse/japan
-            // Map •\¦‚à‚Å‚«‚é‚¯‚ÇAˆÊ’uŠÖŒW‚È‚µ‚È‚Ì‚Åˆê’UTOP ‚Ì‚İ‚ÅMap‚Í‚È‚µ : https://www.google.org/crisisresponse/japan/maps?hl=ja
+            // Google ã‚¯ãƒ©ã‚¤ã‚·ã‚¹ãƒ¬ã‚¹ãƒãƒ³ã‚¹ã‚’åˆ©ç”¨ : https://www.google.org/crisisresponse/japan
+            // Map è¡¨ç¤ºã‚‚ã§ãã‚‹ã‘ã©ã€ä½ç½®é–¢ä¿‚ãªã—ãªã®ã§ä¸€æ—¦TOP ã®ã¿ã§Mapã¯ãªã— : https://www.google.org/crisisresponse/japan/maps?hl=ja
             private static readonly string _googleChrisisUrl = "https://www.google.org/crisisresponse/japan";
 
             public string Latitude { get; private set; }
@@ -140,10 +140,10 @@ namespace AzureFunctionsIntroduction
 
             public async Task<string> GetAsync()
             {
-                var endMessage = new[] {$"‘—‚Á‚Ä‚¢‚½‚¾‚¢‚½Œ»İ’nî•ñ‚ÍŸ‚Ì’Ê‚è‚Å‚·B",
-            $"Œo“x : {this.Latitude}",
-            $"ˆÜ“x : {this.Longitude}",
-            $"ZŠ : {this.Address}",
+                var endMessage = new[] {$"é€ã£ã¦ã„ãŸã ã„ãŸç¾åœ¨åœ°æƒ…å ±ã¯æ¬¡ã®é€šã‚Šã§ã™ã€‚",
+            $"çµŒåº¦ : {this.Latitude}",
+            $"ç·¯åº¦ : {this.Longitude}",
+            $"ä½æ‰€ : {this.Address}",
         }.ToJoinedString(Environment.NewLine);
                 var requestUrl = new Uri($"{_searchBaseUrl}/{this.Latitude}/{this.Longitude}");
                 using (var client = new HttpClient())
@@ -154,8 +154,8 @@ namespace AzureFunctionsIntroduction
                         string postMessage = endMessage;
                         if (this.IsKumamoto)
                         {
-                            // ŒF–{Œ§‚ÌZŠ‚ª“ü‚Á‚Ä‚¢‚½‚ç·‚µ‚Ş
-                            postMessage = new[] {$"ŒF–{Œ§‚Ì•û‚Å‚·‚©Huƒiƒrƒ^ƒCƒ€ĞŠQî•ñv‚à‚²Ql‚É‚Ç‚¤‚¼",
+                            // ç†Šæœ¬çœŒã®ä½æ‰€ãŒå…¥ã£ã¦ã„ãŸã‚‰å·®ã—è¾¼ã‚€
+                            postMessage = new[] {"ç†Šæœ¬çœŒã®æ–¹ã§ã™ã‹ï¼Ÿã€ŒãƒŠãƒ“ã‚¿ã‚¤ãƒ ç½å®³æƒ…å ±ã€ã‚‚ã”å‚è€ƒã«ã©ã†ã",
                         _navitimeUrl,
                         $"{Environment.NewLine}",
                         endMessage,
@@ -163,17 +163,17 @@ namespace AzureFunctionsIntroduction
                             .ToJoinedString(Environment.NewLine);
                         }
 
-                        var message = new[] {$@"u‹ß‚­‚Ì‹Ù‹}”ğ“ïŠ‚ğ’T‚µ‚Ü‚·v‚ÅAŒŸõŒ‹‰Ê‚ªŒ©‚Â‚©‚è‚Ü‚µ‚½B",
-                    $"ÅŠñ‚è‚Ì”ğ“ïŠî•ñ URL : {requestUrl.AbsoluteUri}",
+                        var message = new[] {@"ã€Œè¿‘ãã®ç·Šæ€¥é¿é›£æ‰€ã‚’æ¢ã—ã¾ã™ã€ã§ã€æ¤œç´¢çµæœãŒè¦‹ã¤ã‹ã‚Šã¾ã—ãŸã€‚",
+                    $"æœ€å¯„ã‚Šã®é¿é›£æ‰€æƒ…å ± URL : {requestUrl.AbsoluteUri}",
                     Environment.NewLine,
-                    $"ˆÀ”Ûî•ñ‚ÍGoogleƒNƒ‰ƒCƒVƒXƒŒƒXƒ|ƒ“ƒX‚à‚Ç‚¤‚¼ URL : {_googleChrisisUrl}",
+                    $"å®‰å¦æƒ…å ±ã¯Googleã‚¯ãƒ©ã‚¤ã‚·ã‚¹ãƒ¬ã‚¹ãƒãƒ³ã‚¹ã‚‚ã©ã†ã URL : {_googleChrisisUrl}",
                     Environment.NewLine,
                     postMessage,
                 }.ToJoinedString(Environment.NewLine);
 
                         return message;
                     }
-                    return $"w’è‚µ‚½ZŠ‚ª‚İ‚Â‚©‚è‚Ü‚¹‚ñ‚Å‚µ‚½B‚à‚¤ˆê“x‚µ‚Ä‚¢‚½‚¾‚¯‚Ü‚·‚©H{Environment.NewLine}{endMessage}";
+                    return $"æŒ‡å®šã—ãŸä½æ‰€ãŒã¿ã¤ã‹ã‚Šã¾ã›ã‚“ã§ã—ãŸã€‚ã‚‚ã†ä¸€åº¦è©¦ã—ã¦ã„ãŸã ã‘ã¾ã™ã‹ï¼Ÿ{Environment.NewLine}{endMessage}";
                 }
             }
 
@@ -182,7 +182,7 @@ namespace AzureFunctionsIntroduction
                 var isEngCultureInvaliant = Regex.IsMatch(address, @"Kumamoto\s*Prefecture", RegexOptions.CultureInvariant);
                 var isEngIgnoreCase = Regex.IsMatch(address, @"Kumamoto\s*Prefecture", RegexOptions.IgnoreCase);
                 var isEngIgnoreWhitespace = Regex.IsMatch(address, @"Kumamoto\s*Prefecture", RegexOptions.IgnorePatternWhitespace);
-                var isJapaneseCultureInvaliat = Regex.IsMatch(address, "ŒF–{Œ§", RegexOptions.CultureInvariant);
+                var isJapaneseCultureInvaliat = Regex.IsMatch(address, "ç†Šæœ¬çœŒ", RegexOptions.CultureInvariant);
                 return isEngCultureInvaliant || isEngIgnoreCase || isEngIgnoreWhitespace || isJapaneseCultureInvaliat;
             }
         }
