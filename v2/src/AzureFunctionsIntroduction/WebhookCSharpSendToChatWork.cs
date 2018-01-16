@@ -17,7 +17,7 @@ namespace AzureFunctionsIntroduction
         [FunctionName("WebhookCSharpSendToChatWork")]
         public static async Task<object> Run([HttpTrigger(WebHookType = "genericJson")]HttpRequestMessage req, TraceWriter log)
         {
-            log.Info($"WebhookCSharpSendToChatWork : Webhook was triggered!");
+            log.Info($"{nameof(WebhookCSharpSendToChatWork)} : Webhook was triggered!");
 
             string jsonContent = await req.Content.ReadAsStringAsync();
             dynamic data = JsonConvert.DeserializeObject(jsonContent);

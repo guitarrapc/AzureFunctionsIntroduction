@@ -14,7 +14,7 @@ namespace AzureFunctionsIntroduction
         [FunctionName("GenericWebhookCSharpExtensionMethod")]
         public static async Task<HttpResponseMessage> Run([HttpTrigger(AuthorizationLevel.Function, "post", Route = null)]HttpRequestMessage req, TraceWriter log)
         {
-            log.Info("GenericWebhookCSharpExtensionMethod : C# HTTP trigger function processed a request.");
+            log.Info($"{nameof(GenericWebhookCSharpExtensionMethod)} : C# HTTP trigger function processed a request.");
 
             string jsonContent = await req.Content.ReadAsStringAsync();
             dynamic input = JsonConvert.DeserializeObject(jsonContent);

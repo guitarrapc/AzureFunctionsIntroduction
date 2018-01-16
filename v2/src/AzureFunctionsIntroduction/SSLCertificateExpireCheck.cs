@@ -22,7 +22,7 @@ namespace AzureFunctionsIntroduction
         [FunctionName("SSLCertificateExpireCheck")]
         public static async Task Run([TimerTrigger("0 30 9 * * *", RunOnStartup = true)]TimerInfo myTimer, TraceWriter log)
         {
-            log.Info($"C# Timer trigger function executed at: {DateTime.Now}");
+            log.Info($"{nameof(SSLCertificateExpireCheck)} : C# Timer trigger function executed at: {DateTime.Now}");
 
             var result = (await Task.WhenAll(sites.Select(async x =>
             {

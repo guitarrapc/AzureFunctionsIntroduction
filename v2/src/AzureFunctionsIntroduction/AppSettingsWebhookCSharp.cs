@@ -15,7 +15,7 @@ namespace AzureFunctionsIntroduction
         [FunctionName("AppSettingsWebhookCSharp")]
         public static async Task<HttpResponseMessage> Run([HttpTrigger(AuthorizationLevel.Function, "get", "post", Route = null)]HttpRequestMessage req, TraceWriter log)
         {
-            log.Info("AppSettingsWebhookCSharp : C# HTTP trigger function processed a request.");
+            log.Info($"{nameof(AppSettingsWebhookCSharp)} : C# HTTP trigger function processed a request.");
 
             string jsonContent = await req.Content.ReadAsStringAsync();
             var data = JsonConvert.DeserializeObject<Input>(jsonContent);

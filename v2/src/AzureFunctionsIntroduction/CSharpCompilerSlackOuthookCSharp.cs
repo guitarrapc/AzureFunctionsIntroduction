@@ -20,7 +20,7 @@ namespace AzureFunctionsIntroduction
         [FunctionName("CSharpCompilerSlackOuthookCSharp")]
         public static async Task<object> Run([HttpTrigger(WebHookType = "genericJson")]HttpRequestMessage req, TraceWriter log)
         {
-            log.Info($"CSharpScripting : Webhook was triggered!");
+            log.Info($"{nameof(CSharpCompilerSlackOuthookCSharp)} : Webhook was triggered!");
 
             string content = await req.Content.ReadAsStringAsync();
             log.Info(content);
