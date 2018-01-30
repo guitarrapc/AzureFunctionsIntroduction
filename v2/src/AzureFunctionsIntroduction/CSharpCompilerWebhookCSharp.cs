@@ -6,7 +6,7 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Azure.WebJobs.Host;
 using Newtonsoft.Json;
-using AzureFunctionsIntroduction.Roslyn;
+using AzureFunctionsIntroduction.Features.Roslyn;
 
 namespace AzureFunctionsIntroduction
 {

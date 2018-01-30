@@ -8,7 +8,7 @@ using Microsoft.Azure.WebJobs.Host;
 using System;
 using System.Linq;
 using System.Text;
-using AzureFunctionsIntroduction.Roslyn;
+using AzureFunctionsIntroduction.Features.Roslyn;
 
 namespace AzureFunctionsIntroduction
 {

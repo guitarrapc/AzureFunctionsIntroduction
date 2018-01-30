@@ -8,7 +8,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AzureFunctionsIntroduction.Roslyn
+namespace AzureFunctionsIntroduction.Features.Roslyn
 {
     public class RoslynCompiler
     {
