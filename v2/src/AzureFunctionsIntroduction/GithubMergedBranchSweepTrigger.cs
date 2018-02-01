@@ -51,7 +51,7 @@ namespace AzureFunctionsIntroduction
                     PrPageCount = request.PrPageCount,
                     PrPageSize = request.PrPageSize,
                 };
-                Action<SweeptargetBranch[]> action = branches => log.Info($@"DryRun - {nameof(GithubMergedBranchSweepTimer)}: remove candidates are following.
+                Action<SweeptargetBranchResult[]> action = branches => log.Info($@"DryRun - {nameof(GithubMergedBranchSweepTimer)}: remove candidates are following.
 {branches.Select(x => x.BranchName).ToJoinedString(Environment.NewLine)}");
                 var results = await sweeper.SweepAsync(log, action);
 
@@ -71,7 +71,7 @@ namespace AzureFunctionsIntroduction
     public class SweepResponse
     {
         public bool DryRun { get; set; }
-        public SweeptargetBranch[] Value { get; set; }
+        public SweeptargetBranchResult[] Value { get; set; }
     }
 
     public class GithubMergedBranchSweepRequest

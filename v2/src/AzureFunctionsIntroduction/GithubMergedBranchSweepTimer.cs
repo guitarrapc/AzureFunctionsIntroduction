@@ -39,7 +39,7 @@ namespace AzureFunctionsIntroduction
             var dryRun = GetBoolEnvironmentVariable(envDryRun, true);
             var daysPast = GetIntEnvironmentVariable(envDaysPast, 1);
             var targetRepositories = GetStringArrayEnvironmentVariable(envTargetRepositories, null);
-            var excludeBranches = GetStringArrayEnvironmentVariable(envExcludeBranches, GithubMergedBranchSweeper.DefaultBranchRule);
+            var excludeBranches = GetStringArrayEnvironmentVariable(envExcludeBranches, GithubMergedBranchSweeper.DefaultExcludeBranchRule);
             // max pageSize : 100
             // prPageSize * prPageCount = 2000 is pretty enough for 95 percentile
             var prPageSize = GetIntEnvironmentVariable(envPRPageSize, 100);
@@ -68,7 +68,7 @@ namespace AzureFunctionsIntroduction
                         PrPageCount = prPageCount,
                         PrPageSize = prPageSize,
                     };
-                    Action<SweeptargetBranch[]> action = branches => log.Info($@"DryRun - {nameof(GithubMergedBranchSweepTimer)}: remove candidates are following.
+                    Action<SweeptargetBranchResult[]> action = branches => log.Info($@"DryRun - {nameof(GithubMergedBranchSweepTimer)}: remove candidates are following.
 {branches.Select(x => x.BranchName).ToJoinedString(Environment.NewLine)}");
                     var results = await sweeper.SweepAsync(log, action);
                 }

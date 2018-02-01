@@ -1,6 +1,7 @@
 ﻿using Microsoft.Azure.WebJobs.Host;
 using Octokit;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -19,8 +20,9 @@ namespace AzureFunctionsIntroduction.Features.Github
 
         private string _token;
         private OctokitClient client;
+        private string page = "https://github.com/{0}/{1}/branches/all?utf8=✓&query={2}";
 
-        public static readonly string[] DefaultBranchRule = new[]
+        public static readonly string[] DefaultExcludeBranchRule = new[]
         {
             "^master$",
             "^development$",
@@ -39,7 +41,13 @@ namespace AzureFunctionsIntroduction.Features.Github
             client = new OctokitClient(_token, Owner, nameof(GithubMergedBranchSweeper));
         }
 
-        public async Task<SweeptargetBranch[]> SweepAsync(TraceWriter log, Action<SweeptargetBranch[]> dryRunAction)
+        /// <summary>
+        /// Sweep Merges PullRequests
+        /// </summary>
+        /// <param name="log"></param>
+        /// <param name="dryRunAction"></param>
+        /// <returns></returns>
+        public async Task<SweeptargetBranchResult[]> SweepAsync(TraceWriter log, Action<SweeptargetBranchResult[]> dryRunAction)
         {
             log.Info($"Starting sweep repository's branch. repositry : {Repository}");
 
@@ -77,7 +85,7 @@ namespace AzureFunctionsIntroduction.Features.Github
             return candidateBranches;
         }
 
-        private async Task<SweeptargetBranch[]> GetMergedNotDeletedBranchesAsync(string repository)
+        private async Task<SweeptargetBranchResult[]> GetMergedNotDeletedBranchesAsync(string repository)
         {
             var branchOptions = new ApiOptions() { PageSize = 100 };
             var branchClient = client.GitHubClient.Repository.Branch;
@@ -96,9 +104,9 @@ namespace AzureFunctionsIntroduction.Features.Github
             var prs = await prClient.GetAllForRepository(Owner, repository, prRequest, prOptions);
 
             // no pull requests
-            if (prs == null || !prs.Any()) return new SweeptargetBranch[] { };
+            if (prs == null || !prs.Any()) return new SweeptargetBranchResult[] { };
 
-            var mergedNotDeletedBranches = prs.Where(x => x.Merged).Select(x => new SweeptargetBranch
+            var mergedNotDeletedBranches = prs.Where(x => x.Merged).Select(x => new SweeptargetBranchResult
             {
                 CreatedBy = x.User.Login,
                 RepositoryName = x.Head?.Repository?.Name,
@@ -123,7 +131,7 @@ namespace AzureFunctionsIntroduction.Features.Github
             return mergedNotDeletedBranches;
         }
 
-        private async Task<SweeptargetBranch[]> GetDeleteCandidateBranchesAsync(string repository, SweeptargetBranch[] branches)
+        private async Task<SweeptargetBranchResult[]> GetDeleteCandidateBranchesAsync(string repository, SweeptargetBranchResult[] branches)
         {
             var refClient = client.GitHubClient.Git.Reference;
 
@@ -147,6 +155,67 @@ namespace AzureFunctionsIntroduction.Features.Github
             return candidateBranches;
         }
 
+        /// <summary>
+        /// Get list of Branch detail informations
+        /// </summary>
+        /// <param name="branches"></param>
+        /// <param name="excludeBranches"></param>
+        /// <returns></returns>
+        public async Task<BranchResult[]> GetBranchDetailsAsync(IReadOnlyList<Branch> branches, string[] excludeBranches)
+        {
+            var commits = await GetCommitsAsync(branches.Select(x => x.Commit.Sha).ToArray());
+            var enumerableResult = commits.Select(x => new { x.Sha, LastDate = x.Commit.Author.Date, Commiter = x.Committer?.Login })
+            .Join(branches, x => x.Sha, x => x.Commit.Sha, (inner, outer) => new BranchResult
+            {
+                Name = outer.Name,
+                Protected = outer.Protected,
+                Commiter = inner.Commiter,
+                Url = Uri.EscapeUriString(string.Format(page, Owner, Repository, outer.Name)),
+                LastDate = inner.LastDate,
+                Sha = inner.Sha
+            })
+            .Distinct();
+
+            if (excludeBranches != null && excludeBranches.Any())
+            {
+                enumerableResult = enumerableResult.Where(x => !excludeBranches.Any(y => Regex.IsMatch(x.Name, y, RegexOptions.IgnoreCase)));
+            }
+            enumerableResult = enumerableResult.OrderByDescending(x => x.LastDate);
+
+            return enumerableResult.ToArray();
+        }
+
+        /// <summary>
+        /// Get Branches
+        /// </summary>
+        /// <returns></returns>
+        public async Task<IReadOnlyList<Branch>> GetBranchesAsync(string[] excludeBranches)
+        {
+            var option = new ApiOptions() { PageSize = 100 };
+            var branch = client.GitHubClient.Repository.Branch;
+            var all = await branch.GetAll(Owner, Repository, option);
+            var result = all;
+            if (ExcludeBranches != null && ExcludeBranches.Any())
+            {
+                result = all.Where(x => excludeBranches.Any(y => Regex.IsMatch(x.Name, y, RegexOptions.IgnoreCase))).ToArray();
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Get Commits
+        /// </summary>
+        /// <param name="shas"></param>
+        /// <returns></returns>
+        public async Task<GitHubCommit[]> GetCommitsAsync(IEnumerable<string> shas)
+        {
+            var option = new ApiOptions() { PageSize = 100 };
+            var commit = client.GitHubClient.Repository.Commit;
+            var tasks = shas.Select(x => commit.Get(Owner, Repository, x));
+            var result = await Task.WhenAll(tasks);
+            return result;
+        }
+
         public class OctokitClient
         {
             public GitHubClient GitHubClient { get; set; }
@@ -161,7 +230,7 @@ namespace AzureFunctionsIntroduction.Features.Github
         }
     }
 
-    public class SweeptargetBranch
+    public class SweeptargetBranchResult
     {
         public string CreatedBy { get; set; }
         public string RepositoryName { get; set; }
@@ -178,5 +247,15 @@ namespace AzureFunctionsIntroduction.Features.Github
         public DateTimeOffset? MergedAt { get; set; }
         public DateTimeOffset UpdatedAt { get; set; }
         public DateTimeOffset? ClosedAt { get; set; }
+    }
+
+    public class BranchResult
+    {
+        public string Name { get; set; }
+        public bool Protected { get; set; }
+        public string Commiter { get; set; }
+        public string Url { get; set; }
+        public DateTimeOffset LastDate { get; set; }
+        public string Sha { get; set; }
     }
 }
