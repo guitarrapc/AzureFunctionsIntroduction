@@ -114,7 +114,7 @@ namespace AzureFunctionsIntroduction
                         return $"{x.Output} ( {link} )";
                     });
 
-                    var result = $@"[info][title]{repositoryName}: {createdBy} ({daysPast}日経過のブランチ数: {values.Count()}件)[/title]{values.Select(x => x).ToJoinedString(Environment.NewLine)}[/info]";
+                    var result = $@"[info][title]{repositoryName}: {createdBy} ({daysPast}days past Branches: {values.Count()}件)[/title]{values.Select(x => x).ToJoinedString(Environment.NewLine)}[/info]";
                     return result;
                 })
                 .ToArray();
