@@ -66,22 +66,22 @@ namespace AzureFunctionsIntroduction
                 return req.CreateResponse(HttpStatusCode.InternalServerError, $"Error when running sweep. {ex.GetType()} {ex.Message}");
             }
         }
-    }
 
-    public class SweepResponse
-    {
-        public bool DryRun { get; set; }
-        public SweeptargetBranchResult[] Value { get; set; }
-    }
+        public class GithubMergedBranchSweepRequest
+        {
+            public string Owner { get; set; }
+            public bool DryRun { get; set; } = true;
+            public int DaysPast { get; set; } = 1;
+            public string Repository { get; set; }
+            public string[] ExcludeBranches { get; set; }
+            public int PrPageSize { get; set; } = 100;
+            public int? PrPageCount { get; set; } = 20;
+        }
 
-    public class GithubMergedBranchSweepRequest
-    {
-        public string Owner { get; set; }
-        public bool DryRun { get; set; } = true;
-        public int DaysPast { get; set; } = 1;
-        public string Repository { get; set; }
-        public string[] ExcludeBranches { get; set; }
-        public int PrPageSize { get; set; } = 100;
-        public int? PrPageCount { get; set; } = 20;
+        public class SweepResponse
+        {
+            public bool DryRun { get; set; }
+            public SweeptargetBranchResult[] Value { get; set; }
+        }
     }
 }
