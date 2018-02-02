@@ -253,3 +253,7 @@ paket-files/
 
 # build output path
 Tmp/
+
+
+# Remove Azure Functions local settings
+launchSettings.json
