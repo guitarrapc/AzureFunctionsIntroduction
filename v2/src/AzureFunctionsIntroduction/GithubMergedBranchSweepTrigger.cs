@@ -95,24 +95,24 @@ namespace AzureFunctionsIntroduction
                     var mergedAt = new MarkdownFormat("MergedAt", Value.Select(x => x.MergedAt.Value.ToLocalTime().ToString("d")).ToArray());
                     var branchName = new MarkdownFormat("BranchName", Value.Select(x => x.BranchName).ToArray());
                     var prId = new MarkdownFormat("PrId", Value.Select(x => x.PullrequestId.ToString()).ToArray());
-                    var values = mergedAt.Values.Zip(branchName.Values, (x, b) => new { Item1 = $"{x}: {b}", b = b })
-            .Zip(prId.Values, (x, p) =>
-            {
-                var link = $"https://github.com/{owner}/{repository}";
-                if (usePRUrl && p != "0")
-                {
-                    link += $"/pull/{p}";
-                }
-                else
-                {
-                    link += $"/branches/all?utf8={Uri.EscapeUriString("✓")}&query={Uri.EscapeUriString(x.b)}";
-                    if (link.EndsWith("%20"))
+                    var values = mergedAt.Values.Zip(branchName.Values, (m, b) => new { Output = $"{m}: {b}", BranchName = b })
+                    .Zip(prId.Values, (x, p) =>
                     {
-                        link = link.Substring(0, link.Length - 3);
-                    }
-                }
-                return $"{x.Item1} ( {link} )";
-            });
+                        var link = $"https://github.com/{owner}/{repository}";
+                        if (usePRUrl && p != "0")
+                        {
+                            link += $"/pull/{p}";
+                        }
+                        else
+                        {
+                            link += $"/branches/all?utf8={Uri.EscapeUriString("✓")}&query={Uri.EscapeUriString(x.BranchName)}";
+                            if (link.EndsWith("%20"))
+                            {
+                                link = link.Substring(0, link.Length - 3);
+                            }
+                        }
+                        return $"{x.Output} ( {link} )";
+                    });
 
                     var result = $@"[info][title]{repositoryName}: {createdBy} ({daysPast}日経過のブランチ数: {values.Count()}件)[/title]{values.Select(x => x).ToJoinedString(Environment.NewLine)}[/info]";
                     return result;
