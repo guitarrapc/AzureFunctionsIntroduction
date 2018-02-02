@@ -43,12 +43,15 @@ namespace AzureFunctionsIntroduction
             try
             {
                 // Execute
-                var sweeper = new GithubMergedBranchSweeper(request.Owner, token, request.Repository);
-                var branches = await sweeper.GetBranchesAsync(request.ExcludeBranches);
+                var sweeper = new GithubMergedBranchSweeper(request.Owner, token, request.Repository)
+                {
+                    ExcludeBranches = request.ExcludeBranches,
+                };
+                var branches = await sweeper.GetBranchesAsync();
                 var results = await sweeper.GetBranchDetailsAsync(branches);
 
                 // Response
-                var response = new BranchResponse() { Count = results.Length, Value = results };
+                var response = new BranchResponse() { Count = results.Length, Owner = request.Owner, Repository = request.Repository, Value = results };
                 var responseJson = JsonConvert.SerializeObject(response);
                 return req.CreateResponse(HttpStatusCode.OK, responseJson);
             }
@@ -69,7 +72,23 @@ namespace AzureFunctionsIntroduction
         public class BranchResponse
         {
             public int Count { get; set; }
+            public string Owner { get; set; }
+            public string Repository { get; set; }
             public BranchDetailResult[] Value { get; set; }
+
+            public string[] ToChatworkInfoString(int daysPast)
+            {
+                var values = Value.Where(x => x.LastDate < DateTime.Now.AddDays(-daysPast))
+                .ToLookup(x => string.IsNullOrEmpty(x.Commiter) ? "unknown" : x.Commiter)
+                .OrderByDescending(x => x.Count())
+                .Select(x =>
+                {
+                    var text = x.Select(y => $"{y.LastDate.ToString("g")}: {y.Name} ({y.Url})").ToArray();
+                    return $@"[info][title]{Repository}: {x.Key} ({daysPast}“úŒo‰ß‚Ìƒuƒ‰ƒ“ƒ`”: {text.Count()}Œ)[/title]{text.ToJoinedString(Environment.NewLine)}[/info]";
+                })
+                .ToArray();
+                return values;
+            }
         }
     }
 }

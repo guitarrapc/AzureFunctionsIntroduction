@@ -185,7 +185,7 @@ namespace AzureFunctionsIntroduction.Features.Github
         /// Get Branches
         /// </summary>
         /// <returns></returns>
-        public async Task<IReadOnlyList<Branch>> GetBranchesAsync(string[] excludeBranches)
+        public async Task<IReadOnlyList<Branch>> GetBranchesAsync()
         {
             var option = new ApiOptions() { PageSize = 100 };
             var branch = client.GitHubClient.Repository.Branch;
@@ -193,7 +193,7 @@ namespace AzureFunctionsIntroduction.Features.Github
             var result = all;
             if (ExcludeBranches != null && ExcludeBranches.Any())
             {
-                result = all.Where(x => excludeBranches.Any(y => Regex.IsMatch(x.Name, y, RegexOptions.IgnoreCase))).ToArray();
+                result = all.Where(x => !ExcludeBranches.Any(y => Regex.IsMatch(x.Name, y, RegexOptions.IgnoreCase))).ToArray();
             }
             return result;
         }
