@@ -85,7 +85,7 @@ namespace AzureFunctionsIntroduction
 
             public string ToChatworkInfoString(string owner, string repository, int daysPast, bool usePRUrl)
             {
-                var text = Value.ToLookup(x => x.CreatedBy)
+                var text = Value.GroupBy(x => x.CreatedBy)
                 .Select(y =>
                 {
                     var createdBy = y.First().CreatedBy;
@@ -123,7 +123,7 @@ namespace AzureFunctionsIntroduction
 
             public string ToMarkdownString()
             {
-                var text = Value.ToLookup(x => x.CreatedBy)
+                var text = Value.GroupBy(x => x.CreatedBy)
                 .Select(y =>
                 {
                     var createdByes = Value.Select(x => x.CreatedBy).ToArray();

@@ -79,7 +79,7 @@ namespace AzureFunctionsIntroduction
             public string[] ToChatworkInfoString(int daysPast)
             {
                 var values = Value.Where(x => x.LastDate < DateTime.Now.AddDays(-daysPast))
-                .ToLookup(x => string.IsNullOrEmpty(x.Commiter) ? "unknown" : x.Commiter)
+                .GroupBy(x => string.IsNullOrEmpty(x.Commiter) ? "unknown" : x.Commiter)
                 .OrderByDescending(x => x.Count())
                 .Select(x =>
                 {
