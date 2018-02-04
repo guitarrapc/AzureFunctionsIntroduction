@@ -34,13 +34,14 @@ steps:
 
 - task: AzureRmWebAppDeployment@2
   inputs:
-    ConnectedServiceName: "$(connectedServiceName)"
+    ConnectedServiceName: "AzureResourceManager"
+    azureSubscription: "AzureResourceManager"
     WebAppName: "$(WebAppName)"
     Package: "$(build.artifactstagingdirectory)/**/*.zip"
 
 - task: PublishSymbols@1
   inputs:
-    SearchPattern: "**/bin/**/*.pdb"
+    SearchPattern: "v2/**/bin/**/*.pdb"
 
 - task: PublishBuildArtifacts@1
   inputs:
