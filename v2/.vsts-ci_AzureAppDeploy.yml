@@ -1,0 +1,52 @@
+queue:
+  name: Hosted VS2017
+  demands: 
+    - msbuild
+    - visualstudio
+
+#Your build definition references an undefined variable named ‘Parameters.solution’. Create or edit the build definition for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
+#Your build definition references an undefined variable named ‘Parameters.solution’. Create or edit the build definition for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
+#Your build definition references the ‘BuildPlatform’ variable, which you’ve selected to be settable at queue time. Create or edit the build definition for this YAML file, define the variable on the Variables tab, and then select the option to make it settable at queue time. See https://go.microsoft.com/fwlink/?linkid=865971
+#Your build definition references the ‘BuildConfiguration’ variable, which you’ve selected to be settable at queue time. Create or edit the build definition for this YAML file, define the variable on the Variables tab, and then select the option to make it settable at queue time. See https://go.microsoft.com/fwlink/?linkid=865971
+#Your build definition references an undefined variable named ‘Parameters.connectedServiceName’. Create or edit the build definition for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
+#Your build definition references an undefined variable named ‘Parameters.WebAppName’. Create or edit the build definition for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
+#Your build definition references an undefined variable named ‘build.artifactstagingdirectory)/**/*.zi’. Create or edit the build definition for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
+#Your build definition references an undefined variable named ‘build.artifactstagingdirectory’. Create or edit the build definition for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
+
+variables:
+  solution: 'v2/**/*.sln'
+  connectedServiceName: 'AzureResourceManager'
+  WebAppName: 'AzureFunctionsIntroduction'
+
+steps:
+- task: NuGetToolInstaller@0
+
+- task: NuGetCommand@2
+  inputs:
+    restoreSolution: "$(solution)"
+
+- task: VSBuild@1
+  inputs:
+    solution: "$(solution)"
+    msbuildArgs: "/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation=\"$(build.artifactstagingdirectory)/$(WebAppName).zip\""
+    platform: "$(BuildPlatform)"
+    configuration: "$(BuildConfiguration)"
+
+- task: AzureRmWebAppDeployment@2
+  inputs:
+    ConnectedServiceName: "AzureResourceManager"
+    azureSubscription: "AzureResourceManager"
+    WebAppName: "$(WebAppName)"
+    Package: "$(build.artifactstagingdirectory)/**/*.zip"
+
+- task: PublishSymbols@1
+  inputs:
+    SearchPattern: "v2/**/bin/**/*.pdb"
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: "$(build.artifactstagingdirectory)"
+    ArtifactName: "drop"
+    ArtifactType: "Container"
+
+
