@@ -31,7 +31,7 @@ steps:
 
 - task: AzureRmWebAppDeployment@3
   inputs:
-    azureSubscription: 'AzureResourceManager'
+    ConnectedServiceName: "AzureResourceManager"
     WebAppKind: "functionapp"
     WebAppName: '$(DeploySiteName)'
     Package: '$(build.artifactstagingdirectory)/**/$(DeploySiteName).zip'
