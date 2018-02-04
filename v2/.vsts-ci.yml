@@ -14,28 +14,28 @@ queue:
 #Your build definition references an undefined variable named ‘build.artifactstagingdirectory’. Create or edit the build definition for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
 
 variables:
-  Parameters.solution: 'v2/**/*.sln'
-  Parameters.connectedServiceName: 'AzureResourceManager'
-  Parameters.WebAppName: 'AzureFunctionsIntroduction'
+  solution: 'v2/**/*.sln'
+  connectedServiceName: 'AzureResourceManager'
+  WebAppName: 'AzureFunctionsIntroduction'
 
 steps:
 - task: NuGetToolInstaller@0
 
 - task: NuGetCommand@2
   inputs:
-    restoreSolution: "$(Parameters.solution)"
+    restoreSolution: "$(solution)"
 
 - task: VSBuild@1
   inputs:
-    solution: "$(Parameters.solution)"
-    msbuildArgs: "/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation=\"$(build.artifactstagingdirectory)/$(Parameters.WebAppName).zip\""
+    solution: "$(solution)"
+    msbuildArgs: "/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation=\"$(build.artifactstagingdirectory)/$(WebAppName).zip\""
     platform: "$(BuildPlatform)"
     configuration: "$(BuildConfiguration)"
 
 - task: AzureRmWebAppDeployment@2
   inputs:
-    ConnectedServiceName: "$(Parameters.connectedServiceName)"
-    WebAppName: "$(Parameters.WebAppName)"
+    ConnectedServiceName: "$(connectedServiceName)"
+    WebAppName: "$(WebAppName)"
     Package: "$(build.artifactstagingdirectory)/**/*.zip"
 
 - task: PublishSymbols@1
