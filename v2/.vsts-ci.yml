@@ -19,6 +19,12 @@ steps:
     msbuildArchitecture: 'x64'
     msbuildArguments: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactstagingdirectory)\$(DeploySiteName).zip" /p:DeployIisAppPath=$(DeploySiteName)'
 
+- task: AzureRmWebAppDeployment@3
+  inputs:
+    ConnectedServiceName: "AzureResourceManager"
+    WebAppName: "$(DeploySiteName)"
+    Package: '$(build.artifactstagingdirectory)/**/$(DeploySiteName).zip'
+
 - task: PublishSymbols@1
   inputs:
     SearchPattern: 'v2/**/bin/**/*.pdb'
@@ -26,12 +32,5 @@ steps:
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(build.artifactstagingdirectory)'
-    ArtifactName: '$(Parameters.ArtifactName)'
+    ArtifactName: "drop"
     ArtifactType: 'Container'
-
-- task: AzureRmWebAppDeployment@3
-  inputs:
-    azureSubscription: "AzureResourceManager"
-    WebAppKind: "functionapp"
-    WebAppName: "$(DeploySiteName)"
-    Package: '$(build.artifactstagingdirectory)/**/$(DeploySiteName).zip'
