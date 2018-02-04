@@ -161,11 +161,11 @@ namespace AzureFunctionsIntroduction.Features.Github
         /// <param name="branches"></param>
         /// <param name="excludeBranches"></param>
         /// <returns></returns>
-        public async Task<BranchResult[]> GetBranchDetailsAsync(IReadOnlyList<Branch> branches, string[] excludeBranches)
+        public async Task<BranchDetailResult[]> GetBranchDetailsAsync(IReadOnlyList<Branch> branches)
         {
             var commits = await GetCommitsAsync(branches.Select(x => x.Commit.Sha).ToArray());
-            var enumerableResult = commits.Select(x => new { x.Sha, LastDate = x.Commit.Author.Date, Commiter = x.Committer?.Login })
-            .Join(branches, x => x.Sha, x => x.Commit.Sha, (inner, outer) => new BranchResult
+            var result = commits.Select(x => new { x.Sha, LastDate = x.Commit.Author.Date, Commiter = x.Committer?.Login })
+            .Join(branches, x => x.Sha, x => x.Commit.Sha, (inner, outer) => new BranchDetailResult
             {
                 Name = outer.Name,
                 Protected = outer.Protected,
@@ -174,22 +174,18 @@ namespace AzureFunctionsIntroduction.Features.Github
                 LastDate = inner.LastDate,
                 Sha = inner.Sha
             })
-            .Distinct();
+            .Distinct()
+            .OrderByDescending(x => x.LastDate)
+            .ToArray();
 
-            if (excludeBranches != null && excludeBranches.Any())
-            {
-                enumerableResult = enumerableResult.Where(x => !excludeBranches.Any(y => Regex.IsMatch(x.Name, y, RegexOptions.IgnoreCase)));
-            }
-            enumerableResult = enumerableResult.OrderByDescending(x => x.LastDate);
-
-            return enumerableResult.ToArray();
+            return result;
         }
 
         /// <summary>
         /// Get Branches
         /// </summary>
         /// <returns></returns>
-        public async Task<IReadOnlyList<Branch>> GetBranchesAsync(string[] excludeBranches)
+        public async Task<IReadOnlyList<Branch>> GetBranchesAsync()
         {
             var option = new ApiOptions() { PageSize = 100 };
             var branch = client.GitHubClient.Repository.Branch;
@@ -197,7 +193,7 @@ namespace AzureFunctionsIntroduction.Features.Github
             var result = all;
             if (ExcludeBranches != null && ExcludeBranches.Any())
             {
-                result = all.Where(x => excludeBranches.Any(y => Regex.IsMatch(x.Name, y, RegexOptions.IgnoreCase))).ToArray();
+                result = all.Where(x => !ExcludeBranches.Any(y => Regex.IsMatch(x.Name, y, RegexOptions.IgnoreCase))).ToArray();
             }
             return result;
         }
@@ -249,7 +245,7 @@ namespace AzureFunctionsIntroduction.Features.Github
         public DateTimeOffset? ClosedAt { get; set; }
     }
 
-    public class BranchResult
+    public class BranchDetailResult
     {
         public string Name { get; set; }
         public bool Protected { get; set; }
