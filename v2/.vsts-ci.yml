@@ -1,36 +1,51 @@
 queue:
   name: Hosted VS2017
-  demands: msbuild
+  demands: 
+    - msbuild
+    - visualstudio
+
+#Your build definition references an undefined variable named ‘Parameters.solution’. Create or edit the build definition for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
+#Your build definition references an undefined variable named ‘Parameters.solution’. Create or edit the build definition for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
+#Your build definition references the ‘BuildPlatform’ variable, which you’ve selected to be settable at queue time. Create or edit the build definition for this YAML file, define the variable on the Variables tab, and then select the option to make it settable at queue time. See https://go.microsoft.com/fwlink/?linkid=865971
+#Your build definition references the ‘BuildConfiguration’ variable, which you’ve selected to be settable at queue time. Create or edit the build definition for this YAML file, define the variable on the Variables tab, and then select the option to make it settable at queue time. See https://go.microsoft.com/fwlink/?linkid=865971
+#Your build definition references an undefined variable named ‘Parameters.connectedServiceName’. Create or edit the build definition for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
+#Your build definition references an undefined variable named ‘Parameters.WebAppName’. Create or edit the build definition for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
+#Your build definition references an undefined variable named ‘build.artifactstagingdirectory)/**/*.zi’. Create or edit the build definition for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
+#Your build definition references an undefined variable named ‘build.artifactstagingdirectory’. Create or edit the build definition for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
 
 variables:
-  DeploySiteName: 'AzureFunctionsIntroduction'
-  BuildPlatform: 'any cpu'
-  BuildConfiguration: 'release'
+  Parameters.solution: 'v2/**/*.sln'
+  Parameters.connectedServiceName: 'AzureResourceManager'
+  Parameters.WebAppName: 'AzureFunctionsIntroduction'
 
 steps:
-- task: DotNetCoreCLI@1
-  inputs:
-    command: "restore"
-    projects: 'v2/**/*.sln'
+- task: NuGetToolInstaller@0
 
-- task: MSBuild@1
+- task: NuGetCommand@2
   inputs:
-    solution: 'v2/**/*.sln'
-    msbuildArchitecture: 'x64'
-    msbuildArguments: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactstagingdirectory)\$(DeploySiteName).zip" /p:DeployIisAppPath=$(DeploySiteName)'
+    restoreSolution: "$(Parameters.solution)"
 
-- task: AzureRmWebAppDeployment@3
+- task: VSBuild@1
   inputs:
-    ConnectedServiceName: "AzureResourceManager"
-    WebAppName: "$(DeploySiteName)"
-    Package: '$(build.artifactstagingdirectory)/**/$(DeploySiteName).zip'
+    solution: "$(Parameters.solution)"
+    msbuildArgs: "/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactstagingdirectory)/$(Parameters.WebAppName).zip""
+    platform: "$(BuildPlatform)"
+    configuration: "$(BuildConfiguration)"
+
+- task: AzureRmWebAppDeployment@2
+  inputs:
+    ConnectedServiceName: "$(Parameters.connectedServiceName)"
+    WebAppName: "$(Parameters.WebAppName)"
+    Package: "$(build.artifactstagingdirectory)/**/*.zip"
 
 - task: PublishSymbols@1
   inputs:
-    SearchPattern: 'v2/**/bin/**/*.pdb'
+    SearchPattern: "**/bin/**/*.pdb"
 
 - task: PublishBuildArtifacts@1
   inputs:
-    PathtoPublish: '$(build.artifactstagingdirectory)'
+    PathtoPublish: "$(build.artifactstagingdirectory)"
     ArtifactName: "drop"
-    ArtifactType: 'Container'
+    ArtifactType: "Container"
+
+
