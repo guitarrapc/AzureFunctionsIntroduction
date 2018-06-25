@@ -24,26 +24,65 @@ namespace AzureFunctionsIntroduction
             dynamic data = JsonConvert.DeserializeObject(jsonContent);
 
             string postJson;
-            if (data != null)
+            if (data.title == null || data.text == null || data.urlname == null || data.url == null)
             {
                 postJson = jsonContent;
-                using (var client = new HttpClient())
-                {
-                    var stringContent = new StringContent(postJson);
-                    var res = await client.PostAsync(teamsWebhookUrl, stringContent);
-                    return req.CreateResponse(res.StatusCode, new
-                    {
-                        body = $"Send to Teams for following. text : {data.text}",
-                    });
-                }
             }
             else
             {
-                return req.CreateResponse(HttpStatusCode.BadRequest, new
+                /*
                 {
-                    body = $"Bad request.",
+                    "title": "hogemoge Title",
+                    "text": "hogemoge text",
+                    "urlname": "hogemo url button name",
+                    "url": "https://google.com/"
+                }
+                */
+                var payload = new TeamsMessage
+                {
+                    title = data.title,
+                    text = data.text,
+                };
+                payload.potentialAction = new Potentialaction[]
+                    {
+                        new Potentialaction()
+                        {
+                            name = data.urlname,
+                            target = new string[] { data.url },
+                        },
+                    };
+
+                postJson = JsonConvert.SerializeObject(payload);
+            };
+
+            using (var client = new HttpClient())
+            {
+                var stringContent = new StringContent(postJson);
+                var res = await client.PostAsync(teamsWebhookUrl, stringContent);
+                return req.CreateResponse(res.StatusCode, new
+                {
+                    body = $"Send to Teams for following. text : {data.text}",
                 });
             }
         }
     }
+
+
+    public class TeamsMessage
+    {
+        public string title { get; set; }
+        public string text { get; set; }
+        public Potentialaction[] potentialAction { get; set; }
+    }
+
+    public class Potentialaction
+    {
+        [JsonProperty(PropertyName = "@context")]
+        public string context { get; set; } = "http://schema.org";
+        [JsonProperty(PropertyName = "@type")]
+        public string type { get; set; } = "ViewAction";
+        public string name { get; set; }
+        public string[] target { get; set; }
+    }
+
 }
