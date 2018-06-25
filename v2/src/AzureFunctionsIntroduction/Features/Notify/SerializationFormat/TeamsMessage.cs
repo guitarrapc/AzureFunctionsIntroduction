@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using Utf8Json;
 
-namespace AzureFunctionsIntroduction.Teams
+namespace AzureFunctionsIntroduction.Notify
 {
     public class TeamsMessage
     {

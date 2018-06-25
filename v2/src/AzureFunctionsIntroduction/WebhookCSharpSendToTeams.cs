@@ -8,13 +8,13 @@ using Microsoft.Azure.WebJobs.Host;
 using System;
 using Newtonsoft.Json;
 using System.Collections.Generic;
-using AzureFunctionsIntroduction.Teams;
+using AzureFunctionsIntroduction.Notify;
 
 namespace AzureFunctionsIntroduction
 {
     public static class WebhookCSharpSendToTeams
     {
-        private static string teamsWebhookUrl = Environment.GetEnvironmentVariable("TeamsIncomingWebhookUrl");
+        private static INotify norify = new NotifyTeams();
 
         [FunctionName("WebhookCSharpSendToTeams")]
         public static async Task<HttpResponseMessage> Run([HttpTrigger(AuthorizationLevel.Function, "post", Route = null)]HttpRequestMessage req, TraceWriter log)
@@ -43,7 +43,7 @@ namespace AzureFunctionsIntroduction
                 postJson = NotifyTeams.ToJson((string)data.title, (string)data.text, (string)data.urlname, (string)data.url);
             };
 
-            var res = await NotifyTeams.SendAsync(postJson);
+            var res = await norify.SendAsync(postJson);
             return req.CreateResponse(res.StatusCode, new
             {
                 body = $"Send to Teams for following. text : {data.text}, response : {res.RequestMessage}",

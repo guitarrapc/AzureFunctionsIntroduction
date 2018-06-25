@@ -1,8 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using AzureFunctionsIntroduction.Notify;
 using Microsoft.Azure.EventGrid.Models;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
@@ -16,6 +18,9 @@ namespace AzureFunctionsIntroduction
     {
         const string SubscriptionValidationEvent = "Microsoft.EventGrid.SubscriptionValidationEvent";
         const string StorageBlobCreatedEvent = "Microsoft.Storage.BlobCreated";
+
+        private static INotify notify = new NotifySlack();
+        private static string notifySlackChannel = Environment.GetEnvironmentVariable("eventtrigger_slackchannel");
 
         [FunctionName("EventGridWebhookCSharp")]
         public static async Task<HttpResponseMessage> Run([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)]HttpRequestMessage req, TraceWriter log)
@@ -45,6 +50,18 @@ namespace AzureFunctionsIntroduction
                 {
                     var eventData = dataObject.ToObject<StorageBlobCreatedEventData>();
                     log.Info($"Got BlobCreated event data, blob URI {eventData.Url}");
+
+                    // Notify to slack
+                    var payload = new
+                    {
+                        channel = notifySlackChannel,
+                        username = "AzureBlobBot",
+                        text = $"New Blob Item was uploaded. Please access from {eventData.Url}",
+                    };
+                    var json = JsonConvert.SerializeObject(payload);
+                    var res = await notify.SendAsync(json);
+
+                    response = $"Send to Slack for following. text : {payload.text}";
                 }
 
                 log.Info($"=====Debug Message=====");

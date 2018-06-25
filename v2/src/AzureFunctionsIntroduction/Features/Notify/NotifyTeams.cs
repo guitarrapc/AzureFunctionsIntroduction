@@ -3,14 +3,14 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Utf8Json;
 
-namespace AzureFunctionsIntroduction.Teams
+namespace AzureFunctionsIntroduction.Notify
 {
-    public static class NotifyTeams
+    public class NotifyTeams : INotify
     {
         private static string teamsWebhookUrl = Environment.GetEnvironmentVariable("TeamsIncomingWebhookUrl");
         private static HttpClient client = new HttpClient();
 
-        public static async Task<HttpResponseMessage> SendAsync(string json)
+        public async Task<HttpResponseMessage> SendAsync(string json)
         {
             var stringContent = new StringContent(json);
             var res = await client.PostAsync(teamsWebhookUrl, stringContent);

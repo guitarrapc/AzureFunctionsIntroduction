@@ -8,12 +8,13 @@ using Microsoft.Azure.WebJobs.Host;
 using System;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using AzureFunctionsIntroduction.Notify;
 
 namespace AzureFunctionsIntroduction
 {
     public static class WebhookCSharpSendToSlack
     {
-        private static string _slackWebhookUrl = Environment.GetEnvironmentVariable("SlackIncomingWebhookUrl");
+        private static INotify notify = new NotifySlack();
 
         [FunctionName("WebhookCSharpSendToSlack")]
         public static async Task<HttpResponseMessage> Run([HttpTrigger(AuthorizationLevel.Function, "post", Route = null)]HttpRequestMessage req, TraceWriter log)
@@ -38,18 +39,13 @@ namespace AzureFunctionsIntroduction
                 text = data.text,
                 icon_url = data.icon_url,
             };
-            var jsonString = JsonConvert.SerializeObject(payload);
-            using (var client = new HttpClient())
+            var json = JsonConvert.SerializeObject(payload);
+            var res = await notify.SendAsync(json);
+
+            return req.CreateResponse(res.StatusCode, new
             {
-                var res = await client.PostAsync(_slackWebhookUrl, new FormUrlEncodedContent(new[]
-                {
-                    new KeyValuePair<string, string>("payload", jsonString)
-                }));
-                return req.CreateResponse(res.StatusCode, new
-                {
-                    body = $"Send to Slack for following. text : {data.text}",
-                });
-            }
+                body = $"Send to Slack for following. text : {payload.text}",
+            });
         }
     }
 }
