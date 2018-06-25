@@ -8,6 +8,7 @@ using Microsoft.Azure.WebJobs.Host;
 using System;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using AzureFunctionsIntroduction.Teams;
 
 namespace AzureFunctionsIntroduction
 {
@@ -31,6 +32,7 @@ namespace AzureFunctionsIntroduction
             else
             {
                 /*
+                Input JSON Data Format
                 {
                     "title": "hogemoge Title",
                     "text": "hogemoge text",
@@ -38,32 +40,14 @@ namespace AzureFunctionsIntroduction
                     "url": "https://google.com/"
                 }
                 */
-                var payload = new TeamsMessage
-                {
-                    title = data.title,
-                    text = data.text,
-                };
-                payload.potentialAction = new Potentialaction[]
-                    {
-                        new Potentialaction()
-                        {
-                            name = data.urlname,
-                            target = new string[] { data.url },
-                        },
-                    };
-
-                postJson = JsonConvert.SerializeObject(payload);
+                postJson = NotifyTeams.ToJson((string)data.title, (string)data.text, (string)data.urlname, (string)data.url);
             };
 
-            using (var client = new HttpClient())
+            var res = await NotifyTeams.SendAsync(postJson);
+            return req.CreateResponse(res.StatusCode, new
             {
-                var stringContent = new StringContent(postJson);
-                var res = await client.PostAsync(teamsWebhookUrl, stringContent);
-                return req.CreateResponse(res.StatusCode, new
-                {
-                    body = $"Send to Teams for following. text : {data.text}",
-                });
-            }
+                body = $"Send to Teams for following. text : {data.text}, response : {res.RequestMessage}",
+            });
         }
     }
 
