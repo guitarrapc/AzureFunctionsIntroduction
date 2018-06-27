@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using Utf8Json;
 
@@ -12,7 +13,7 @@ namespace AzureFunctionsIntroduction.Notify
 
         public async Task<HttpResponseMessage> SendAsync(string json)
         {
-            var stringContent = new StringContent(json);
+            var stringContent = new StringContent(json, Encoding.UTF8);
             var res = await client.PostAsync(teamsWebhookUrl, stringContent);
             return res;
         }
