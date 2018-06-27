@@ -1,0 +1,119 @@
+{
+    "id": "146cd33f-4489-438b-a25d-7cc958e4d9a3",
+    "eventType": "ms.vss-release.deployment-started-event",
+    "publisherId": "rm",
+    "message": {
+        "text": "Deployment of release Release-5 to environment Dev started.",
+        "html": "Deployment on environment <a href='http://fabfiber.visualstudio.com/Fabrikam-Fiber-Git/_apps/hub/ms.vss-releaseManagement-web.hub-explorer?_a=environment-summary&definitionEnvironmentId=1&definitionId=4'>Dev</a> started.",
+        "markdown": "Deployment on environment [Dev](http://fabfiber.visualstudio.com/Fabrikam-Fiber-Git/_apps/hub/ms.vss-releaseManagement-web.hub-explorer?_a=environment-summary&definitionEnvironmentId=1&definitionId=4) started."
+    },
+    "detailedMessage": {
+        "text": "Deployment of release Release-5 on environment Dev started.\r\nTrigger: Manual",
+        "html": "Deployment on environment <a href='Dev'>http://fabfiber.visualstudio.com/Fabrikam-Fiber-Git/_apps/hub/ms.vss-releaseManagement-web.hub-explorer?_a=environment-summary&definitionEnvironmentId=1&definitionId=4</a> started.<br>Trigger: Manual",
+        "markdown": "Deployment on environment [Release-1](http://fabfiber.visualstudio.com/Fabrikam-Fiber-Git/_apps/hub/ms.vss-releaseManagement-web.hub-explorer?_a=environment-summary&definitionEnvironmentId=1&definitionId=4) started.\r\nTrigger: Dev"
+    },
+    "resource": {
+        "environment": {
+            "id": 5,
+            "releaseId": 0,
+            "name": "Dev",
+            "status": "queued",
+            "variables": {},
+            "variableGroups": [],
+            "preDeployApprovals": [],
+            "postDeployApprovals": [],
+            "preApprovalsSnapshot": {
+                "approvals": [],
+                "approvalOptions": {
+                    "requiredApproverCount": 0,
+                    "releaseCreatorCanBeApprover": true,
+                    "autoTriggeredAndPreviousEnvironmentApprovedCanBeSkipped": false,
+                    "enforceIdentityRevalidation": false,
+                    "timeoutInMinutes": 0,
+                    "executionOrder": "beforeGates"
+                }
+            },
+            "postApprovalsSnapshot": {
+                "approvals": []
+            },
+            "deploySteps": [],
+            "rank": 1,
+            "definitionEnvironmentId": 1,
+            "queueId": 1,
+            "environmentOptions": {
+                "emailNotificationType": "OnlyOnFailure",
+                "emailRecipients": "release.environment.owner;release.creator",
+                "skipArtifactsDownload": false,
+                "timeoutInMinutes": 0,
+                "enableAccessToken": false,
+                "publishDeploymentStatus": false,
+                "badgeEnabled": false,
+                "autoLinkWorkItems": false,
+                "pullRequestDeploymentEnabled": false
+            },
+            "demands": [],
+            "conditions": [],
+            "modifiedOn": "2016-01-21T08:19:17.26Z",
+            "workflowTasks": [
+                {
+                    "taskId": "00000000-0000-0000-0000-000000000000",
+                    "version": "*",
+                    "name": "Deploy Website to Azure",
+                    "enabled": true,
+                    "alwaysRun": false,
+                    "continueOnError": false,
+                    "timeoutInMinutes": 0,
+                    "definitionType": null,
+                    "overrideInputs": {},
+                    "inputs": {
+                        "ConnectedServiceName": "b460b0f8-fe23-4dc2-a99c-fd8b0633fe1c",
+                        "WebSiteName": "$(webAppName)",
+                        "WebSiteLocation": "Southeast Asia",
+                        "Slot": "",
+                        "Package": "$(System.DefaultWorkingDirectory)\\**\\*.zip"
+                    }
+                }
+            ],
+            "deployPhasesSnapshot": [],
+            "owner": {
+                "displayName": "Chuck Reinhart",
+                "id": "4247c988-4060-4712-abca-ff44681dd78a"
+            },
+            "scheduledDeploymentTime": "2016-01-21T08:19:17.26Z",
+            "schedules": [],
+            "release": {
+                "id": 5,
+                "name": "Release-5",
+                "_links": {}
+            },
+            "preDeploymentGatesSnapshot": {
+                "id": 0,
+                "gatesOptions": null,
+                "gates": []
+            },
+            "postDeploymentGatesSnapshot": {
+                "id": 0,
+                "gatesOptions": null,
+                "gates": []
+            }
+        },
+        "release": null,
+        "project": {
+            "id": "00000000-0000-0000-0000-000000000000",
+            "name": "Fabrikam"
+        }
+    },
+    "resourceVersion": "3.0-preview.1",
+    "resourceContainers": {
+        "collection": {
+            "id": "c12d0eb8-e382-443b-9f9c-c52cba5014c2"
+        },
+        "account": {
+            "id": "f844ec47-a9db-4511-8281-8b63f4eaf94e"
+        },
+        "project": {
+            "id": "be9b3917-87e6-42a4-a549-2bc06a7a878f"
+        }
+    },
+    "createdDate": "2018-06-27T18:05:25.525Z"
+}
