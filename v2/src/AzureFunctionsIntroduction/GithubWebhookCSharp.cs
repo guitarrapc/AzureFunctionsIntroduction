@@ -12,7 +12,7 @@ namespace AzureFunctionsIntroduction
 {
     public static class GithubWebhookCSharp
     {
-        private static readonly string webhookUrl = Environment.GetEnvironmentVariable("SlackIncomingWebhookUrl");
+        private static readonly string webhookUrl = ConfigurationManagerHelper.Get("SlackIncomingWebhookUrl");
 
         [FunctionName("GithubWebhookCSharp")]
         public static async Task<HttpResponseMessage> Run([HttpTrigger(WebHookType = "github")]HttpRequestMessage req, TraceWriter log)

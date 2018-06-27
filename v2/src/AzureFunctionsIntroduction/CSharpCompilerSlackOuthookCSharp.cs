@@ -15,7 +15,7 @@ namespace AzureFunctionsIntroduction
     public static class CSharpCompilerSlackOuthookCSharp
     {
         private const string TRIGGER_WORD = "@C#:";
-        private static string _slackWebhookUrl = Environment.GetEnvironmentVariable("SlackIncomingWebhookUrl");
+        private static string _slackWebhookUrl = ConfigurationManagerHelper.Get("SlackIncomingWebhookUrl");
 
         [FunctionName("CSharpCompilerSlackOuthookCSharp")]
         public static async Task<object> Run([HttpTrigger(WebHookType = "genericJson")]HttpRequestMessage req, TraceWriter log)

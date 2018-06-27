@@ -12,7 +12,7 @@ namespace AzureFunctionsIntroduction
 {
     public static class WebhookCSharpSendToChatWork
     {
-        private static readonly string chatworkApiKey = Environment.GetEnvironmentVariable("ChatworkApiKey");
+        private static readonly string chatworkApiKey = ConfigurationManagerHelper.Get("ChatworkApiKey");
 
         [FunctionName("WebhookCSharpSendToChatWork")]
         public static async Task<object> Run([HttpTrigger(WebHookType = "genericJson")]HttpRequestMessage req, TraceWriter log)

@@ -21,7 +21,7 @@ namespace AzureFunctionsIntroduction
         {
             log.Info($"{nameof(WebhookCSharpSendToTeams)} : C# HTTP trigger function processed a request.");
 
-            string jsonContent = await req.Content.ReadAsStringAsync();
+            var jsonContent = await req.Content.ReadAsStringAsync();
             dynamic data = JsonConvert.DeserializeObject(jsonContent);
 
             string postJson;

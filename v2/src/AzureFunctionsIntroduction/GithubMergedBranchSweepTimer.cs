@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Host;
 using AzureFunctionsIntroduction.Features.Github;
-using static AzureFunctionsIntroduction.StaticHelpers.EnvironmentHelper;
+using static AzureFunctionsIntroduction.ConfigurationManagerHelper;
 
 namespace AzureFunctionsIntroduction
 {
@@ -34,16 +34,16 @@ namespace AzureFunctionsIntroduction
             log.Info($"{nameof(GithubMergedBranchSweepTimer)} : C# Timer trigger function executed at: {DateTime.Now}");
 
             // get value from Environment variable
-            var owner = GetStringEnvironmentVariable(envOwner, "");
-            var token = GetStringEnvironmentVariable(envToken, "");
-            var dryRun = GetBoolEnvironmentVariable(envDryRun, true);
-            var daysPast = GetIntEnvironmentVariable(envDaysPast, 1);
-            var targetRepositories = GetStringArrayEnvironmentVariable(envTargetRepositories, null);
-            var excludeBranches = GetStringArrayEnvironmentVariable(envExcludeBranches, GithubMergedBranchSweeper.DefaultExcludeBranchRule);
+            var owner = Get(envOwner, "");
+            var token = Get(envToken, "");
+            var dryRun = Get(envDryRun, true);
+            var daysPast = Get(envDaysPast, 1);
+            var targetRepositories = Get(envTargetRepositories, (string[])null);
+            var excludeBranches = Get(envExcludeBranches, GithubMergedBranchSweeper.DefaultExcludeBranchRule);
             // max pageSize : 100
             // prPageSize * prPageCount = 2000 is pretty enough for 95 percentile
-            var prPageSize = GetIntEnvironmentVariable(envPRPageSize, 100);
-            int? prPageCount = GetIntEnvironmentVariable(envPRPageCount, 20); ;
+            var prPageSize = Get(envPRPageSize, 100);
+            int? prPageCount = Get(envPRPageCount, 20); ;
 
             // Show log
             log.Info($@"{envOwner} : {owner}
