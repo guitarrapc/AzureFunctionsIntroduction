@@ -12,7 +12,7 @@ namespace AzureFunctionsIntroduction
 {
     public static class VSTSWebhookCSharp
     {
-        private static readonly string webhookUrl = ConfigurationManagerHelper.Get("SlackIncomingWebhookUrl");
+        private static readonly string webhookUrl = ConfigurationManagerHelper.GetOrDefault("SlackIncomingWebhookUrl");
 
         [FunctionName("VSTSWebhookCSharp")]
         public static async Task<object> Run([HttpTrigger(WebHookType = "genericJson")]HttpRequestMessage req, TraceWriter log)

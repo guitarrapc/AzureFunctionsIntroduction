@@ -20,7 +20,7 @@ namespace AzureFunctionsIntroduction
         const string StorageBlobCreatedEvent = "Microsoft.Storage.BlobCreated";
 
         private static INotify notify = new NotifySlack();
-        private static string notifySlackChannel = ConfigurationManagerHelper.Get("eventtrigger_slackchannel");
+        private static string notifySlackChannel = ConfigurationManagerHelper.GetOrDefault("eventtrigger_slackchannel");
 
         [FunctionName("EventGridWebhookCSharp")]
         public static async Task<HttpResponseMessage> Run([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)]HttpRequestMessage req, TraceWriter log)

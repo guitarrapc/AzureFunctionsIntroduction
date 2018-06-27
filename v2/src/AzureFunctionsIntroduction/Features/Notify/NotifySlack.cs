@@ -8,7 +8,7 @@ namespace AzureFunctionsIntroduction.Notify
 {
     public class NotifySlack : INotify
     {
-        private static string _slackWebhookUrl = ConfigurationManagerHelper.Get("SlackIncomingWebhookUrl");
+        private static string _slackWebhookUrl = ConfigurationManagerHelper.GetOrDefault("SlackIncomingWebhookUrl");
         private static HttpClient client = new HttpClient();
 
         public async Task<HttpResponseMessage> SendAsync(string json)

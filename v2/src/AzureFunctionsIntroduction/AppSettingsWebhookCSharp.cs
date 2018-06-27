@@ -22,7 +22,7 @@ namespace AzureFunctionsIntroduction
 
             // You can access Azure Functions Portal > Application Settings setting variable.
             var envKey = data.key;
-            var envValue = ConfigurationManagerHelper.Get(envKey);
+            var envValue = ConfigurationManagerHelper.GetOrDefault(envKey);
 
             return req.CreateResponse(HttpStatusCode.OK, new
             {

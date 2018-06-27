@@ -9,7 +9,7 @@ namespace AzureFunctionsIntroduction
 {
     public static class ConfigurationManagerHelper
     {
-        public static string Get(string key, string defaultValue = "")
+        public static string GetOrDefault(string key, string defaultValue = "")
         {
             try
             {
@@ -25,7 +25,7 @@ namespace AzureFunctionsIntroduction
             }
         }
 
-        public static string[] Get(string key, string[] defaultValue)
+        public static string[] GetOrDefault(string key, string[] defaultValue)
         {
             try
             {
@@ -41,7 +41,7 @@ namespace AzureFunctionsIntroduction
             }
         }
 
-        public static int Get(string key, int defaultValue)
+        public static int GetOrDefault(string key, int defaultValue)
         {
             try
             {
@@ -57,7 +57,7 @@ namespace AzureFunctionsIntroduction
             }
         }
 
-        public static bool Get(string key, bool defaultValue)
+        public static bool GetOrDefault(string key, bool defaultValue)
         {
             try
             {

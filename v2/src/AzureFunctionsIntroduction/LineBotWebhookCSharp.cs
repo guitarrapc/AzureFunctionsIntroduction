@@ -12,9 +12,9 @@ namespace AzureFunctionsIntroduction
 {
     public static class LineBotWebhookCSharp
     {
-        private static readonly string lineChannelId = ConfigurationManagerHelper.Get("LineChannelId");
-        private static readonly string lineChannelSecret = ConfigurationManagerHelper.Get("LineChannelSecret");
-        private static readonly string lineMid = ConfigurationManagerHelper.Get("LineMid");
+        private static readonly string lineChannelId = ConfigurationManagerHelper.GetOrDefault("LineChannelId");
+        private static readonly string lineChannelSecret = ConfigurationManagerHelper.GetOrDefault("LineChannelSecret");
+        private static readonly string lineMid = ConfigurationManagerHelper.GetOrDefault("LineMid");
 
         [FunctionName("LineBotWebhookCSharp")]
         public static async Task<object> Run([HttpTrigger(WebHookType = "genericJson")]HttpRequestMessage req, TraceWriter log)

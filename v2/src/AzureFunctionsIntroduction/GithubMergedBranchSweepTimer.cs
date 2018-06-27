@@ -34,16 +34,16 @@ namespace AzureFunctionsIntroduction
             log.Info($"{nameof(GithubMergedBranchSweepTimer)} : C# Timer trigger function executed at: {DateTime.Now}");
 
             // get value from Environment variable
-            var owner = Get(envOwner, "");
-            var token = Get(envToken, "");
-            var dryRun = Get(envDryRun, true);
-            var daysPast = Get(envDaysPast, 1);
-            var targetRepositories = Get(envTargetRepositories, (string[])null);
-            var excludeBranches = Get(envExcludeBranches, GithubMergedBranchSweeper.DefaultExcludeBranchRule);
+            var owner = GetOrDefault(envOwner, "");
+            var token = GetOrDefault(envToken, "");
+            var dryRun = GetOrDefault(envDryRun, true);
+            var daysPast = GetOrDefault(envDaysPast, 1);
+            var targetRepositories = GetOrDefault(envTargetRepositories, (string[])null);
+            var excludeBranches = GetOrDefault(envExcludeBranches, GithubMergedBranchSweeper.DefaultExcludeBranchRule);
             // max pageSize : 100
             // prPageSize * prPageCount = 2000 is pretty enough for 95 percentile
-            var prPageSize = Get(envPRPageSize, 100);
-            int? prPageCount = Get(envPRPageCount, 20); ;
+            var prPageSize = GetOrDefault(envPRPageSize, 100);
+            int? prPageCount = GetOrDefault(envPRPageCount, 20); ;
 
             // Show log
             log.Info($@"{envOwner} : {owner}

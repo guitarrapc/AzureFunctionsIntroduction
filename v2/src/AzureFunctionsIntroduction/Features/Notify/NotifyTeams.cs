@@ -7,7 +7,7 @@ namespace AzureFunctionsIntroduction.Notify
 {
     public class NotifyTeams : INotify
     {
-        private static string teamsWebhookUrl = ConfigurationManagerHelper.Get("TeamsIncomingWebhookUrl", "");
+        private static string teamsWebhookUrl = ConfigurationManagerHelper.GetOrDefault("TeamsIncomingWebhookUrl", "");
         private static HttpClient client = new HttpClient();
 
         public async Task<HttpResponseMessage> SendAsync(string json)
