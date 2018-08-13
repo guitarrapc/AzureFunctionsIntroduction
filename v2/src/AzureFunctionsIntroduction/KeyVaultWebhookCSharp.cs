@@ -23,6 +23,9 @@ namespace AzureFunctionsIntroduction
             // Make sure AppService can access to KeyVault by
             // 1. Enable Managed Service Identity : AppService
             // 2. Enable AccessPolicy for AppService. : KeyVault
+            // 3. Set Secret at KeyVault.
+            // 4. Set KeyVault Secret Uri as AzureFunctions EnvironmentVariables, the key is "KeyVaultSecretUri".
+            // 5. Deploy App and try access to the FunctionUri!
             var azureServiceTokenProvider = new AzureServiceTokenProvider();
             var kvClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(azureServiceTokenProvider.KeyVaultTokenCallback), client);
             var secret = (await kvClient.GetSecretAsync(Environment.GetEnvironmentVariable("KeyVaultSecretUri"))).Value;
