@@ -47,6 +47,7 @@ Use AppSettings to store secret values. This eliminate sensitive value in the so
 Fetch AppSettings on Remote Azure to local dev | install `npm i -g azure-functions-cli`, login `func azure login`, select subscription `func azure subscriptions list`, list functionapp ``func azure functionapp list`, then fetch to local `func azure functionapp fetch-app-settings AzureFunctionsIntroduction`. rename to local.settings.json and now all variables are fetched to local as like remote.
 Use ConfigurationManager if possible. | ConfigurationManager is rather better for above fetch approatch, it can dectypt fetched encrypt data. [ConfigurationManagerHelper](https://github.com/guitarrapc/AzureFunctionsIntroduction/blob/master/v2/src/AzureFunctionsIntroduction/StaticHelpers/ConfigurationManagerHelper.cs) will improve ConfigurationManager mutch friendly.
 [Set AzureWebJobsStorage for Timer Triggers or others.](https://github.com/Microsoft/azure-docs/blob/master/articles/azure-functions/functions-run-local.md) | ![](images/AzureWebJobsStorageLocalSettings.png) <br/> ![](images/StorageAccountConnectionStrings.png)
+Enable [Managed Service Identity](https://docs.microsoft.com/en-us/azure/app-service/app-service-managed-service-identity#creating-an-app-with-an-identity) when using KeyVault or access to other azure resource. Then add AccessPolicy of KeyVault. But still cannot debug from local. Use Remote Debug. | ![](images/ManagedServiceIdentity.png) ![](images/KeyVaultAccessPolicy.png)
 
 # Not Recommend
 

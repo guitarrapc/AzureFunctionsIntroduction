@@ -43,7 +43,7 @@ namespace AzureFunctionsIntroduction
 
             // You can access Azure Functions Portal > Application Settings setting variable.
             var envKey = data.key;
-            var secret = GetKeyVaultSecret(envKey);
+            var secret = await GetKeyVaultSecret(envKey);
 
             return req.CreateResponse(HttpStatusCode.OK, new
             {
@@ -66,7 +66,7 @@ namespace AzureFunctionsIntroduction
 
             // You can access Azure Functions Portal > Application Settings setting variable.
             var envKey = input.key;
-            var secret = GetKeyVaultSecret(envKey);
+            var secret = await GetKeyVaultSecret(envKey);
 
             return req.CreateResponse(HttpStatusCode.OK, new
             {
@@ -77,6 +77,9 @@ namespace AzureFunctionsIntroduction
 
         private static async Task<string> GetKeyVaultSecret(string envKey)
         {
+            // Make sure AppService can access to KeyVault by
+            // 1. Enable Managed Service Identity : AppService
+            // 2. Enable AccessPolicy for AppService. : KeyVault
             var azureServiceTokenProvider = new AzureServiceTokenProvider();
             var kvClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(azureServiceTokenProvider.KeyVaultTokenCallback), client);
             var secret = (await kvClient.GetSecretAsync(envKey)).Value;
