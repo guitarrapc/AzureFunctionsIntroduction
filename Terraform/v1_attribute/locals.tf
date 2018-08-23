@@ -5,7 +5,7 @@ locals {
 }
 
 locals {
-  location = "japawest"
+  location = "japanwest"
 }
 
 locals {
