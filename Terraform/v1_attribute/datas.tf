@@ -13,14 +13,12 @@ data "azurerm_resource_group" "current" {
 }
 
 # key vault secret
-# data "azurerm_key_vault_secret" "FUNCTION_APP_EVENTTRIGGER_SLACKWEBHOOKURL" {
-#   name      = "FUNCTION_APP_EVENTTRIGGER_SLACKWEBHOOKURL"
-#   vault_uri = "${azurerm_key_vault.this.vault_uri}"
-# }
+data "azurerm_key_vault_secret" "FUNCTION_APP_EVENTTRIGGER_SLACKWEBHOOKURL" {
+  name      = "FUNCTION_APP_EVENTTRIGGER_SLACKWEBHOOKURL"
+  vault_uri = "${azurerm_key_vault.this.vault_uri}"
+}
 
-
-# data "azurerm_key_vault_secret" "FUNCTION_APP_SLACKINCOMINGWEBHOOKURL" {
-#   name      = "FUNCTION_APP_SLACKINCOMINGWEBHOOKURL"
-#   vault_uri = "${azurerm_key_vault.this.vault_uri}"
-# }
-
+data "azurerm_key_vault_secret" "FUNCTION_APP_SLACKINCOMINGWEBHOOKURL" {
+  name      = "FUNCTION_APP_SLACKINCOMINGWEBHOOKURL"
+  vault_uri = "${azurerm_key_vault.this.vault_uri}"
+}
