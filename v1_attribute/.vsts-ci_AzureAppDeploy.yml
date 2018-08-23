@@ -1,52 +1,63 @@
+resources:
+- repo: self
 queue:
   name: Hosted VS2017
   demands: 
     - msbuild
     - visualstudio
 
-#Your build definition references an undefined variable named ‘Parameters.solution’. Create or edit the build definition for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
-#Your build definition references an undefined variable named ‘Parameters.solution’. Create or edit the build definition for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
-#Your build definition references the ‘BuildPlatform’ variable, which you’ve selected to be settable at queue time. Create or edit the build definition for this YAML file, define the variable on the Variables tab, and then select the option to make it settable at queue time. See https://go.microsoft.com/fwlink/?linkid=865971
-#Your build definition references the ‘BuildConfiguration’ variable, which you’ve selected to be settable at queue time. Create or edit the build definition for this YAML file, define the variable on the Variables tab, and then select the option to make it settable at queue time. See https://go.microsoft.com/fwlink/?linkid=865971
-#Your build definition references an undefined variable named ‘Parameters.connectedServiceName’. Create or edit the build definition for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
-#Your build definition references an undefined variable named ‘Parameters.WebAppName’. Create or edit the build definition for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
-#Your build definition references an undefined variable named ‘build.artifactstagingdirectory)/**/*.zi’. Create or edit the build definition for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
-#Your build definition references an undefined variable named ‘build.artifactstagingdirectory’. Create or edit the build definition for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
+#Your build pipeline references an undefined variable named ‘Parameters.solution’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
+#Your build pipeline references an undefined variable named ‘Parameters.solution’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
+#Your build pipeline references an undefined variable named ‘Parameters.WebAppName’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
+#Your build pipeline references the ‘BuildPlatform’ variable, which you’ve selected to be settable at queue time. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab, and then select the option to make it settable at queue time. See https://go.microsoft.com/fwlink/?linkid=865971
+#Your build pipeline references the ‘BuildConfiguration’ variable, which you’ve selected to be settable at queue time. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab, and then select the option to make it settable at queue time. See https://go.microsoft.com/fwlink/?linkid=865971
+#Your build pipeline references an undefined variable named ‘Parameters.connectedServiceName’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
+#Your build pipeline references an undefined variable named ‘Parameters.WebAppName’. Create or edit the build pipeline for this YAML file, define the variable on the Variables tab. See https://go.microsoft.com/fwlink/?linkid=865972
 
 variables:
-  solution: 'v2/**/*.sln'
-  connectedServiceName: 'AzureResourceManager'
-  WebAppName: 'AzureFunctionsIntroduction'
+  Parameters.solution: 'v2/**/*.sln'
+  Parameters.connectedServiceName: 'AzureResourceManager'
+  Parameters.WebAppName: 'AzureFunctionsIntroduction'
+  BuildConfiguration: "Release"
+  BuildPlatform: "any cpu"
 
 steps:
 - task: NuGetToolInstaller@0
+  displayName: 'Use NuGet 4.3.0'
+  inputs:
+    checkLatest: true
 
 - task: NuGetCommand@2
+  displayName: 'NuGet restore'
   inputs:
-    restoreSolution: "$(solution)"
+    restoreSolution: '$(Parameters.solution)'
 
 - task: VSBuild@1
+  displayName: 'Build solution **\*.sln'
   inputs:
-    solution: "$(solution)"
-    msbuildArgs: "/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation=\"$(build.artifactstagingdirectory)/$(WebAppName).zip\""
-    platform: "$(BuildPlatform)"
-    configuration: "$(BuildConfiguration)"
+    solution: '$(Parameters.solution)'
+    msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactstagingdirectory)/$(Parameters.WebAppName).zip"'
+    platform: '$(BuildPlatform)'
+    configuration: '$(BuildConfiguration)'
+
 
 - task: AzureRmWebAppDeployment@2
+  displayName: 'Azure App Service Deploy: function-v1-function'
   inputs:
-    ConnectedServiceName: "AzureResourceManager"
-    azureSubscription: "AzureResourceManager"
-    WebAppName: "$(WebAppName)"
-    Package: "$(build.artifactstagingdirectory)/**/*.zip"
+    ConnectedServiceName: '$(Parameters.connectedServiceName)'
+    WebAppName: '$(Parameters.WebAppName)'
+    Package: '$(build.artifactstagingdirectory)/**/*.zip'
 
 - task: PublishSymbols@1
+  displayName: 'Publish symbols path: '
   inputs:
-    SearchPattern: "v2/**/bin/**/*.pdb"
+    SearchPattern: '**\bin\**\*.pdb'
+
+  continueOnError: true
 
 - task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: drop'
   inputs:
-    PathtoPublish: "$(build.artifactstagingdirectory)"
-    ArtifactName: "drop"
-    ArtifactType: "Container"
+    PathtoPublish: '$(build.artifactstagingdirectory)'
 
 
