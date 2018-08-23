@@ -9,7 +9,7 @@ data "azurerm_client_config" "current" {}
 
 # resource group
 data "azurerm_resource_group" "current" {
-  name = "NS-function-v1"
+  name = "function-v1"
 }
 
 # key vault secret
