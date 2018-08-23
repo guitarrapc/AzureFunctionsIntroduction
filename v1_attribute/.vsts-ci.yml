@@ -2,16 +2,22 @@ queue:
   name: Hosted VS2017
   demands: msbuild
 
+variables:
+  Parameters.solution: 'v1_attribute/src/AzureFunctionsIntroduction.sln'
+  Parameters.connectedServiceName: 'AzureResourceManager'
+  Parameters.WebAppName: 'AzureFunctionsIntroduction'
+  BuildConfiguration: "Release"
+
 steps:
 - task: DotNetCoreCLI@1
   inputs:
     command: "restore"
-    projects: "v2/src/AzureFunctionsIntroduction.sln"
+    projects: "$(Parameters.solution)"
 
 - task: MSBuild@1
   inputs:
-    solution: "v2/src/AzureFunctionsIntroduction.sln"
-    configuration: "Release"
+    solution: "$(Parameters.solution)"
+    configuration: "$(BuildConfiguration)"
     msbuildArguments: "/p:OutputPath=$(Build.SourcesDirectory)/Tmp"
     clean: "true"
 
