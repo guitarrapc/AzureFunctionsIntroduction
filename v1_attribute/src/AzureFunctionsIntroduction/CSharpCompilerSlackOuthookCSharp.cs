@@ -49,7 +49,7 @@ namespace AzureFunctionsIntroduction
             log.Info(resultText);
 
             // Send back with Slack Incoming Webhook
-            var message = string.IsNullOrWhiteSpace(resultText) ? "‹ó‚¾ƒjƒƒ" : resultText;
+            var message = string.IsNullOrWhiteSpace(resultText) ? "ï¿½ó‚¾ƒjï¿½ï¿½" : resultText;
             var payload = new
             {
                 channel = "#azurefunctions",

@@ -2,18 +2,14 @@ queue:
   name: Hosted VS2017
   demands: msbuild
 
-name: My Release Branch Build
+name: My PR  Build
 trigger:
   branches:
     include:
-    - releases/v1-attribute
-    exclude:
     - master
 
 variables:
   Parameters.solution: 'v1_attribute/src/AzureFunctionsIntroduction.sln'
-  Parameters.connectedServiceName: 'AzureResourceManager'
-  Parameters.WebAppName: 'AzureFunctionsIntroduction'
   BuildConfiguration: "Release"
 
 steps:
@@ -28,8 +24,3 @@ steps:
     configuration: "$(BuildConfiguration)"
     msbuildArguments: "/p:OutputPath=$(Build.SourcesDirectory)/Tmp"
     clean: "true"
-
-- task: CmdLine@1
-  inputs:
-    filename: "C:/Program Files/IIS/Microsoft Web Deploy V3/msdeploy.exe"
-    arguments: "-verb:sync -source:contentPath=$(Build.SourcesDirectory)/Tmp -dest:contentPath='$(DeploySiteName)',ComputerName='$(DeployScmUrl)',UserName='$(DeployUserName)',Password='$(DeployPassword)',AuthType='Basic'"

@@ -31,8 +31,12 @@ namespace AzureFunctionsIntroduction
 
         private static async Task<HttpResponseMessage> PostHandler(HttpRequestMessage req)
         {
-            string jsonContent = await req.Content.ReadAsStringAsync();
-            var data = JsonConvert.DeserializeObject<Input>(jsonContent);
+            var data = await req.Content.ReadAsAsync<Input>();
+
+            if (data == null)
+            {
+                return req.CreateErrorResponse(HttpStatusCode.BadRequest, "Required post data 'key' not found.");
+            }
 
             // You can access Azure Functions Portal > Application Settings setting variable.
             var envKey = data.key;
@@ -50,7 +54,10 @@ namespace AzureFunctionsIntroduction
             var input = new Input();
             var properties = typeof(Input).GetProperties().Select(x => x.Name).ToArray();
             var keyValues = req.GetQueryNameValuePairs().Where(x => properties.Contains(x.Key));
-            if (!keyValues.Any()) throw new NullReferenceException("No query Parameter 'key' not found.");
+            if (!keyValues.Any())
+            {
+                return req.CreateErrorResponse(HttpStatusCode.BadRequest, "Required query parameter 'key' not found.");
+            }
 
             // only check first key
             var keyValue = keyValues.First();
