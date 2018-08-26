@@ -4,6 +4,13 @@ This is Sample project for Azure Functions v2 attribute style, precompiled.
 
 ## Getting Started
 
+### Configure Azure Environment
+
+Use `~/Terraform/v2` within Cloud Shell
+
+[![Launch Cloud Shell](https://shell.azure.com/images/launchcloudshell.png "Launch Cloud Shell")](https://shell.azure.com)
+
+
 ### Sync remote environment variables
 
 install azure functions cli.

@@ -1,5 +1,5 @@
 locals {
-  keyvaultname = "function-v1-kv"
+  keyvaultname = "function-v2-kv"
 }
 
 resource "azurerm_key_vault" "this" {
@@ -70,11 +70,12 @@ resource "azurerm_key_vault_access_policy" "secret_readers" {
   vault_name          = "${azurerm_key_vault.this.name}"
   resource_group_name = "${azurerm_key_vault.this.resource_group_name}"
   tenant_id           = "${data.azurerm_client_config.current.tenant_id}"
-  object_id           = "${lookup(azurerm_function_app.function.identity[0], "principal_id")}"
+  object_id           = "${azurerm_function_app.function.id}"
   key_permissions     = []
 
   secret_permissions = [
     "get",
+    "list",
   ]
 
   certificate_permissions = []
