@@ -7,6 +7,14 @@ jobs:
     steps:
       - checkout
       - run:
+          name: current path
+          command: pwd
+          working_directory: ~/v2/src/AzureFunctionsIntroduction
+      - run:
+          name: Restore nuget
+          command: dotnet restore
+          working_directory: ~/v2/src/AzureFunctionsIntroduction
+      - run:
           name: Build Azure Function
           command: dotnet publish -c Release -o ../publish
           working_directory: ~/v2/src/AzureFunctionsIntroduction
@@ -19,6 +27,10 @@ jobs:
       - run:
           name: Install 7zip
           command: apt-get update && apt-get install -y p7zip-full
+      - run:
+          name: Restore nuget
+          command: dotnet restore
+          working_directory: ~/v2/src/AzureFunctionsIntroduction
       - run:
           name: Build Azure Function
           command: dotnet publish -c Release -o ../publish
