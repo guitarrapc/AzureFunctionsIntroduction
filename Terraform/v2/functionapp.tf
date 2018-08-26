@@ -36,7 +36,7 @@ resource "azurerm_function_app" "function" {
   storage_connection_string = "${azurerm_storage_account.function.primary_connection_string}"
 
   https_only = true
-  version    = "~1"
+  version    = "beta"
 
   app_settings {
     eventtrigger_slackchannel    = "azurefunctions"
