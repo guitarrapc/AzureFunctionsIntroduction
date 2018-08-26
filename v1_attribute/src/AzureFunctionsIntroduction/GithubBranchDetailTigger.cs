@@ -84,7 +84,7 @@ namespace AzureFunctionsIntroduction
                 .Select(x =>
                 {
                     var text = x.Select(y => $"{y.LastDate.ToString("g")}: {y.Name} ({y.Url})").ToArray();
-                    return $@"[info][title]{Repository}: {x.Key} ({daysPast}days past branches: {text.Count()}åè)[/title]{text.ToJoinedString(Environment.NewLine)}[/info]";
+                    return $@"[info][title]{Repository}: {x.Key} ({daysPast}days past branches: {text.Count()}ÔøΩÔøΩ)[/title]{text.ToJoinedString(Environment.NewLine)}[/info]";
                 })
                 .ToArray();
                 return values;

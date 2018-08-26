@@ -16,14 +16,6 @@ Reference | Description
 [Azure/Azure-Functions](https://github.com/Azure/Azure-Functions) | AzureFunctions official repo. You may find where to report Issue, Feature Requests, Questions and Help.
 [Microsoft Azure WebJobs SDK Quick Reference](https://jhaleyfiles2016.blob.core.windows.net/public/Azure%20WebJobs%20SDK%20Cheat%20Sheet%202014.pdf) | Web Job SDK cheat sheet.
 
-## Clone Remove AppSettings to the local
-
-```
-func azure functionapp fetch-app-settings AzureFunctionsIntroductions
-Remove-Item ./local.settings.json -Force
-Rename-Item ./appsettings.json local.settings.json -Force
-```
-
 # Precompiled functions reference
 
 Refer many samples and demo.

@@ -1,10 +1,31 @@
 ![](https://guitarrapc.visualstudio.com/_apis/public/build/definitions/7ded7c7f-85c4-4196-a2ad-92577231ccdb/3/badge)
 
-# V2 : Recommented
+## V1 with Attributed: Stable
 
-This is Sample project for Azure Functions v2, precompiled.
+This is Sample project for Azure Functions v1 attribute style, precompiled.
 
-# Samples
+## Getting Started
+
+### Sync remote environment variables
+
+install azure functions cli.
+
+```
+npm i -g azure-functions-cli
+```
+
+sync
+
+```powershell
+cd src/AzureFunctionsIntroduction
+func azure functionapp fetch-app-settings function-v1-function
+if (Test-Path local.settings.json) {Remove-Item ./local.settings.json -Force}
+Rename-Item ./appsettings.json local.settings.json -Force
+```
+
+
+
+## Samples
 
 This sample include following.
 
@@ -26,6 +47,6 @@ WebhookCSharpGithubOctokit | C# | Yes | NuGet package reference sample for Octok
 WebhookCSharpSendToChatWork | C# | Yes | Chatwork Notification Sample code.
 WebhookCSharpSendToSlack | C# | Yes | Slack Notification Sample code.
 
-# License
+## License
 
 [MIT](https://github.com/guitarrapc/AzureFunctionsIntroduction/blob/master/LICENSE)

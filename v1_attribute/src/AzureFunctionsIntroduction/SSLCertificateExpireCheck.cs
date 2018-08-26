@@ -13,7 +13,7 @@ namespace AzureFunctionsIntroduction
     {
         // Days for alarm before expired
         private static readonly TimeSpan limitDaysBefore = TimeSpan.FromDays(30);
-        // ‘ÎÛƒTƒCƒg
+        // ï¿½ÎÛƒTï¿½Cï¿½g
         private static readonly string[] sites = new[]
         {
             "https://google.com/", // Sample
