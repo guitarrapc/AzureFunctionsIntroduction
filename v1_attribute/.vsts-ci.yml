@@ -2,13 +2,11 @@ queue:
   name: Hosted VS2017
   demands: msbuild
 
-name: My Release Branch Build
+name: My Release Build
 trigger:
   branches:
     include:
-    - releases/v1-attribute
-    exclude:
-    - master
+    - release/v1-attribute
 
 variables:
   Parameters.solution: 'v1_attribute/src/AzureFunctionsIntroduction.sln'

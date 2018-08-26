@@ -2,11 +2,11 @@ queue:
   name: Hosted VS2017
   demands: msbuild
 
-name: My PR  Build
+name: My Develop Build
 trigger:
   branches:
     include:
-    - master
+    - develop/v1-attribute
 
 variables:
   Parameters.solution: 'v1_attribute/src/AzureFunctionsIntroduction.sln'
