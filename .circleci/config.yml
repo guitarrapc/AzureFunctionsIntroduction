@@ -18,8 +18,7 @@ jobs:
           command: dotnet restore
           working_directory: v2/src/AzureFunctionsIntroduction
       - save_cache:
-          key:
-            - nuget-cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "v2/src/AzureFunctionsIntroduction.csproj" }}
+          key: nuget-cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "v2/src/AzureFunctionsIntroduction.csproj" }}
           paths:
             - ~/.nuget
       - run:
