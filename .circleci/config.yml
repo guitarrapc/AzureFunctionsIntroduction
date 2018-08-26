@@ -11,6 +11,9 @@ jobs:
           command: pwd
           working_directory: ~/v2/src/AzureFunctionsIntroduction
       - run:
+          name: ls root
+          command: ls
+      - run:
           name: ls
           command: ls
           working_directory: ~/v2/src/AzureFunctionsIntroduction
