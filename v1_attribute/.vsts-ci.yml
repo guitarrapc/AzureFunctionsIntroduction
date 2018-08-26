@@ -2,6 +2,14 @@ queue:
   name: Hosted VS2017
   demands: msbuild
 
+name: My Release Branch Build
+trigger:
+  branches:
+    include:
+    - releases/v1-attribute
+    exclude:
+    - master
+
 variables:
   Parameters.solution: 'v1_attribute/src/AzureFunctionsIntroduction.sln'
   Parameters.connectedServiceName: 'AzureResourceManager'
