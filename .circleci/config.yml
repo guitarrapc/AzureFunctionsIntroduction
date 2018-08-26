@@ -58,7 +58,9 @@ workflows:
       - build:
           filters:
             branches:
-              only: develop/v2
+              only: 
+                - develop/v2
+                - release/v2
       - deploy:
           requires:
             - build
