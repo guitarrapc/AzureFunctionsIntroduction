@@ -21,7 +21,13 @@ if (Test-Path local.settings.json) {Remove-Item ./local.settings.json -Force}
 Rename-Item ./appsettings.json local.settings.json -Force
 ```
 
+## Build
 
+use Dockerfile to build .NET Core 2.0 dll.
+
+```
+docker build -t azurefunctionsintroduction .
+```
 
 ## Samples
 
