@@ -6,7 +6,7 @@ name: My Release Branch Build
 trigger:
   branches:
     include:
-    - releases/v1-attribute
+    - release/v1-attribute
     exclude:
     - master
 
