@@ -1,0 +1,20 @@
+queue:
+  name: Hosted VS2017
+  demands: msbuild
+
+variables:
+  Parameters.solution: 'v1_attribute/src/AzureFunctionsIntroduction.sln'
+  BuildConfiguration: "Release"
+
+steps:
+- task: DotNetCoreCLI@1
+  inputs:
+    command: "restore"
+    projects: "$(Parameters.solution)"
+
+- task: MSBuild@1
+  inputs:
+    solution: "$(Parameters.solution)"
+    configuration: "$(BuildConfiguration)"
+    msbuildArguments: "/p:OutputPath=$(Build.SourcesDirectory)/Tmp"
+    clean: "true"
