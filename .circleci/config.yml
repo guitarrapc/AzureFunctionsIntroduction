@@ -12,13 +12,13 @@ jobs:
           working_directory: v2/src/AzureFunctionsIntroduction
       - restore_cache:
           keys:
-            - nuget-cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "v2/src/AzureFunctionsIntroduction.csproj" }}
+            - nuget-cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "v2/src/AzureFunctionsIntroduction/AzureFunctionsIntroduction.csproj" }}
       - run:
           name: Restore nuget
           command: dotnet restore
           working_directory: v2/src/AzureFunctionsIntroduction
       - save_cache:
-          key: nuget-cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "v2/src/AzureFunctionsIntroduction.csproj" }}
+          key: nuget-cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "v2/src/AzureFunctionsIntroduction/AzureFunctionsIntroduction.csproj" }}
           paths:
             - ~/.nuget
       - run:
