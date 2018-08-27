@@ -8,7 +8,6 @@
 #   description = "Input service principal's password"
 # }
 
-
 variable "TENANT_ID" {
   description = "Input service principal's tenantid"
 }
