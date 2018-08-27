@@ -40,9 +40,9 @@ resource "azurerm_function_app" "function" {
 
   app_settings {
     eventtrigger_slackchannel            = "azurefunctions"
-    eventtriggerSlackwebhookurlSecretUri = "${azurerm_key_vault.this.vault_uri}/secrets/${azurerm_key_vault_secret.test.name}"
+    eventtriggerSlackwebhookurlSecretUri = "${azurerm_key_vault.this.vault_uri}/secrets/${azurerm_key_vault_secret.FUNCTION_APP_EVENTTRIGGER_SLACKWEBHOOKURL.name}"
     KeyVaultSecretUri                    = "${azurerm_key_vault.this.vault_uri}/secrets/${azurerm_key_vault_secret.test.name}"
-    slackIncomingWebhookUrlSecretUri     = "${azurerm_key_vault.this.vault_uri}/secrets/${azurerm_key_vault_secret.test.name}"
+    slackIncomingWebhookUrlSecretUri     = "${azurerm_key_vault.this.vault_uri}/secrets/${azurerm_key_vault_secret.FUNCTION_APP_SLACKINCOMINGWEBHOOKURL.name}"
 
     # eventtrigger_slackwebhookurl = "${data.azurerm_key_vault_secret.FUNCTION_APP_EVENTTRIGGER_SLACKWEBHOOKURL.value}"
     # SlackIncomingWebhookUrl      = "${data.azurerm_key_vault_secret.FUNCTION_APP_SLACKINCOMINGWEBHOOKURL.value}"
