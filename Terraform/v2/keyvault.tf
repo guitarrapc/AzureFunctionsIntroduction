@@ -43,33 +43,10 @@ resource "azurerm_key_vault_access_policy" "this" {
   ]
 }
 
-resource "azurerm_key_vault_access_policy" "current" {
-  vault_name          = "${azurerm_key_vault.this.name}"
-  resource_group_name = "${azurerm_key_vault.this.resource_group_name}"
-  tenant_id           = "${data.azurerm_client_config.current.tenant_id}"
-  object_id           = "${data.azurerm_client_config.current.service_principal_object_id}"
-
-  key_permissions = [
-    "list",
-    "create",
-    "get",
-  ]
-
-  secret_permissions = [
-    "list",
-    "get",
-    "set",
-  ]
-
-  certificate_permissions = [
-    "get",
-  ]
-}
-
 resource "azurerm_key_vault_access_policy" "secret_readers" {
   vault_name          = "${azurerm_key_vault.this.name}"
   resource_group_name = "${azurerm_key_vault.this.resource_group_name}"
-  tenant_id           = "${data.azurerm_client_config.current.tenant_id}"
+  tenant_id           = "${azurerm_key_vault.this.tenant_id}"
   object_id           = "${lookup(azurerm_function_app.function.identity[0], "principal_id")}"
   key_permissions     = []
 
