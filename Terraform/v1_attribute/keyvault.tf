@@ -43,6 +43,22 @@ resource "azurerm_key_vault_access_policy" "this" {
   ]
 }
 
+resource "azurerm_key_vault_access_policy" "cloudshells" {
+  count = "${length(local.CLOUD_SHELL_SP_OBJECT_ID_LIST)}"
+  vault_name          = "${azurerm_key_vault.this.name}"
+  resource_group_name = "${azurerm_key_vault.this.resource_group_name}"
+  tenant_id           = "${azurerm_key_vault.this.tenant_id}"
+  object_id           = "${local.CLOUD_SHELL_SP_OBJECT_ID_LIST[count.index]}"
+  key_permissions     = []
+
+  secret_permissions = [
+    "get",
+    "list",
+  ]
+
+  certificate_permissions = []
+}
+
 resource "azurerm_key_vault_access_policy" "secret_readers" {
   vault_name          = "${azurerm_key_vault.this.name}"
   resource_group_name = "${azurerm_key_vault.this.resource_group_name}"

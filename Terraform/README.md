@@ -4,7 +4,7 @@ This terraform aim to run on CloudShell.
 
 [![Launch Cloud Shell](https://shell.azure.com/images/launchcloudshell.png "Launch Cloud Shell")](https://shell.azure.com)
 
-## Prerequisite
+## Prerequisite for CloudShell
 
 Please create any blob storage you want to store your state.
 Run following at first time you logged in to CloudShell.
@@ -16,8 +16,11 @@ Run following at first time you logged in to CloudShell.
 $ echo "source bashrc" >> .bashrc
 $ cat << 'EOF' > bashrc
 export ARM_ACCESS_KEY=<....>
+export ARM_USE_MSI=true
 export TF_VAR_TENANT_ID=$ACC_TID
 export TF_VAR_SP_OBJECT_ID=$ACC_OID
+export TF_VAR_FUNCTION_APP_EVENTTRIGGER_SLACKWEBHOOKURL=<....>
+export TF_VAR_FUNCTION_APP_SLACKINCOMINGWEBHOOKURL=<....>
 EOF
 ```
 
@@ -32,8 +35,11 @@ if you are cloning from private repo, then use ssh auth.
 $ echo "source bashrc" >> .bashrc
 $ cat << 'EOF' > bashrc
 export ARM_ACCESS_KEY=<....>
+export ARM_USE_MSI=true
 export TF_VAR_TENANT_ID=$ACC_TID
 export TF_VAR_SP_OBJECT_ID=$ACC_OID
+export TF_VAR_FUNCTION_APP_EVENTTRIGGER_SLACKWEBHOOKURL=<....>
+export TF_VAR_FUNCTION_APP_SLACKINCOMINGWEBHOOKURL=<....>
 # ssh agent (for private repo only)
 eval $(ssh-agent -s)
 ssh-add .ssh/id_rsa

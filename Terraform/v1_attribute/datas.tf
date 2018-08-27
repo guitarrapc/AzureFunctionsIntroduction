@@ -5,10 +5,6 @@ data "azurerm_builtin_role_definition" "contributor" {
 # Current
 data "azurerm_subscription" "current" {}
 
-# Will not work with MSI.
-# Uncomment when you want to treat with localmachine.
-#data "azurerm_client_config" "current" {}
-
 # resource group
 data "azurerm_resource_group" "current" {
   name = "function-v1"

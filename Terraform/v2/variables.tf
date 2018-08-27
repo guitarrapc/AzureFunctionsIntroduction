@@ -1,12 +1,14 @@
 # Will not work with MSI.
 # Uncomment when you want to treat terraform on local machine.
-# variable "CLIENT_ID" {
-#   description = "Input service principal's appId"
-# }
+variable "CLIENT_ID" {
+  description = "Input service principal's appId"
+  default = ""
+}
 
-# variable "CLIENT_SECRET" {
-#   description = "Input service principal's password"
-# }
+variable "CLIENT_SECRET" {
+  description = "Input service principal's password"
+  default = ""
+}
 
 variable "TENANT_ID" {
   description = "Input service principal's tenantid"
