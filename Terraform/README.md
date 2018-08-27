@@ -1,15 +1,44 @@
+## TL;DR
+
+This terraform aim to run on both CloudShell and CI.
+
+Environment | Description | Use case
+---- | ---- | ----
+CloudShell | Managed Console with MSI. | Each developer's dev env.
+CI | Service Principal Id of application registration, terraform. | CI
+
+## Run on Local (service principal id for Terraform)
+
+> SAMPLE : bashrc_local
+
+```bashrc
+export ARM_ACCESS_KEY=<....>
+export ARM_USE_MSI=false
+export CLIENT_ID=<....>
+export CLIENT_SECRET=<....>
+export TENANT_ID=<....>
+export SP_OBJECT_ID=<....>
+export TF_VAR_CLIENT_ID=$CLIENT_ID
+export TF_VAR_CLIENT_SECRET=$CLIENT_SECRET
+export TF_VAR_TENANT_ID=$TENANT_ID
+export TF_VAR_SP_OBJECT_ID=$SP_OBJECT_ID
+export TF_VAR_FUNCTION_APP_EVENTTRIGGER_SLACKWEBHOOKURL=<....>
+export TF_VAR_FUNCTION_APP_SLACKINCOMINGWEBHOOKURL=<....>
+```
+
 ## Run on CloudShell
 
-This terraform aim to run on CloudShell.
 
 [![Launch Cloud Shell](https://shell.azure.com/images/launchcloudshell.png "Launch Cloud Shell")](https://shell.azure.com)
 
-## Prerequisite for CloudShell
+### Prerequisite for CloudShell
 
 Please create any blob storage you want to store your state.
 Run following at first time you logged in to CloudShell.
 
-### Public Repo
+#### Public Repo
+
+> SAMPLE : bashrc_cloudshell_public
 
 ```bashrc
 # load custom bashrc on startup
@@ -18,7 +47,7 @@ $ cat << 'EOF' > bashrc
 export ARM_ACCESS_KEY=<....>
 export ARM_USE_MSI=true
 export TF_VAR_TENANT_ID=$ACC_TID
-export TF_VAR_SP_OBJECT_ID=$ACC_OID
+export TF_VAR_SP_OBJECT_ID=<....>
 export TF_VAR_FUNCTION_APP_EVENTTRIGGER_SLACKWEBHOOKURL=<....>
 export TF_VAR_FUNCTION_APP_SLACKINCOMINGWEBHOOKURL=<....>
 EOF
@@ -26,9 +55,11 @@ EOF
 
 done! Let's try restart cloud shell.
 
-### Private Repo
+#### Private Repo
 
 if you are cloning from private repo, then use ssh auth.
+
+> SAMPLE : bashrc_cloudshell_private
 
 ```bashrc
 # load custom bashrc on startup
@@ -37,7 +68,7 @@ $ cat << 'EOF' > bashrc
 export ARM_ACCESS_KEY=<....>
 export ARM_USE_MSI=true
 export TF_VAR_TENANT_ID=$ACC_TID
-export TF_VAR_SP_OBJECT_ID=$ACC_OID
+export TF_VAR_SP_OBJECT_ID=<....>
 export TF_VAR_FUNCTION_APP_EVENTTRIGGER_SLACKWEBHOOKURL=<....>
 export TF_VAR_FUNCTION_APP_SLACKINCOMINGWEBHOOKURL=<....>
 # ssh agent (for private repo only)
@@ -67,7 +98,7 @@ $ cat ~/.ssh/id_rsa.pub
 done! Let's try restart cloud shell.
 You will find ssh-agen loaded with specified ssh key.
 
-## Git Clone
+### Git Clone
 
 Move to clouddrive and clone git repo.
 
@@ -75,8 +106,8 @@ Move to clouddrive and clone git repo.
 cd clouddrive
 ```
 
-* If you are using Public repo, you can clone repo with https.
-* If you are using Private repo, you can clone repo with ssh.
+* If you are using Public repo, you clone repo with https.
+* If you are using Private repo, you clone repo with ssh.
 
 ```shell
 $ git clone git clone https://github.com/guitarrapc/AzureFunctionsIntroduction.git
@@ -88,7 +119,7 @@ $ git clone git clone https://github.com/guitarrapc/AzureFunctionsIntroduction.g
 move to repo's terraform directory.
 
 ```shell
-$ cd AzureFunctionsIntroduction/Terraform/v2
+$ cd ~/clouddrive/AzureFunctionsIntroduction/Terraform/v2
 ```
 
 ### tfstate Blob settings
@@ -138,8 +169,9 @@ commands will detect it and remind you to do so if necessary.
 ```
 
 
-### Terraform plan
+### Terraform plan and Apply
 
 ```shell
 $ terraform plan
+$ terraform apply
 ```
