@@ -13,21 +13,29 @@ Local | Service Principal Id of application registration, terraform. | CI
 * Env : ARM_ACCESS_KEY is required for terraform's backend blob authentication.
 * Env : ARM_USE_MSI will redirect your credential with local SP and CloudShell's MSI.
 
-## Run on Local (service principal id for Terraform)
+## Run on Local (already az login)
 
-> SAMPLE : bashrc_local
+> SAMPLE : bashrc_local_azlogin
 
 ```bashrc
 export ARM_ACCESS_KEY=<....>
-export ARM_USE_MSI=false
-export CLIENT_ID=<....>
-export CLIENT_SECRET=<....>
-export TENANT_ID=<....>
-export SP_OBJECT_ID=<....>
-export TF_VAR_CLIENT_ID=$CLIENT_ID
-export TF_VAR_CLIENT_SECRET=$CLIENT_SECRET
-export TF_VAR_TENANT_ID=$TENANT_ID
-export TF_VAR_SP_OBJECT_ID=$SP_OBJECT_ID
+export TF_VAR_SP_OBJECT_ID=<....>
+export TF_VAR_FUNCTION_APP_EVENTTRIGGER_SLACKWEBHOOKURL=<....>
+export TF_VAR_FUNCTION_APP_SLACKINCOMINGWEBHOOKURL=<....>
+```
+
+
+## Run on CI (service principal id for Terraform)
+
+> SAMPLE : bashrc_serviceprincipal
+
+```bashrc
+export ARM_ACCESS_KEY=<....>
+export ARM_SUBSCRIPTION_ID=<....>
+export ARM_CLIENT_ID=<....>
+export ARM_CLIENT_SECRET=<....>
+export ARM_TENANT_ID=<....>
+export TF_VAR_SP_OBJECT_ID=<....>
 export TF_VAR_FUNCTION_APP_EVENTTRIGGER_SLACKWEBHOOKURL=<....>
 export TF_VAR_FUNCTION_APP_SLACKINCOMINGWEBHOOKURL=<....>
 ```
@@ -51,8 +59,6 @@ Run following at first time you logged in to CloudShell.
 $ echo "source bashrc" >> .bashrc
 $ cat << 'EOF' > bashrc
 export ARM_ACCESS_KEY=<....>
-export ARM_USE_MSI=true
-export TF_VAR_TENANT_ID=$ACC_TID
 export TF_VAR_SP_OBJECT_ID=<....>
 export TF_VAR_FUNCTION_APP_EVENTTRIGGER_SLACKWEBHOOKURL=<....>
 export TF_VAR_FUNCTION_APP_SLACKINCOMINGWEBHOOKURL=<....>
@@ -72,8 +78,6 @@ if you are cloning from private repo, then use ssh auth.
 $ echo "source bashrc" >> .bashrc
 $ cat << 'EOF' > bashrc
 export ARM_ACCESS_KEY=<....>
-export ARM_USE_MSI=true
-export TF_VAR_TENANT_ID=$ACC_TID
 export TF_VAR_SP_OBJECT_ID=<....>
 export TF_VAR_FUNCTION_APP_EVENTTRIGGER_SLACKWEBHOOKURL=<....>
 export TF_VAR_FUNCTION_APP_SLACKINCOMINGWEBHOOKURL=<....>

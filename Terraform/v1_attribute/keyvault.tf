@@ -11,7 +11,7 @@ resource "azurerm_key_vault" "this" {
     name = "standard"
   }
 
-  tenant_id                   = "${var.TENANT_ID}"
+  tenant_id                   = "${data.azurerm_client_config.current.tenant_id}"
   enabled_for_disk_encryption = true
 
   tags = "${merge(

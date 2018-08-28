@@ -1,8 +1,8 @@
 export ARM_ACCESS_KEY=<....>
+export ARM_SUBSCRIPTION_ID=<....>
+export ARM_CLIENT_ID=<....>
+export ARM_CLIENT_SECRET=<....>
+export ARM_TENANT_ID=<....>
 export TF_VAR_SP_OBJECT_ID=<....>
 export TF_VAR_FUNCTION_APP_EVENTTRIGGER_SLACKWEBHOOKURL=<....>
 export TF_VAR_FUNCTION_APP_SLACKINCOMINGWEBHOOKURL=<....>
-# ssh agent (for private repo only)
-eval $(ssh-agent -s)
-ssh-add .ssh/id_rsa
-ssh-add -l
