@@ -4,8 +4,9 @@ This terraform aim to run on both CloudShell and CI.
 
 Environment | Description | Use case
 ---- | ---- | ----
-CloudShell | Managed Console with MSI. | Each developer's dev env.
-Local | Service Principal Id of application registration, terraform. | CI
+CloudShell | Managed Console with MSI. | Each developer's cloud dev env.
+Local | az login credential | Each developer's local dev env.
+CI | Service Principal Id of application registration, terraform. | CI or any non-interactive env
 
 ## Notice
 
@@ -105,13 +106,6 @@ Copy ssh pub and paste to Github Public Key.
 $ cat ~/.ssh/id_rsa.pub
 ```
 
-You may required git config for git commit/push ops.
-
-```
-$ git config --global user.name "John Doe"
-$ git config --global user.email johndoe@users.noreply.github.com
-```
-
 done! Let's try restart cloud shell.
 You will find ssh-agen loaded with specified ssh key.
 
@@ -128,6 +122,13 @@ cd clouddrive
 
 ```shell
 $ git clone git clone https://github.com/guitarrapc/AzureFunctionsIntroduction.git
+```
+
+You may required git config for git commit/push ops.
+
+```
+$ git config --global user.name "John Doe"
+$ git config --global user.email johndoe@users.noreply.github.com
 ```
 
 ## Terraform Ops
