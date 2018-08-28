@@ -1,5 +1,5 @@
 locals {
-  eventgrid_name = "eventgrid-fucntion-v1"
+  eventgrid_name = "function-v1-eventgrid"
 }
 
 resource "azurerm_resource_group" "eventgridtest" {
