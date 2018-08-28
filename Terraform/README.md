@@ -5,7 +5,13 @@ This terraform aim to run on both CloudShell and CI.
 Environment | Description | Use case
 ---- | ---- | ----
 CloudShell | Managed Console with MSI. | Each developer's dev env.
-CI | Service Principal Id of application registration, terraform. | CI
+Local | Service Principal Id of application registration, terraform. | CI
+
+## Notice
+
+* terraform version : Will depends on what CloudShell supports. -> see terraform.tf
+* Env : ARM_ACCESS_KEY is required for terraform's backend blob authentication.
+* Env : ARM_USE_MSI will redirect your credential with local SP and CloudShell's MSI.
 
 ## Run on Local (service principal id for Terraform)
 
@@ -93,6 +99,13 @@ Copy ssh pub and paste to Github Public Key.
 
 ```bash
 $ cat ~/.ssh/id_rsa.pub
+```
+
+You may required git config for git commit/push ops.
+
+```
+$ git config --global user.name "John Doe"
+$ git config --global user.email johndoe@users.noreply.github.com
 ```
 
 done! Let's try restart cloud shell.
