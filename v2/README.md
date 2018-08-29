@@ -24,8 +24,7 @@ sync
 ```powershell
 cd src/AzureFunctionsIntroduction
 func azure functionapp fetch-app-settings function-v2-function
-if (Test-Path local.settings.json) {Remove-Item ./local.settings.json -Force}
-Rename-Item ./appsettings.json local.settings.json -Force
+Copy-Item ./appsettings.json local.settings.json -Force
 ```
 
 ## Build

@@ -1,15 +1,3 @@
-variable "CLIENT_ID" {
-  description = "Input service principal's appId"
-}
-
-variable "CLIENT_SECRET" {
-  description = "Input service principal's password"
-}
-
-variable "TENANT_ID" {
-  description = "Input service principal's tenantid"
-}
-
 variable "SP_OBJECT_ID" {
   description = "Input terraform service principal's objectid"
 }
