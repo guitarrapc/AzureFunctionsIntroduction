@@ -1,39 +1,87 @@
+## TL;DR
+
+This terraform aim to run on both CloudShell and CI.
+
+Environment | Description | Use case
+---- | ---- | ----
+CloudShell | Managed Console with MSI. | Each developer's cloud dev env.
+Local | az login credential | Each developer's local dev env.
+CI | Service Principal Id of application registration, terraform. | CI or any non-interactive env
+
+## Notice
+
+* terraform version : Will depends on what CloudShell supports. -> see terraform.tf
+* Env : ARM_ACCESS_KEY is required for terraform's backend blob authentication.
+* Env : ARM_USE_MSI will redirect your credential with local SP and CloudShell's MSI.
+
+## Run on Local (already az login)
+
+> SAMPLE : bashrc_local_azlogin
+
+```bashrc
+export ARM_ACCESS_KEY=<....>
+export TF_VAR_SP_OBJECT_ID=<....>
+export TF_VAR_FUNCTION_APP_EVENTTRIGGER_SLACKWEBHOOKURL=<....>
+export TF_VAR_FUNCTION_APP_SLACKINCOMINGWEBHOOKURL=<....>
+```
+
+
+## Run on CI (service principal id for Terraform)
+
+> SAMPLE : bashrc_serviceprincipal
+
+```bashrc
+export ARM_ACCESS_KEY=<....>
+export ARM_SUBSCRIPTION_ID=<....>
+export ARM_CLIENT_ID=<....>
+export ARM_CLIENT_SECRET=<....>
+export ARM_TENANT_ID=<....>
+export TF_VAR_SP_OBJECT_ID=<....>
+export TF_VAR_FUNCTION_APP_EVENTTRIGGER_SLACKWEBHOOKURL=<....>
+export TF_VAR_FUNCTION_APP_SLACKINCOMINGWEBHOOKURL=<....>
+```
+
 ## Run on CloudShell
 
-This terraform aim to run on CloudShell.
 
 [![Launch Cloud Shell](https://shell.azure.com/images/launchcloudshell.png "Launch Cloud Shell")](https://shell.azure.com)
 
-## Prerequisite
+### Prerequisite for CloudShell
 
 Please create any blob storage you want to store your state.
 Run following at first time you logged in to CloudShell.
 
-### Public Repo
+#### Public Repo
+
+> SAMPLE : bashrc_cloudshell_public
 
 ```bashrc
 # load custom bashrc on startup
 $ echo "source bashrc" >> .bashrc
 $ cat << 'EOF' > bashrc
 export ARM_ACCESS_KEY=<....>
-export TF_VAR_TENANT_ID=$ACC_TID
-export TF_VAR_SP_OBJECT_ID=$ACC_OID
+export TF_VAR_SP_OBJECT_ID=<....>
+export TF_VAR_FUNCTION_APP_EVENTTRIGGER_SLACKWEBHOOKURL=<....>
+export TF_VAR_FUNCTION_APP_SLACKINCOMINGWEBHOOKURL=<....>
 EOF
 ```
 
 done! Let's try restart cloud shell.
 
-### Private Repo
+#### Private Repo
 
 if you are cloning from private repo, then use ssh auth.
+
+> SAMPLE : bashrc_cloudshell_private
 
 ```bashrc
 # load custom bashrc on startup
 $ echo "source bashrc" >> .bashrc
 $ cat << 'EOF' > bashrc
 export ARM_ACCESS_KEY=<....>
-export TF_VAR_TENANT_ID=$ACC_TID
-export TF_VAR_SP_OBJECT_ID=$ACC_OID
+export TF_VAR_SP_OBJECT_ID=<....>
+export TF_VAR_FUNCTION_APP_EVENTTRIGGER_SLACKWEBHOOKURL=<....>
+export TF_VAR_FUNCTION_APP_SLACKINCOMINGWEBHOOKURL=<....>
 # ssh agent (for private repo only)
 eval $(ssh-agent -s)
 ssh-add .ssh/id_rsa
@@ -61,7 +109,7 @@ $ cat ~/.ssh/id_rsa.pub
 done! Let's try restart cloud shell.
 You will find ssh-agen loaded with specified ssh key.
 
-## Git Clone
+### Git Clone
 
 Move to clouddrive and clone git repo.
 
@@ -69,11 +117,18 @@ Move to clouddrive and clone git repo.
 cd clouddrive
 ```
 
-* If you are using Public repo, you can clone repo with https.
-* If you are using Private repo, you can clone repo with ssh.
+* If you are using Public repo, you clone repo with https.
+* If you are using Private repo, you clone repo with ssh.
 
 ```shell
 $ git clone git clone https://github.com/guitarrapc/AzureFunctionsIntroduction.git
+```
+
+You may required git config for git commit/push ops.
+
+```
+$ git config --global user.name "John Doe"
+$ git config --global user.email johndoe@users.noreply.github.com
 ```
 
 ## Terraform Ops
@@ -82,7 +137,7 @@ $ git clone git clone https://github.com/guitarrapc/AzureFunctionsIntroduction.g
 move to repo's terraform directory.
 
 ```shell
-$ cd AzureFunctionsIntroduction/Terraform/v2
+$ cd ~/clouddrive/AzureFunctionsIntroduction/Terraform/v2
 ```
 
 ### tfstate Blob settings
@@ -132,8 +187,9 @@ commands will detect it and remind you to do so if necessary.
 ```
 
 
-### Terraform plan
+### Terraform plan and Apply
 
 ```shell
 $ terraform plan
+$ terraform apply
 ```
