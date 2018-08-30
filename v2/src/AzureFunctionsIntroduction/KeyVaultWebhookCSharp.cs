@@ -30,7 +30,7 @@ namespace AzureFunctionsIntroduction
             // 5. Deploy App and try access to the FunctionUri!
             var azureServiceTokenProvider = new AzureServiceTokenProvider();
             var kvClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(azureServiceTokenProvider.KeyVaultTokenCallback), client);
-            var secret = (await kvClient.GetSecretAsync(EnvironmentHelper.GetOrDefault("KeyVaultSecretUri", ""))).Value;
+            var secret = (await kvClient.GetSecretAsync(EnvironmentHelper.GetOrDefault(AppSettings.EnvKeyVaultSecretUri, ""))).Value;
             return req.CreateResponse(HttpStatusCode.OK, new
             {
                 Value = secret,

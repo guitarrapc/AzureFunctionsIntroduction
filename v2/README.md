@@ -35,6 +35,12 @@ use Dockerfile to build .NET Core 2.0 dll.
 docker build -t azurefunctionsintroduction .
 ```
 
+## Deployment
+
+v2 deployment is done with [Deploying from a zip file](https://github.com/projectkudu/kudu/wiki/Deploying-from-a-zip-file).
+
+ref: https://docs.microsoft.com/en-us/azure/azure-functions/deployment-zip-push
+
 ## Samples
 
 This sample include following.

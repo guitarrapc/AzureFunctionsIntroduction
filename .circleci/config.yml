@@ -55,7 +55,7 @@ jobs:
           working_directory: v2/src/AzureFunctionsIntroduction
       - run:
           name: Push to App Service
-          command: curl -X POST -u $SITE_USER:$SITE_PASS --data-binary @artifact.zip https://$FUNCTION_NAME.scm.azurewebsites.net/api/zipdeploy
+          command: curl -X POST -u $SITE_USER:$SITE_PASS --data-binary @artifact.zip https://$FUNCTION_NAME.scm.azurewebsites.net/api/zipdeploy?isAsync=true
           working_directory: v2/src/AzureFunctionsIntroduction
 
 workflows:
