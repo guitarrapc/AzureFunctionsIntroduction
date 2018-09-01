@@ -39,6 +39,9 @@ resource "azurerm_function_app" "function" {
   version    = "~1"
 
   app_settings {
+    # ZipDeploy with Run From Package : https://github.com/Azure/app-service-announcements/issues/110
+    WEBSITE_RUN_FROM_ZIP = 1
+
     eventtrigger_slackchannel            = "azurefunctions"
     eventtriggerSlackwebhookurlSecretUri = "${azurerm_key_vault.this.vault_uri}/secrets/${azurerm_key_vault_secret.FUNCTION_APP_EVENTTRIGGER_SLACKWEBHOOKURL.name}"
     KeyVaultSecretUri                    = "${azurerm_key_vault.this.vault_uri}/secrets/${azurerm_key_vault_secret.test.name}"
