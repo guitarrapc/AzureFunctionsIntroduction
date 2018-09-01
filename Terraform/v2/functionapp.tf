@@ -36,14 +36,21 @@ resource "azurerm_function_app" "function" {
   storage_connection_string = "${azurerm_storage_account.function.primary_connection_string}"
 
   https_only = true
-  version    = "~1"
+  version    = "beta"
 
   app_settings {
-    eventtrigger_slackchannel            = "azurefunctions"
-    eventtriggerSlackwebhookurlSecretUri = "${azurerm_key_vault.this.vault_uri}/secrets/${azurerm_key_vault_secret.FUNCTION_APP_EVENTTRIGGER_SLACKWEBHOOKURL.name}"
-    KeyVaultSecretUri                    = "${azurerm_key_vault.this.vault_uri}/secrets/${azurerm_key_vault_secret.test.name}"
-    slackIncomingWebhookUrlSecretUri     = "${azurerm_key_vault.this.vault_uri}/secrets/${azurerm_key_vault_secret.FUNCTION_APP_SLACKINCOMINGWEBHOOKURL.name}"
+    # As of 2.0.1-beta.26 a worker runtime setting is required.
+    FUNCTIONS_WORKER_RUNTIME                       = "dotnet"
+    eventtrigger_slackchannel                      = "azurefunctions"
+    key_vault_eventtriggerSlackwebhookurlSecretUri = "${azurerm_key_vault.this.vault_uri}secrets/${local.vault_secret_name_FUNCTION_APP_EVENTTRIGGER_SLACKWEBHOOKURL}"
+    key_vault_secret_uri                           = "${azurerm_key_vault.this.vault_uri}secrets/${local.vault_secret_name_test}"
+    key_vault_slackIncomingWebhookUrlSecretUri     = "${azurerm_key_vault.this.vault_uri}secrets/${local.vault_secret_name_FUNCTION_APP_SLACKINCOMINGWEBHOOKURL}"
+    key_vault_sas_blob_item_connection_string      = "${azurerm_key_vault.this.vault_uri}secrets/${local.vault_secret_name_FUNCTION_SAS_BLOB_ITEM_CONNECTION_STRING}"
+    sas_blob_item_primary_endpoint                 = "${azurerm_storage_account.blob.primary_blob_endpoint}"
+    sas_blob_item_container                        = "${azurerm_storage_container.blob.name}"
+    sas_blob_item_name                             = "${azurerm_storage_blob.blob.name}"
 
+    # Incase you want set secret directly from KeyVault.
     # eventtrigger_slackwebhookurl = "${data.azurerm_key_vault_secret.FUNCTION_APP_EVENTTRIGGER_SLACKWEBHOOKURL.value}"
     # SlackIncomingWebhookUrl      = "${data.azurerm_key_vault_secret.FUNCTION_APP_SLACKINCOMINGWEBHOOKURL.value}"
   }
@@ -52,7 +59,9 @@ resource "azurerm_function_app" "function" {
     type = "SystemAssigned"
   }
 
-  depends_on = ["azurerm_key_vault_secret.FUNCTION_APP_EVENTTRIGGER_SLACKWEBHOOKURL", "azurerm_key_vault_secret.FUNCTION_APP_SLACKINCOMINGWEBHOOKURL"]
+  depends_on = [
+    "azurerm_key_vault.this",
+  ]
 
   tags = "${merge(
         var.common_tags,

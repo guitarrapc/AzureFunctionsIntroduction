@@ -1,16 +1,15 @@
-![](https://guitarrapc.visualstudio.com/_apis/public/build/definitions/7ded7c7f-85c4-4196-a2ad-92577231ccdb/3/badge)
+## V2
 
-## V1 with Attributed: Stable
-
-This is Sample project for Azure Functions v1 attribute style, precompiled.
+This is Sample project for Azure Functions v2 attribute style, precompiled.
 
 ## Getting Started
 
 ### Configure Azure Environment
 
-Use `~/Terraform/v1_attribute` within Cloud Shell
+Use `~/Terraform/v2` within Cloud Shell
 
 [![Launch Cloud Shell](https://shell.azure.com/images/launchcloudshell.png "Launch Cloud Shell")](https://shell.azure.com)
+
 
 ### Sync remote environment variables
 
@@ -24,12 +23,23 @@ sync
 
 ```powershell
 cd src/AzureFunctionsIntroduction
-func azure functionapp fetch-app-settings function-v1-function
-if (Test-Path local.settings.json) {Remove-Item ./local.settings.json -Force}
-Rename-Item ./appsettings.json local.settings.json -Force
+func azure functionapp fetch-app-settings function-v2-function
+Copy-Item ./appsettings.json local.settings.json -Force
 ```
 
+## Build
 
+use Dockerfile to build .NET Core 2.0 dll.
+
+```
+docker build -t azurefunctionsintroduction .
+```
+
+## Deployment
+
+v2 deployment is done with [Deploying from a zip file](https://github.com/projectkudu/kudu/wiki/Deploying-from-a-zip-file).
+
+ref: https://docs.microsoft.com/en-us/azure/azure-functions/deployment-zip-push
 
 ## Samples
 
