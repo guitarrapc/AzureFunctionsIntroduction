@@ -7,7 +7,7 @@ trigger:
 variables:
   Parameters.solution: 'v1_attribute/src/AzureFunctionsIntroduction.sln'
   Parameters.connectedServiceName: 'AzureResourceManager'
-  Parameters.WebAppName: 'AzureFunctionsIntroduction'
+  Parameters.WebAppName: 'function-v1-function'
   BuildConfiguration: "Release"
 
 phases:
