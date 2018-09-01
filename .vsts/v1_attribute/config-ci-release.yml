@@ -1,23 +1,22 @@
-phases:
-
 name: Release Build
 trigger:
   branches:
     include:
     - release/v1-attribute
 
+variables:
+  Parameters.solution: 'v1_attribute/src/AzureFunctionsIntroduction.sln'
+  Parameters.connectedServiceName: 'AzureResourceManager'
+  Parameters.WebAppName: 'AzureFunctionsIntroduction'
+  BuildConfiguration: "Release"
+
+phases:
+
 - phase: build_windows_agent
   displayName: Windows Agent
   queue:
     name: Hosted VS2017
     demands: msbuild
-
-
-  variables:
-    Parameters.solution: 'v1_attribute/src/AzureFunctionsIntroduction.sln'
-    Parameters.connectedServiceName: 'AzureResourceManager'
-    Parameters.WebAppName: 'AzureFunctionsIntroduction'
-    BuildConfiguration: "Release"
 
   steps:
   - task: DotNetCoreCLI@1
