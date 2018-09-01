@@ -7,7 +7,7 @@ trigger:
 variables:
   Parameters.solution: 'v1_attribute/src/AzureFunctionsIntroduction.sln'
   Parameters.connectedServiceName: 'AzureResourceManager'
-  Parameters.WebAppName: 'AzureFunctionsIntroduction'
+  WebAppName: 'function-v1-function'
   BuildConfiguration: "Release"
 
 phases:
@@ -36,16 +36,31 @@ phases:
   - task: ArchiveFiles@2
     displayName: 'Archive $(build.artifactstagingdirectory)'
     inputs:
-      rootFolderOrFile: '$(build.artifactstagingdirectory)'
+      rootFolderOrFile: '$(build.SourcesDirectory)/Tmp'
       archiveFile: '$(Build.ArtifactStagingDirectory)/artifact.zip'
+      includeRootFolder: false
 
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact: drop'
+    inputs:
+      PathtoPublish: '$(build.artifactstagingdirectory)'
 
   - powershell: |
-    $username = $env:DeployUserName
-    $password = $env:DeployPassword
-    $filePath = "$($env:Build.ArtifactStagingDirectory)/artifact.zip"
-    $apiUrl = "https://$($env:Parameters.WebAppName).scm.azurewebsites.net/api/zipdeploy"
-    $base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f $username, $password)))
-    $userAgent = "powershell/1.0"
-    Invoke-RestMethod -Uri $apiUrl -Headers @{Authorization=("Basic {0}" -f $base64AuthInfo)} -UserAgent $userAgent -Method POST -InFile $filePath -ContentType "multipart/form-data" 
-    displayName: 'PowerShell Script'
+      $username = $env:DeployUserName
+      $password = $env:DeployPassword
+      $filePath = "$($env:Build_ArtifactStagingDirectory)/artifact.zip"
+      $apiUrl = "https://$env:WebAppName.scm.azurewebsites.net/api/zipdeploy"
+      echo "username : $username"
+      echo "password : $password"
+      echo "filePath : $filePath"
+      echo "apiUrl : $apiUrl"
+
+  - powershell: |
+      $username = $env:DeployUserName
+      $password = $env:DeployPassword
+      $filePath = "$($env:Build_ArtifactStagingDirectory)/artifact.zip"
+      $apiUrl = "https://$env:WebAppName.scm.azurewebsites.net/api/zipdeploy"
+      $base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f $username, $password)))
+      $userAgent = "powershell/1.0"
+      Invoke-RestMethod -Uri $apiUrl -Headers @{Authorization=("Basic {0}" -f $base64AuthInfo)} -UserAgent $userAgent -Method POST -InFile $filePath -ContentType "multipart/form-data" 
+    displayName: 'deploy'
