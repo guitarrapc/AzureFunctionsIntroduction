@@ -23,17 +23,17 @@ variables:
 
 steps:
 - task: NuGetToolInstaller@0
-  displayName: 'Use NuGet 4.3.0'
+  displayName: nuget tool installer
   inputs:
     checkLatest: true
 
 - task: NuGetCommand@2
-  displayName: 'NuGet restore'
+  displayName: restore
   inputs:
     restoreSolution: '$(Parameters.solution)'
 
 - task: VSBuild@1
-  displayName: 'Build solution **\*.sln'
+  displayName: build
   inputs:
     solution: '$(Parameters.solution)'
     msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:PackageLocation="$(build.artifactstagingdirectory)/$(Parameters.WebAppName).zip"'
@@ -42,7 +42,7 @@ steps:
 
 
 - task: AzureRmWebAppDeployment@2
-  displayName: 'Azure App Service Deploy: function-v1-function'
+  displayName: deploy
   inputs:
     ConnectedServiceName: '$(Parameters.connectedServiceName)'
     WebAppName: '$(Parameters.WebAppName)'

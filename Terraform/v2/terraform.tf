@@ -4,7 +4,7 @@ terraform {
   backend "azurerm" {
     storage_account_name = "terraformguitarrapc"
     container_name       = "azurefunctionsintroduction"
-    key                  = "azure/v1-attribute/terraform.tfstate"
+    key                  = "azure/v2/terraform.tfstate"
     resource_group_name  = "terraform"
   }
 }

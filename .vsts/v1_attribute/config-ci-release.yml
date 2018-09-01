@@ -1,0 +1,51 @@
+name: Release Build
+trigger:
+  branches:
+    include:
+    - release/v1-attribute
+
+variables:
+  Parameters.solution: 'v1_attribute/src/AzureFunctionsIntroduction.sln'
+  Parameters.connectedServiceName: 'AzureResourceManager'
+  Parameters.WebAppName: 'AzureFunctionsIntroduction'
+  BuildConfiguration: "Release"
+
+phases:
+
+- phase: build_windows_agent
+  displayName: Windows Agent
+  queue:
+    name: Hosted VS2017
+    demands: msbuild
+
+  steps:
+  - task: DotNetCoreCLI@1
+    displayName: restore
+    inputs:
+      command: "restore"
+      projects: "$(Parameters.solution)"
+
+  - task: MSBuild@1
+    displayName: build
+    inputs:
+      solution: "$(Parameters.solution)"
+      configuration: "$(BuildConfiguration)"
+      msbuildArguments: "/p:OutputPath=$(Build.SourcesDirectory)/Tmp"
+      clean: "true"
+
+  - task: ArchiveFiles@2
+    displayName: 'Archive $(build.artifactstagingdirectory)'
+    inputs:
+      rootFolderOrFile: '$(build.artifactstagingdirectory)'
+      archiveFile: '$(Build.ArtifactStagingDirectory)/artifact.zip'
+
+
+  - powershell: |
+    $username = $env:DeployUserName
+    $password = $env:DeployPassword
+    $filePath = "$($env:Build.ArtifactStagingDirectory)/artifact.zip"
+    $apiUrl = "https://$($env:Parameters.WebAppName).scm.azurewebsites.net/api/zipdeploy"
+    $base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f $username, $password)))
+    $userAgent = "powershell/1.0"
+    Invoke-RestMethod -Uri $apiUrl -Headers @{Authorization=("Basic {0}" -f $base64AuthInfo)} -UserAgent $userAgent -Method POST -InFile $filePath -ContentType "multipart/form-data" 
+    displayName: 'PowerShell Script'
