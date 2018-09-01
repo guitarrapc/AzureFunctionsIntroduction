@@ -55,6 +55,11 @@ jobs:
     working_directory: ~/AzureFunctionsIntroduction
     steps:
       - restore_cache:
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          keys:
+            - v1-nuget-cache-{{ arch }}-{{ .Branch }}-{{ checksum "v2/src/AzureFunctionsIntroduction/AzureFunctionsIntroduction.csproj" }}
+      - restore_cache:
           keys: 
             - v1-build-v1-{{ arch }}-{{ .Branch }}-{{ checksum "v2/src/AzureFunctionsIntroduction/../publish" }}
       - run:
