@@ -1,54 +1,70 @@
 version: 2
 jobs:
+  checkout_code:
+    docker:
+      - image: microsoft/dotnet:sdk
+    working_directory: ~/project
+    steps:
+      - checkout
+      - save_cache:
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - ~/circleci-demo-workflows
+
+  restore:
+    docker:
+      - image: microsoft/dotnet:sdk
+    working_directory: ~/project
+    steps:
+      - restore_cache:
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          keys:
+            - v1-nuget-cache-{{ arch }}-{{ .Branch }}-{{ checksum "v2/src/AzureFunctionsIntroduction/AzureFunctionsIntroduction.csproj" }}
+      - run:
+          name: Restore nuget
+          command: dotnet restore
+          working_directory: v2/src/AzureFunctionsIntroduction
+      - save_cache:
+          key: v1-nuget-cache-{{ arch }}-{{ .Branch }}-{{ checksum "v2/src/AzureFunctionsIntroduction/AzureFunctionsIntroduction.csproj" }}
+          paths:
+            - ~/.nuget
+
   build:
     docker:
       - image: microsoft/dotnet:sdk
     working_directory: ~/project
     steps:
-      - checkout
-      - run:
-          name: current path
-          command: pwd && ls
-          working_directory: v2/src/AzureFunctionsIntroduction
+      - restore_cache:
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
       - restore_cache:
           keys:
-            - nuget-cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "v2/src/AzureFunctionsIntroduction/AzureFunctionsIntroduction.csproj" }}
+            - v1-nuget-cache-{{ arch }}-{{ .Branch }}-{{ checksum "v2/src/AzureFunctionsIntroduction/AzureFunctionsIntroduction.csproj" }}
       - run:
-          name: Restore nuget
-          command: dotnet restore
-          working_directory: v2/src/AzureFunctionsIntroduction
-      - save_cache:
-          key: nuget-cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "v2/src/AzureFunctionsIntroduction/AzureFunctionsIntroduction.csproj" }}
-          paths:
-            - ~/.nuget
-      - run:
-          name: Build Azure Function
+          name: Build
           command: dotnet publish -c Release -o ../publish
           working_directory: v2/src/AzureFunctionsIntroduction
+      - save_cache:
+          key: v1-build-v1-{{ arch }}-{{ .Branch }}-{{ checksum "v2/src/AzureFunctionsIntroduction/AzureFunctionsIntroduction.csproj" }}
+          paths:
+            - ~/.nuget
+
   deploy:
     docker:
       - image: microsoft/dotnet:sdk
     working_directory: ~/project
     steps:
-      - checkout
+      - restore_cache:
+          key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+          keys:
+            - v1-nuget-cache-{{ arch }}-{{ .Branch }}-{{ checksum "v2/src/AzureFunctionsIntroduction/AzureFunctionsIntroduction.csproj" }}
+      - restore_cache:
+          keys: 
+            - v1-build-v1-{{ arch }}-{{ .Branch }}-{{ checksum "v2/src/AzureFunctionsIntroduction/AzureFunctionsIntroduction.csproj" }}
       - run:
           name: Install 7zip
           command: apt-get update && apt-get install -y p7zip-full
-      - restore_cache:
-          keys:
-            - nuget-cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "v2/src/AzureFunctionsIntroduction/AzureFunctionsIntroduction.csproj" }}
-      - run:
-          name: Restore nuget
-          command: dotnet restore
-          working_directory: v2/src/AzureFunctionsIntroduction
-      - save_cache:
-          key: nuget-cache-v1-{{ arch }}-{{ .Branch }}-{{ checksum "v2/src/AzureFunctionsIntroduction/AzureFunctionsIntroduction.csproj" }}
-          paths:
-            - ~/.nuget
-      - run:
-          name: Build Azure Function
-          command: dotnet publish -c Release -o publish
-          working_directory: v2/src/AzureFunctionsIntroduction
       - run:
           name: Pack to Zip
           command: 7z a artifact.zip ./publish/*
@@ -62,7 +78,23 @@ workflows:
   version: 2
   build_and_deploy:
     jobs:
+      - checkout_code:
+          filters:
+            branches:
+              only: 
+                - develop/v2
+                - release/v2
+      - restore:
+          requires:
+            - checkout_code
+          filters:
+            branches:
+              only: 
+                - develop/v2
+                - release/v2
       - build:
+          requires:
+            - restore
           filters:
             branches:
               only: 
