@@ -1,0 +1,39 @@
+phases:
+- phase: build_windows_agent
+  displayName: Windows Agent
+  queue:
+    name: Hosted VS2017
+    demands: msbuild
+
+  name: Release Build
+  trigger:
+    branches:
+      include:
+      - release/v1-attribute
+
+  variables:
+    Parameters.solution: 'v1_attribute/src/AzureFunctionsIntroduction.sln'
+    Parameters.connectedServiceName: 'AzureResourceManager'
+    Parameters.WebAppName: 'AzureFunctionsIntroduction'
+    BuildConfiguration: "Release"
+
+  steps:
+  - task: DotNetCoreCLI@1
+    displayName: restore
+    inputs:
+      command: "restore"
+      projects: "$(Parameters.solution)"
+
+  - task: MSBuild@1
+    displayName: build
+    inputs:
+      solution: "$(Parameters.solution)"
+      configuration: "$(BuildConfiguration)"
+      msbuildArguments: "/p:OutputPath=$(Build.SourcesDirectory)/Tmp"
+      clean: "true"
+
+  - task: CmdLine@1
+    displayName: deploy
+    inputs:
+      filename: "C:/Program Files/IIS/Microsoft Web Deploy V3/msdeploy.exe"
+      arguments: "-verb:sync -source:contentPath=$(Build.SourcesDirectory)/Tmp -dest:contentPath='$(DeploySiteName)',ComputerName='$(DeployScmUrl)',UserName='$(DeployUserName)',Password='$(DeployPassword)',AuthType='Basic'"
