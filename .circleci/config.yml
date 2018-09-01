@@ -19,7 +19,7 @@ jobs:
             - ~/.nuget
       - run:
           name: Build
-          command: dotnet publish -c Release -o ../publish
+          command: dotnet publish -c Release -o publish
           working_directory: v2/src/AzureFunctionsIntroduction
 
   deploy:
@@ -41,7 +41,7 @@ jobs:
             - ~/.nuget
       - run:
           name: Build
-          command: dotnet publish -c Release -o ../publish
+          command: dotnet publish -c Release -o publish
           working_directory: v2/src/AzureFunctionsIntroduction
       - run:
           name: Install 7zip
@@ -51,9 +51,9 @@ jobs:
           command: 7z a artifact.zip ./publish/*
           working_directory: v2/src/AzureFunctionsIntroduction
       - run:
-          name: Push to App Service
+          name: Zipdeploy FunctionApp
           command: curl -X POST -u $SITE_USER:$SITE_PASS --data-binary @artifact.zip https://$FUNCTION_NAME.scm.azurewebsites.net/api/zipdeploy?isAsync=true
-          working_directory: v2/src/AzureFunctionsIntroduction/bin/publish
+          working_directory: v2/src/AzureFunctionsIntroduction
 
 workflows:
   version: 2
