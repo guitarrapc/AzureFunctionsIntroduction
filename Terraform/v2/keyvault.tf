@@ -44,7 +44,7 @@ resource "azurerm_key_vault_access_policy" "this" {
 }
 
 resource "azurerm_key_vault_access_policy" "cloudshells" {
-  count = "${length(local.CLOUD_SHELL_SP_OBJECT_ID_LIST)}"
+  count               = "${length(local.CLOUD_SHELL_SP_OBJECT_ID_LIST)}"
   vault_name          = "${azurerm_key_vault.this.name}"
   resource_group_name = "${azurerm_key_vault.this.resource_group_name}"
   tenant_id           = "${azurerm_key_vault.this.tenant_id}"
@@ -58,7 +58,6 @@ resource "azurerm_key_vault_access_policy" "cloudshells" {
 
   certificate_permissions = []
 }
-
 
 resource "azurerm_key_vault_access_policy" "secret_readers" {
   vault_name          = "${azurerm_key_vault.this.name}"
@@ -78,7 +77,7 @@ resource "azurerm_key_vault_access_policy" "secret_readers" {
 }
 
 resource "azurerm_key_vault_secret" "test" {
-  name      = "test"
+  name      = "${local.vault_secret_name_test}"
   value     = "1234"
   vault_uri = "${azurerm_key_vault.this.vault_uri}"
 
@@ -91,7 +90,7 @@ resource "azurerm_key_vault_secret" "test" {
 }
 
 resource "azurerm_key_vault_secret" "FUNCTION_APP_EVENTTRIGGER_SLACKWEBHOOKURL" {
-  name      = "functionappeventtriggerslackwebhookurl"
+  name      = "${local.vault_secret_name_FUNCTION_APP_EVENTTRIGGER_SLACKWEBHOOKURL}"
   value     = "${var.FUNCTION_APP_EVENTTRIGGER_SLACKWEBHOOKURL}"
   vault_uri = "${azurerm_key_vault.this.vault_uri}"
 
@@ -104,11 +103,27 @@ resource "azurerm_key_vault_secret" "FUNCTION_APP_EVENTTRIGGER_SLACKWEBHOOKURL" 
 }
 
 resource "azurerm_key_vault_secret" "FUNCTION_APP_SLACKINCOMINGWEBHOOKURL" {
-  name      = "functionappslackincomingwebhookurl"
+  name      = "${local.vault_secret_name_FUNCTION_APP_SLACKINCOMINGWEBHOOKURL}"
   value     = "${var.FUNCTION_APP_SLACKINCOMINGWEBHOOKURL}"
   vault_uri = "${azurerm_key_vault.this.vault_uri}"
 
   depends_on = ["azurerm_key_vault.this"]
+
+  tags = "${merge(
+        var.common_tags,
+        local.common_tags,
+    )}"
+}
+
+resource "azurerm_key_vault_secret" "FUNCTION_SAS_BLOB_ITEM_CONNECTION_STRING" {
+  name      = "${local.vault_secret_name_FUNCTION_SAS_BLOB_ITEM_CONNECTION_STRING}"
+  value     = "${azurerm_storage_account.blob.primary_connection_string}"
+  vault_uri = "${azurerm_key_vault.this.vault_uri}"
+
+  depends_on = [
+    "azurerm_key_vault.this",
+    "azurerm_storage_account.blob",
+  ]
 
   tags = "${merge(
         var.common_tags,

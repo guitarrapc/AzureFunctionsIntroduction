@@ -24,8 +24,7 @@ sync
 ```powershell
 cd src/AzureFunctionsIntroduction
 func azure functionapp fetch-app-settings function-v2-function
-if (Test-Path local.settings.json) {Remove-Item ./local.settings.json -Force}
-Rename-Item ./appsettings.json local.settings.json -Force
+Copy-Item ./appsettings.json local.settings.json -Force
 ```
 
 ## Build
@@ -35,6 +34,12 @@ use Dockerfile to build .NET Core 2.0 dll.
 ```
 docker build -t azurefunctionsintroduction .
 ```
+
+## Deployment
+
+v2 deployment is done with [Deploying from a zip file](https://github.com/projectkudu/kudu/wiki/Deploying-from-a-zip-file).
+
+ref: https://docs.microsoft.com/en-us/azure/azure-functions/deployment-zip-push
 
 ## Samples
 
