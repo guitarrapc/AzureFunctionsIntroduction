@@ -6,7 +6,7 @@ trigger:
 
 variables:
   Parameters.solution: 'v1_attribute/src/AzureFunctionsIntroduction.sln'
-  BuildConfiguration: "Release"
+  BuildConfiguration: "Debug"
 
 phases:
 
