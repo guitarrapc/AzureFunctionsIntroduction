@@ -6,7 +6,7 @@ trigger:
 
 variables:
   Parameters.solution: 'v1_attribute/src/AzureFunctionsIntroduction.sln'
-  BuildConfiguration: "Release"
+  BuildConfiguration: "Debug"
 
 phases:
 
@@ -28,5 +28,11 @@ phases:
     inputs:
       solution: "$(Parameters.solution)"
       configuration: "$(BuildConfiguration)"
-      msbuildArguments: "/p:OutputPath=$(Build.SourcesDirectory)/Tmp"
+      msbuildArguments: "/p:OutputPath=$(Build.artifactstagingdirectory)"
       clean: "true"
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact: drop'
+    inputs:
+      PathtoPublish: '$(build.artifactstagingdirectory)'
+
