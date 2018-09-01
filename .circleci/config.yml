@@ -47,7 +47,7 @@ jobs:
       - save_cache:
           key: v1-build-v1-{{ arch }}-{{ .Branch }}-{{ checksum "v2/src/AzureFunctionsIntroduction/AzureFunctionsIntroduction.csproj" }}
           paths:
-            - ~/.nuget
+            - v2/src/AzureFunctionsIntroduction/../publish
 
   deploy:
     docker:
@@ -72,7 +72,7 @@ jobs:
       - run:
           name: Push to App Service
           command: curl -X POST -u $SITE_USER:$SITE_PASS --data-binary @artifact.zip https://$FUNCTION_NAME.scm.azurewebsites.net/api/zipdeploy?isAsync=true
-          working_directory: v2/src/AzureFunctionsIntroduction
+          working_directory: v2/src/AzureFunctionsIntroduction/bin/publish
 
 workflows:
   version: 2
