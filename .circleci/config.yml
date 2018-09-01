@@ -3,7 +3,7 @@ jobs:
   checkout_code:
     docker:
       - image: microsoft/dotnet:sdk
-    working_directory: ~/project
+    working_directory: ~/AzureFunctionsIntroduction
     steps:
       - checkout
       - save_cache:
@@ -14,7 +14,7 @@ jobs:
   restore:
     docker:
       - image: microsoft/dotnet:sdk
-    working_directory: ~/project
+    working_directory: ~/AzureFunctionsIntroduction
     steps:
       - restore_cache:
           key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
@@ -33,7 +33,7 @@ jobs:
   build:
     docker:
       - image: microsoft/dotnet:sdk
-    working_directory: ~/project
+    working_directory: ~/AzureFunctionsIntroduction
     steps:
       - restore_cache:
           key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
@@ -52,7 +52,7 @@ jobs:
   deploy:
     docker:
       - image: microsoft/dotnet:sdk
-    working_directory: ~/project
+    working_directory: ~/AzureFunctionsIntroduction
     steps:
       - restore_cache:
           key: v1-repo-{{ .Environment.CIRCLE_SHA1 }}
