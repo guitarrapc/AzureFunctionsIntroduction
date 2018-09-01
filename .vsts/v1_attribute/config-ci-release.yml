@@ -38,6 +38,7 @@ phases:
     inputs:
       rootFolderOrFile: '$(build.SourcesDirectory)/Tmp'
       archiveFile: '$(Build.ArtifactStagingDirectory)/artifact.zip'
+      includeRootFolder: false
 
   - task: PublishBuildArtifacts@1
     displayName: 'Publish Artifact: drop'
@@ -47,7 +48,7 @@ phases:
   - powershell: |
       $username = $env:DeployUserName
       $password = $env:DeployPassword
-      $filePath = "$($env:Build.ArtifactStagingDirectory)/artifact.zip"
+      $filePath = "$($env:Build_ArtifactStagingDirectory)/artifact.zip"
       $apiUrl = "https://$env:WebAppName.scm.azurewebsites.net/api/zipdeploy"
       echo "username : $username"
       echo "password : $password"
@@ -57,7 +58,7 @@ phases:
   - powershell: |
       $username = $env:DeployUserName
       $password = $env:DeployPassword
-      $filePath = "$($env:Build.ArtifactStagingDirectory)/artifact.zip"
+      $filePath = "$($env:Build_ArtifactStagingDirectory)/artifact.zip"
       $apiUrl = "https://$env:WebAppName.scm.azurewebsites.net/api/zipdeploy"
       $base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(("{0}:{1}" -f $username, $password)))
       $userAgent = "powershell/1.0"
