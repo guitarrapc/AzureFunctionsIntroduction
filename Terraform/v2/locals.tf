@@ -25,4 +25,5 @@ locals {
   vault_secret_name_FUNCTION_APP_EVENTTRIGGER_SLACKWEBHOOKURL = "functionappeventtriggerslackwebhookurl"
   vault_secret_name_FUNCTION_APP_SLACKINCOMINGWEBHOOKURL      = "functionappslackincomingwebhookurl"
   vault_secret_name_FUNCTION_SAS_BLOB_ITEM_CONNECTION_STRING  = "functionsasblobitemconnectionstring"
+  vault_secret_name_FUNCTION_TABLE_CONNECTION_STRING          = "functiontableconnectionstring"
 }

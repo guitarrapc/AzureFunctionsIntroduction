@@ -39,8 +39,12 @@ resource "azurerm_function_app" "function" {
   version    = "beta"
 
   app_settings {
+    # ZipDeploy with Run From Package : https://github.com/Azure/app-service-announcements/issues/110
+    WEBSITE_RUN_FROM_ZIP = 1
+
     # As of 2.0.1-beta.26 a worker runtime setting is required.
-    FUNCTIONS_WORKER_RUNTIME                       = "dotnet"
+    FUNCTIONS_WORKER_RUNTIME = "dotnet"
+
     eventtrigger_slackchannel                      = "azurefunctions"
     key_vault_eventtriggerSlackwebhookurlSecretUri = "${azurerm_key_vault.this.vault_uri}secrets/${local.vault_secret_name_FUNCTION_APP_EVENTTRIGGER_SLACKWEBHOOKURL}"
     key_vault_secret_uri                           = "${azurerm_key_vault.this.vault_uri}secrets/${local.vault_secret_name_test}"
@@ -49,6 +53,10 @@ resource "azurerm_function_app" "function" {
     sas_blob_item_primary_endpoint                 = "${azurerm_storage_account.blob.primary_blob_endpoint}"
     sas_blob_item_container                        = "${azurerm_storage_container.blob.name}"
     sas_blob_item_name                             = "${azurerm_storage_blob.blob.name}"
+    table_storage_asset_table_name                 = "sampletable"
+    table_storage_asset_table_default_parition     = "assets"
+    table_storage_asset_table_default_assetname    = "default"
+    key_vault_table_storage_connection_string      = "${azurerm_key_vault.this.vault_uri}secrets/${local.vault_secret_name_FUNCTION_TABLE_CONNECTION_STRING}"
 
     # Incase you want set secret directly from KeyVault.
     # eventtrigger_slackwebhookurl = "${data.azurerm_key_vault_secret.FUNCTION_APP_EVENTTRIGGER_SLACKWEBHOOKURL.value}"

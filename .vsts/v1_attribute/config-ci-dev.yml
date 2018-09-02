@@ -1,0 +1,38 @@
+name: Develop Build
+trigger:
+  branches:
+    include:
+    - develop/v1-attribute
+
+variables:
+  Parameters.solution: 'v1_attribute/src/AzureFunctionsIntroduction.sln'
+  BuildConfiguration: "Debug"
+
+phases:
+
+- phase: build_windows_agent
+  displayName: Windows Agent
+  queue:
+    name: Hosted VS2017
+    demands: msbuild
+
+  steps:
+  - task: DotNetCoreCLI@1
+    displayName: restore
+    inputs:
+      command: "restore"
+      projects: "$(Parameters.solution)"
+
+  - task: MSBuild@1
+    displayName: build
+    inputs:
+      solution: "$(Parameters.solution)"
+      configuration: "$(BuildConfiguration)"
+      msbuildArguments: "/p:OutputPath=$(Build.artifactstagingdirectory)"
+      clean: "true"
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact: drop'
+    inputs:
+      PathtoPublish: '$(build.artifactstagingdirectory)'
+
