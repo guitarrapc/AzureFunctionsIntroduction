@@ -130,3 +130,19 @@ resource "azurerm_key_vault_secret" "FUNCTION_SAS_BLOB_ITEM_CONNECTION_STRING" {
         local.common_tags,
     )}"
 }
+
+resource "azurerm_key_vault_secret" "FUNCTION_TABLE_STORAGE_CONNECTION_STRING" {
+  name      = "${local.vault_secret_name_FUNCTION_TABLE_CONNECTION_STRING}"
+  value     = "${azurerm_storage_account.table.primary_connection_string}"
+  vault_uri = "${azurerm_key_vault.this.vault_uri}"
+
+  depends_on = [
+    "azurerm_key_vault.this",
+    "azurerm_storage_account.blob",
+  ]
+
+  tags = "${merge(
+        var.common_tags,
+        local.common_tags,
+    )}"
+}

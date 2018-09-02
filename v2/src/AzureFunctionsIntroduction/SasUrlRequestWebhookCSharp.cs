@@ -3,6 +3,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using AzureFunctionsIntroduction.Domains.Entities;
 using AzureFunctionsIntroduction.Features;
 using Microsoft.Azure.KeyVault;
 using Microsoft.Azure.KeyVault.Models;
@@ -33,10 +34,10 @@ namespace AzureFunctionsIntroduction
 
         private static async Task<AssetBundleInfomationResponse> GetSasUrl(SasRequest request)
         {
-            // TODO : key = assetName -> key reference to table storage and return assetname.
-            var asset = GetBlobName(request?.Key);
+            // key reference to table storage and return assetname.
+            var asset = await GetBlobNameAsync(request?.Partition, request?.Key);
 
-            // KeyVault からBlob AccountのConnectionStringを取得
+            // Obtain connection string from key vault
             if (kvClient == null || storageAccountConnectionStringBundle == null)
             {
                 var azureServiceTokenProvider = new AzureServiceTokenProvider();
@@ -44,7 +45,7 @@ namespace AzureFunctionsIntroduction
                 storageAccountConnectionStringBundle = await kvClient.GetSecretAsync(EnvironmentHelper.GetOrDefault(AppSettings.EnvKeyVaultSasBlobItemConnectionString, ""));
             }
 
-            // リクエストごとにShortSAS Token の生成
+            // Create SAS Token for every request
             var sasTokenReqeust = new SasTokenRequest(storageAccountConnectionStringBundle.Value);
             var sasToken = await sasTokenReqeust.GenerateDefaultSasTokenAsync(EnvironmentHelper.GetOrDefault(AppSettings.EnvSasBlobItemContainer, ""), asset);
             var response = new AssetBundleInfomationResponse(new Uri(EnvironmentHelper.GetOrDefault(AppSettings.EnvSasBlobPrimaryEndpoint, "")), EnvironmentHelper.GetOrDefault(AppSettings.EnvSasBlobItemContainer, ""), asset, sasToken);
@@ -52,17 +53,33 @@ namespace AzureFunctionsIntroduction
             return response;
         }
 
-        private static string GetBlobName(string key)
+        private static async Task<string> GetBlobNameAsync(string partition, string key)
         {
-            // temporary just test item
-            return string.IsNullOrWhiteSpace(key)
-                ? EnvironmentHelper.GetOrDefault(AppSettings.EnvSasBlobItemName, "")
-                : EnvironmentHelper.GetOrDefault(AppSettings.EnvSasBlobItemName, "");
+            // Obtain ConnectionString from KeyVault
+            var connectionString = await KeyVaultHelper.GetSecretValueAsync(EnvironmentHelper.GetOrDefault(AppSettings.EnvKeyVaultTableStorageConnectionString, ""));
+            // TableReference
+            var table = CloudStoreageAccountHelper.GetTableReference(connectionString, EnvironmentHelper.GetOrDefault(AppSettings.EnvTableStorageTableName, ""));
+
+            if (string.IsNullOrWhiteSpace(partition))
+            {
+                partition = EnvironmentHelper.GetOrDefault(AppSettings.EnvTableStorageTableDefaultPartition, "");
+            }
+            if (string.IsNullOrWhiteSpace(key))
+            {
+                key = EnvironmentHelper.GetOrDefault(AppSettings.EnvTableStorageTableDefaultAssetName, "");
+            }
+
+            var entity = await table.RetrieveAsync<AssetEntity>(partition, key);
+            return entity.AssetName;
         }
     }
 
     public class SasRequest
     {
+        public string Partition { get; set; }
+        /// <summary>
+        /// key == assetName
+        /// </summary>
         public string Key { get; set; }
     }
 
