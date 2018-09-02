@@ -16,11 +16,11 @@ namespace AzureFunctionsIntroduction
             log.LogInformation("C# HTTP trigger function processed a request.");
 
             // Obtain ConnectionString from KeyVault
-            var connectionString = await KeyVaultHelper.GetSecretValueAsync(EnvironmentHelper.GetOrDefault(AppSettings.EnvKeyVaultTableStorageConnectionString, ""));
+            var connectionString = await KeyVaultHelper.GetSecretValueAsync(AppSettings.EnvKeyVaultTableStorageConnectionString);
 
             // TableReference
-            var table = CloudStoreageAccountHelper.GetTableReference(connectionString, EnvironmentHelper.GetOrDefault(AppSettings.EnvTableStorageTableName, ""));
-            var entity = await table.RetrieveAsync<AssetEntity>(EnvironmentHelper.GetOrDefault(AppSettings.EnvTableStorageTableDefaultPartition, ""), EnvironmentHelper.GetOrDefault(AppSettings.EnvTableStorageTableDefaultAssetName, ""));
+            var table = CloudStoreageAccountHelper.GetTableReference(connectionString, AppSettings.EnvTableStorageTableName);
+            var entity = await table.RetrieveAsync<AssetEntity>(AppSettings.EnvTableStorageTableDefaultPartition, AppSettings.EnvTableStorageTableDefaultAssetName);
             log.LogInformation($"{entity.PartitionKey}\t{entity.RowKey}\t{entity.Timestamp}\t{entity.AssetName}");
             return req.CreateResponse(HttpStatusCode.OK, entity.AssetName);
         }

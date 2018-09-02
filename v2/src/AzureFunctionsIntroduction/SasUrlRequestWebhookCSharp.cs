@@ -42,13 +42,13 @@ namespace AzureFunctionsIntroduction
             {
                 var azureServiceTokenProvider = new AzureServiceTokenProvider();
                 kvClient = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(azureServiceTokenProvider.KeyVaultTokenCallback), client);
-                storageAccountConnectionStringBundle = await kvClient.GetSecretAsync(EnvironmentHelper.GetOrDefault(AppSettings.EnvKeyVaultSasBlobItemConnectionString, ""));
+                storageAccountConnectionStringBundle = await kvClient.GetSecretAsync(AppSettings.EnvKeyVaultSasBlobItemConnectionString);
             }
 
             // Create SAS Token for every request
             var sasTokenReqeust = new SasTokenRequest(storageAccountConnectionStringBundle.Value);
-            var sasToken = await sasTokenReqeust.GenerateDefaultSasTokenAsync(EnvironmentHelper.GetOrDefault(AppSettings.EnvSasBlobItemContainer, ""), asset);
-            var response = new AssetBundleInfomationResponse(new Uri(EnvironmentHelper.GetOrDefault(AppSettings.EnvSasBlobPrimaryEndpoint, "")), EnvironmentHelper.GetOrDefault(AppSettings.EnvSasBlobItemContainer, ""), asset, sasToken);
+            var sasToken = await sasTokenReqeust.GenerateDefaultSasTokenAsync(AppSettings.EnvSasBlobItemContainer, asset);
+            var response = new AssetBundleInfomationResponse(new Uri(AppSettings.EnvSasBlobPrimaryEndpoint), AppSettings.EnvSasBlobItemContainer, asset, sasToken);
 
             return response;
         }
@@ -56,17 +56,17 @@ namespace AzureFunctionsIntroduction
         private static async Task<string> GetBlobNameAsync(string partition, string key)
         {
             // Obtain ConnectionString from KeyVault
-            var connectionString = await KeyVaultHelper.GetSecretValueAsync(EnvironmentHelper.GetOrDefault(AppSettings.EnvKeyVaultTableStorageConnectionString, ""));
+            var connectionString = await KeyVaultHelper.GetSecretValueAsync(AppSettings.EnvKeyVaultTableStorageConnectionString);
             // TableReference
-            var table = CloudStoreageAccountHelper.GetTableReference(connectionString, EnvironmentHelper.GetOrDefault(AppSettings.EnvTableStorageTableName, ""));
+            var table = CloudStoreageAccountHelper.GetTableReference(connectionString, AppSettings.EnvTableStorageTableName);
 
             if (string.IsNullOrWhiteSpace(partition))
             {
-                partition = EnvironmentHelper.GetOrDefault(AppSettings.EnvTableStorageTableDefaultPartition, "");
+                partition = AppSettings.EnvTableStorageTableDefaultPartition;
             }
             if (string.IsNullOrWhiteSpace(key))
             {
-                key = EnvironmentHelper.GetOrDefault(AppSettings.EnvTableStorageTableDefaultAssetName, "");
+                key = AppSettings.EnvTableStorageTableDefaultAssetName;
             }
 
             var entity = await table.RetrieveAsync<AssetEntity>(partition, key);
